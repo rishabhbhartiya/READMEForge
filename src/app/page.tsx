@@ -40,7 +40,7 @@ function HeaderBuilder({ onAdd }: { onAdd:(c:string)=>void }) {
   const [style, setStyle] = useState('profile')
   const [height, setHeight] = useState(280)
   const url = `/api/header?name=${encodeURIComponent(name)}&title=${encodeURIComponent(title)}&tagline=${encodeURIComponent(tagline)}&metal=${metal}&style=${style}&height=${height}`
-  const md = `![Header](https://metalforge.vercel.app${url})`
+  const md = `![Header](https://metal-forage.vercel.app${url})`
   return (
     <div><SectionHeader tag="// component_type: profile_header" title="PROFILE HEADER GENERATOR"/>
     <BuilderGrid controls={<>
@@ -61,13 +61,13 @@ function HeaderBuilder({ onAdd }: { onAdd:(c:string)=>void }) {
 
 function FooterBuilderUI({ onAdd }: { onAdd:(c:string)=>void }) {
   const [text, setText] = useState('Thanks for visiting!')
-  const [subtext, setSubtext] = useState('Made with ♦ and MetalForge')
+  const [subtext, setSubtext] = useState('Made with ♦ and metal-forage')
   const [links, setLinks] = useState('Twitter,GitHub,LinkedIn')
   const [metal, setMetal] = useState('chrome')
   const [style, setStyle] = useState('wave')
   const [height, setHeight] = useState(180)
   const url = `/api/footer?text=${encodeURIComponent(text)}&subtext=${encodeURIComponent(subtext)}&links=${encodeURIComponent(links)}&metal=${metal}&style=${style}&height=${height}`
-  const md = `![Footer](https://metalforge.vercel.app${url})`
+  const md = `![Footer](https://metal-forage.vercel.app${url})`
   return (
     <div><SectionHeader tag="// component_type: profile_footer" title="PROFILE FOOTER GENERATOR"/>
     <BuilderGrid controls={<>
@@ -96,7 +96,7 @@ function NeoCardBuilder({ onAdd }: { onAdd:(c:string)=>void }) {
   const [width, setWidth] = useState(200)
   const [height, setHeight] = useState(160)
   const url = `/api/card-neo?title=${encodeURIComponent(title)}&value=${encodeURIComponent(value)}&subtitle=${encodeURIComponent(subtitle)}&icon=${encodeURIComponent(icon)}&theme=${theme}&style=${style}&width=${width}&height=${height}`
-  const md = `![${title}](https://metalforge.vercel.app${url})`
+  const md = `![${title}](https://metal-forage.vercel.app${url})`
   return (
     <div><SectionHeader tag="// component_type: neumorphic_card" title="NEUMORPHIC CARD"/>
     <BuilderGrid controls={<>
@@ -137,7 +137,7 @@ function GlassCardBuilder({ onAdd }: { onAdd:(c:string)=>void }) {
   const [width, setWidth] = useState(220)
   const [height, setHeight] = useState(170)
   const url = `/api/card-glass?title=${encodeURIComponent(title)}&value=${encodeURIComponent(value)}&subtitle=${encodeURIComponent(subtitle)}&icon=${encodeURIComponent(icon)}&theme=${theme}&width=${width}&height=${height}`
-  const md = `![${title}](https://metalforge.vercel.app${url})`
+  const md = `![${title}](https://metal-forage.vercel.app${url})`
   return (
     <div><SectionHeader tag="// component_type: glass_card" title="GLASSMORPHIC CARD"/>
     <BuilderGrid controls={<>
@@ -172,7 +172,7 @@ function TextAnimBuilder({ onAdd }: { onAdd:(c:string)=>void }) {
   const [speed, setSpeed] = useState('normal')
   const [bg, setBg] = useState('dark')
   const url = `/api/text-anim?text=${encodeURIComponent(text)}&effect=${effect}&metal=${metal}&width=${width}&size=${size}&speed=${speed}&bg=${bg}`
-  const md = `![${text}](https://metalforge.vercel.app${url})`
+  const md = `![${text}](https://metal-forage.vercel.app${url})`
   return (
     <div><SectionHeader tag="// component_type: text_animation" title="TEXT ANIMATION EFFECTS"/>
     <BuilderGrid controls={<>
@@ -207,7 +207,7 @@ function ProgressBuilder({ onAdd }: { onAdd:(c:string)=>void }) {
   const [style, setStyle] = useState('metallic')
   const [width, setWidth] = useState(450)
   const url = `/api/progress-bar?label=${encodeURIComponent(label)}&value=${value}&metal=${metal}&style=${style}&width=${width}`
-  const md = `![${label} ${value}%](https://metalforge.vercel.app${url})`
+  const md = `![${label} ${value}%](https://metal-forage.vercel.app${url})`
 
   const PRESET_SKILLS = [
     {label:'TypeScript',v:92,m:'electric'},{label:'React',v:88,m:'electric'},{label:'Python',v:80,m:'neon'},
@@ -227,7 +227,7 @@ function ProgressBuilder({ onAdd }: { onAdd:(c:string)=>void }) {
       <RangeField label="Width" id="pw" min={200} max={800} value={width} onChange={setWidth}/>
       <div className="mt-4">
         <button className="btn-chrome px-4 py-2 rounded text-sm cursor-pointer mr-3 mb-3"
-          onClick={()=>onAdd(`![${label}](https://metalforge.vercel.app/api/skill-tree?title=Tech+Stack&skills=${encodeURIComponent(PRESET_SKILLS.map(s=>`${s.label}:${s.v}:${s.m}`).join(','))}&width=450)`)}>
+          onClick={()=>onAdd(`![${label}](https://metal-forage.vercel.app/api/skill-tree?title=Tech+Stack&skills=${encodeURIComponent(PRESET_SKILLS.map(s=>`${s.label}:${s.v}:${s.m}`).join(','))}&width=450)`)}>
           ⚡ Add Full Skill Tree
         </button>
         <AddButton onClick={()=>onAdd(md)}/>
@@ -253,7 +253,7 @@ function TerminalBuilder({ onAdd }: { onAdd:(c:string)=>void }) {
   const [metal, setMetal] = useState('chrome')
   const [width, setWidth] = useState(500)
   const url = `/api/terminal?title=${encodeURIComponent(termTitle)}&lines=${encodeURIComponent(lines)}&theme=${theme}&metal=${metal}&width=${width}`
-  const md = `![Terminal](https://metalforge.vercel.app${url})`
+  const md = `![Terminal](https://metal-forage.vercel.app${url})`
   return (
     <div><SectionHeader tag="// component_type: terminal" title="TERMINAL BLOCK"/>
     <BuilderGrid controls={<>
@@ -285,7 +285,7 @@ function LogoBuilder({ onAdd }: { onAdd:(c:string)=>void }) {
   const [size, setSize] = useState(120)
   const [glow, setGlow] = useState(true)
   const url = `/api/logo-container?text=${encodeURIComponent(text)}&metal=${metal}&style=${shape}&size=${size}&glow=${glow}`
-  const md = `![Logo](https://metalforge.vercel.app${url})`
+  const md = `![Logo](https://metal-forage.vercel.app${url})`
   return (
     <div><SectionHeader tag="// component_type: logo_container" title="LOGO CONTAINER"/>
     <BuilderGrid controls={<>
@@ -330,7 +330,7 @@ function FrameBuilder({ onAdd }: { onAdd:(c:string)=>void }) {
   const url = frameType === 'image'
     ? `/api/image-container?src=${encodeURIComponent(src)}&frame=${frame}&metal=${metal}&width=${width}&height=${height}&caption=${encodeURIComponent(caption)}`
     : `/api/gif-container?src=${encodeURIComponent(src)}&frame=${frame}&metal=${metal}&width=${width}&height=${height}`
-  const md = `![Frame](https://metalforge.vercel.app${url})`
+  const md = `![Frame](https://metal-forage.vercel.app${url})`
   return (
     <div><SectionHeader tag="// component_type: image_frame" title="IMAGE / GIF FRAME"/>
     <BuilderGrid controls={<>
@@ -365,7 +365,7 @@ function SocialBuilder({ onAdd }: { onAdd:(c:string)=>void }) {
   const [style, setStyle] = useState('pills')
   const [width, setWidth] = useState(600)
   const url = `/api/social-links?links=${encodeURIComponent(links)}&metal=${metal}&style=${style}&width=${width}`
-  const md = `![Social Links](https://metalforge.vercel.app${url})`
+  const md = `![Social Links](https://metal-forage.vercel.app${url})`
   return (
     <div><SectionHeader tag="// component_type: social_links" title="SOCIAL LINKS ROW"/>
     <BuilderGrid controls={<>
@@ -399,7 +399,7 @@ export default function Home() {
       {/* HERO */}
       <section className="relative py-16 px-6 text-center overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[radial-gradient(ellipse,rgba(74,158,255,0.09)_0%,transparent_70%)] pointer-events-none"/>
-        <p className="font-mono text-[11px] tracking-[3px] text-[#4a9eff] mb-3 opacity-75">// METALFORGE v2.0 — 16 COMPONENT TYPES — FULL PROFILE KIT</p>
+        <p className="font-mono text-[11px] tracking-[3px] text-[#4a9eff] mb-3 opacity-75">// metal-forage v2.0 — 16 COMPONENT TYPES — FULL PROFILE KIT</p>
         <h1 className="font-orbitron text-[clamp(24px,5vw,64px)] font-black tracking-[4px] leading-tight mb-4"
           style={{ background:'linear-gradient(135deg,#e8e8e8 0%,#a0a8c0 35%,#ffffff 55%,#8090b0 100%)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
           README FORGE

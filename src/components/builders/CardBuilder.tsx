@@ -13,7 +13,7 @@ export function CardBuilder({ onAdd }: { onAdd: (code: string) => void }) {
   const [compact, setCompact] = useState(false)
 
   const url = `/api/card?username=${username}&type=${type}&metal=${metal}&border=${border}&width=${width}${compact?'&compact=true':''}`
-  const markdown = `![${type} Card](https://metalforge.vercel.app${url})`
+  const markdown = `![${type} Card](https://metal-forage.vercel.app${url})`
 
   return (
     <div>
@@ -84,7 +84,7 @@ export function ButtonBuilder({ onAdd }: { onAdd: (code: string) => void }) {
   const [href, setHref]   = useState('https://github.com')
 
   const url = `/api/button?label=${encodeURIComponent(label)}&icon=${encodeURIComponent(icon)}&metal=${metal}&style=${style}&width=${width}`
-  const markdown = `[![${label}](https://metalforge.vercel.app${url})](${href})`
+  const markdown = `[![${label}](https://metal-forage.vercel.app${url})](${href})`
 
   return (
     <div>
@@ -170,7 +170,7 @@ export function BadgeBuilder({ onAdd }: { onAdd: (code: string) => void }) {
   const [icon, setIcon]   = useState('')
 
   const url = `/api/badge?label=${encodeURIComponent(label)}${value?`&value=${encodeURIComponent(value)}`:''}&metal=${metal}&shape=${shape}${icon?`&icon=${encodeURIComponent(icon)}`:''}`
-  const markdown = `![${label}](https://metalforge.vercel.app${url})`
+  const markdown = `![${label}](https://metal-forage.vercel.app${url})`
 
   return (
     <div>
@@ -236,7 +236,7 @@ export function DividerBuilder({ onAdd }: { onAdd: (code: string) => void }) {
   const [height, setHeight] = useState(4)
 
   const url = `/api/divider?metal=${metal}&style=${style}&width=${width}&height=${height}`
-  const markdown = `![Divider](https://metalforge.vercel.app${url})`
+  const markdown = `![Divider](https://metal-forage.vercel.app${url})`
 
   return (
     <div>

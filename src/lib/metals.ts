@@ -5,6 +5,20 @@ export type MetalType =
   | 'chrome' | 'gold' | 'rose-gold' | 'titanium'
   | 'copper' | 'obsidian' | 'electric' | 'neon' | 'blood' | 'ice'
 
+export type ThemeMode = 'light' | 'dark'
+
+export type ColorPreset =
+  | 'red' | 'orange' | 'yellow' | 'lime'
+  | 'green' | 'teal' | 'cyan'
+  | 'blue' | 'indigo'
+  | 'purple' | 'pink'
+  | 'gray'
+
+export interface GradientOptions {
+  colors: string[]
+  angle?: number
+}
+
 export type BannerShape =
   | 'wave' | 'wave-bottom' | 'rect' | 'shark' | 'slice'
   | 'egg' | 'cylinder' | 'diagonal' | 'venom'
@@ -89,6 +103,41 @@ export const METALS: Record<MetalType, MetalConfig> = {
   },
 }
 
+export const COLORS: Record<ColorPreset, string[]> = {
+  red: ['#ff4d4d', '#b30000'],
+  orange: ['#ff8c42', '#e85d04'],
+  yellow: ['#ffd84d', '#ffb703'],
+  lime: ['#bfff00', '#80ff00'],
+  green: ['#2ecc71', '#1e8449'],
+  teal: ['#1abc9c', '#0e7c66'],
+  cyan: ['#00d4ff', '#0096c7'],
+  blue: ['#3b82f6', '#1e40af'],
+  indigo: ['#6366f1', '#3730a3'],
+  purple: ['#a855f7', '#6b21a8'],
+  pink: ['#ec4899', '#be185d'],
+  gray: ['#d1d5db', '#374151'],
+}
+
+export const THEMES: Record<ThemeMode, {
+  bg: string
+  text: string
+  accent: string
+  shadow: string
+}> = {
+  light: {
+    bg: '#ffffff',
+    text: '#111827',
+    accent: '#3b82f6',
+    shadow: 'rgba(0,0,0,0.15)'
+  },
+  dark: {
+    bg: '#0f172a',
+    text: '#f8fafc',
+    accent: '#60a5fa',
+    shadow: 'rgba(0,0,0,0.5)'
+  }
+}
+
 // ─── Gradient Builder ────────────────────────────────────────────────────────
 
 export function buildGradient(
@@ -108,6 +157,33 @@ export function buildGradient(
       ${stops}
     </linearGradient>`
 }
+
+export function buildCustomGradient(
+  id: string,
+  colors: string[],
+  angle = 135,
+  opacity = 1
+): string {
+
+  const safeColors = colors.length > 0 ? colors : ['#cccccc', '#666666']
+  const total = Math.max(safeColors.length - 1, 1)
+
+  const stops = safeColors
+    .map((c, i) => {
+      const offset = (i / total) * 100
+      return `<stop offset="${offset}%" stop-color="${c}" stop-opacity="${opacity}" />`
+    })
+    .join('\n      ')
+
+  const rad = (angle * Math.PI) / 180
+  const x2 = (50 + 50 * Math.cos(rad)).toFixed(1)
+  const y2 = (50 + 50 * Math.sin(rad)).toFixed(1)
+
+  return `<linearGradient id="${id}" x1="50%" y1="50%" x2="${x2}%" y2="${y2}%" gradientUnits="userSpaceOnUse">
+      ${stops}
+    </linearGradient>`
+}
+
 
 export function buildRadialGradient(
   id: string,
@@ -281,4 +357,48 @@ export function buildBevel(w: number, h: number, r = 8): string {
       L${w - 1},${h * 0.7} Q${w * 0.5},${h * 0.9} 1,${h * 0.7}
       L1,${h - r} Q1,${h - 1} ${r},${h - 1} Z"
       fill="black" opacity="0.2"/>`
+}
+
+
+export function getReadableTextColor(bg: string): string {
+
+  if (!bg.startsWith('#') || bg.length !== 7) {
+    return '#ffffff'
+  }
+
+  const r = parseInt(bg.substring(1, 3), 16)
+  const g = parseInt(bg.substring(3, 5), 16)
+  const b = parseInt(bg.substring(5, 7), 16)
+
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+
+  return luminance > 0.6 ? '#111111' : '#ffffff'
+}
+
+
+
+export const GRADIENT_PRESETS = {
+  sunset: ['#ff5f6d', '#ffc371'],
+  aurora: ['#00f260', '#0575e6'],
+  ocean: ['#2193b0', '#6dd5ed'],
+  fire: ['#f12711', '#f5af19'],
+  neon: ['#00f5a0', '#00d9f5'],
+} as const
+
+
+export function resolveGradient(
+  id: string,
+  metal?: MetalType,
+  colors?: string[]
+) {
+
+  if (colors && colors.length > 0) {
+    return buildCustomGradient(id, colors)
+  }
+
+  if (metal) {
+    return buildGradient(id, metal)
+  }
+
+  return buildGradient(id, 'chrome')
 }

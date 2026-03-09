@@ -18,7 +18,7 @@ export default function BannerBuilder({ onAdd }: { onAdd: (code: string) => void
   const [align, setAlign] = useState('center')
   const [section, setSection] = useState<'header'|'footer'>('header')
 
-  const buildUrl = (base = 'https://metalforge.vercel.app') =>
+  const buildUrl = (base = 'https://metal-forage.vercel.app') =>
     `${base}/api/banner?text=${encodeURIComponent(text)}&subtext=${encodeURIComponent(subtext)}&metal=${metal}&type=${shape}&height=${height}&width=${width}&animation=${anim}&align=${align}&section=${section}`
 
   const markdown = `![Banner](${buildUrl()})`
