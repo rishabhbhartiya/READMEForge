@@ -1,5 +1,12 @@
 'use client'
 
+const NAV_LINKS = [
+  { label: 'Docs', href: '#docs' },
+  { label: 'API', href: '#api' },
+  { label: 'Examples', href: '#showcase' },
+  { label: 'GitHub', href: 'https://github.com/metalforge', target: '_blank' },
+]
+
 export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 flex items-center justify-between px-8 h-16
@@ -24,23 +31,28 @@ export default function Navbar() {
 
       {/* Nav links */}
       <ul className="hidden md:flex gap-1 list-none">
-        {['Docs', 'API', 'Examples', 'GitHub'].map(l => (
-          <li key={l}>
-            <a href="#" className="block px-4 py-2 font-rajdhani font-semibold text-[13px]
-              tracking-[1.5px] uppercase text-[#7880a0] rounded
-              border border-transparent transition-all duration-200
-              hover:text-[#4a9eff] hover:border-[rgba(74,158,255,0.25)] hover:bg-[rgba(74,158,255,0.05)]">
-              {l}
+        {NAV_LINKS.map(l => (
+          <li key={l.label}>
+            <a
+              href={l.href}
+              target={(l as any).target}
+              rel={(l as any).target === '_blank' ? 'noreferrer' : undefined}
+              className="block px-4 py-2 font-rajdhani font-semibold text-[13px]
+                tracking-[1.5px] uppercase text-[#7880a0] rounded
+                border border-transparent transition-all duration-200
+                hover:text-[#4a9eff] hover:border-[rgba(74,158,255,0.25)]
+                hover:bg-[rgba(74,158,255,0.05)]">
+              {l.label}
             </a>
           </li>
         ))}
       </ul>
 
-      {/* Right badge */}
+      {/* Right badge — v3 */}
       <div className="font-mono text-[11px] tracking-[1px] px-3 py-1.5 rounded-sm
-        text-[#1a0800] font-bold"
+        text-[#1a0800] font-bold select-none"
         style={{ background: 'linear-gradient(135deg,#fff0a0,#d4a020,#f5d040,#9a7010)' }}>
-        v2.0 ALPHA
+        v3.0 BETA
       </div>
     </nav>
   )

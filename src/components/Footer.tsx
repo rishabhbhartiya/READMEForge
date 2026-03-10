@@ -1,19 +1,19 @@
-export default function Footer() {
-  const cols = [
-    {
-      title: 'Components',
-      links: ['Banners', 'Stat Cards', 'Buttons', 'Badges', 'Dividers'],
-    },
-    {
-      title: 'Resources',
-      links: ['Documentation', 'API Reference', 'Examples', 'Changelog'],
-    },
-    {
-      title: 'Community',
-      links: ['GitHub', 'Discord', 'Twitter/X', 'Contribute'],
-    },
-  ]
+const COLS = [
+  {
+    title: 'Components',
+    links: ['Banners', 'Stat Cards', 'Buttons', 'Badges', 'Dividers', 'Text Animations', 'Progress Bars'],
+  },
+  {
+    title: 'Resources',
+    links: ['Documentation', 'API Reference', 'Examples', 'Changelog', 'GitHub'],
+  },
+  {
+    title: 'Community',
+    links: ['Discord', 'Twitter/X', 'Contribute', 'Report a Bug'],
+  },
+]
 
+export default function Footer() {
   return (
     <footer className="relative bg-[#0e0e1a] border-t border-[rgba(120,140,200,0.12)] pt-14 pb-8 px-8 overflow-hidden">
 
@@ -23,8 +23,7 @@ export default function Footer() {
 
       {/* Background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[200px]
-        bg-[radial-gradient(ellipse,rgba(74,158,255,0.04)_0%,transparent_70%)]
-        pointer-events-none"/>
+        bg-[radial-gradient(ellipse,rgba(74,158,255,0.04)_0%,transparent_70%)] pointer-events-none"/>
 
       <div className="max-w-[1320px] mx-auto">
         {/* Main grid */}
@@ -34,16 +33,17 @@ export default function Footer() {
           <div>
             <div className="font-orbitron text-[18px] font-black tracking-[3px] mb-4">
               <span style={{
-                background:'linear-gradient(135deg,#f0f0f0,#909090,#d8d8d8)',
-                WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent',
+                background: 'linear-gradient(135deg,#f0f0f0,#909090,#d8d8d8)',
+                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
               }}>METAL</span>
               <span style={{
-                background:'linear-gradient(135deg,#fff0a0,#d4a020,#f5d040)',
-                WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent',
+                background: 'linear-gradient(135deg,#fff0a0,#d4a020,#f5d040)',
+                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
               }}>FORGE</span>
             </div>
             <p className="text-[14px] text-[#7880a0] leading-[1.7] max-w-[240px] mb-5">
-              Advanced GitHub README component generator. Metallic SVG engine. Deployed on Vercel.
+              Advanced GitHub README component generator. 44-metal SVG engine. 28 design styles.
+              Deployed on Vercel.
             </p>
             <div className="flex gap-2 flex-wrap">
               <span className="font-mono text-[10px] px-2.5 py-1 rounded-sm
@@ -67,7 +67,7 @@ export default function Footer() {
           </div>
 
           {/* Link columns */}
-          {cols.map(col => (
+          {COLS.map(col => (
             <div key={col.title}>
               <h4 className="font-mono text-[11px] tracking-[2px] uppercase text-[#7880a0] mb-4">
                 {col.title}
@@ -93,13 +93,13 @@ export default function Footer() {
           <span>
             © 2026{' '}
             <span style={{
-              background:'linear-gradient(135deg,#f0f0f0,#909090,#d8d8d8)',
-              WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent',
+              background: 'linear-gradient(135deg,#f0f0f0,#909090,#d8d8d8)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
             }}>METALFORGE</span>
             {' '}· MIT LICENSE
           </span>
           <span>CRAFTED WITH <span className="text-[#ff6b35]">♦</span> FOR DEVELOPERS</span>
-          <span>v2.0.0-alpha · NEXT.JS 14</span>
+          <span>v3.0.0-beta · NEXT.JS 15 · EDGE RUNTIME</span>
         </div>
       </div>
     </footer>
