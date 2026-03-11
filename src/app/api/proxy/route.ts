@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
 
     try {
         const res = await fetch(url, {
-            headers: { 'User-Agent': 'MetalForge/3.0 (+https://metal-forage.vercel.app)' },
+            headers: { 'User-Agent': 'Metal Forage/3.0 (+https://metal-forage.vercel.app)' },
             signal: AbortSignal.timeout(8000),
         })
 

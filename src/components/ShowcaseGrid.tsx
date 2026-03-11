@@ -2,7 +2,7 @@
 
 import { SectionHeader } from './ui'
 
-const BASE = 'https://metalforge.vercel.app'
+const BASE = 'https://metal-forage.vercel.app'
 
 const SECTIONS = [
   {

@@ -1,5 +1,5 @@
 /**
- * MetalForge v3 — Core SVG Engine
+ * Metal Forage v3 — Core SVG Engine
  * metals.ts
  *
  * Full color system: metallic presets + custom colors + multi-stop gradients

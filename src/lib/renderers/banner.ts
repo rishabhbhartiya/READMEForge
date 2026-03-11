@@ -175,8 +175,8 @@ export function renderBanner(opts: BannerOptions): string {
 
   return `<svg xmlns="http://www.w3.org/2000/svg"
   width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"
-  role="img" aria-label="${text || 'MetalForge Banner'}">
-  <title>${text || 'MetalForge Banner'}</title>
+  role="img" aria-label="${text || 'Metal Forage Banner'}">
+  <title>${text || 'Metal Forage Banner'}</title>
   <defs>
     ${mainDefs}
     ${hiDefs}

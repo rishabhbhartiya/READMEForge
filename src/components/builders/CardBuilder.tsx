@@ -7,7 +7,7 @@ import {
   SelectField, TextField, AddButton,
 } from '../ui'
 
-const BASE_URL = 'https://metalforge.vercel.app'
+const BASE_URL = 'https://metal-forage.vercel.app'
 
 // ─── CARD BUILDER ────────────────────────────────────────────────────────────
 export function CardBuilder({ onAdd }: { onAdd: (code: string) => void }) {

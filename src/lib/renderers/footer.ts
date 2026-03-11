@@ -26,7 +26,7 @@ export interface FooterOptions {
 export function renderFooter(opts: FooterOptions): string {
   const {
     text = 'Thanks for visiting!',
-    subtext = 'Made with ♦ and MetalForge',
+    subtext = 'Made with ♦ and Metal Forage',
     style = 'wave',
     links = '',
     theme = 'dark',
@@ -82,7 +82,7 @@ export function renderFooter(opts: FooterOptions): string {
   return `<svg xmlns="http://www.w3.org/2000/svg"
   width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"
   role="img" aria-label="Footer">
-  <title>MetalForge Footer</title>
+  <title>Metal Forage Footer</title>
   <defs>${mainDefs}</defs>
 
   <rect width="${w}" height="${h}" fill="${bg}"/>

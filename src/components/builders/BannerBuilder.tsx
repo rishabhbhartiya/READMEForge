@@ -12,7 +12,7 @@ const ANIMATIONS = ['none', 'shimmer', 'pulse', 'fadeIn', 'scanline', 'glow', 's
 const ALIGNS = ['left', 'center', 'right']
 const FONTS = ['Orbitron', 'Rajdhani', 'Share Tech Mono', 'Arial Black', 'Georgia']
 
-const BASE_URL = 'https://metalforge.vercel.app'
+const BASE_URL = 'https://metal-forage.vercel.app'
 
 export default function BannerBuilder({ onAdd }: { onAdd: (code: string) => void }) {
   const [text, setText] = useState('Hello, World!')

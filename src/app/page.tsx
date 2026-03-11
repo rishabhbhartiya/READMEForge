@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import BannerBuilder from '@/components/builders/BannerBuilder'
@@ -108,7 +108,7 @@ function HeaderBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 // ─── Footer Builder ───────────────────────────────────────────────────────────
 function FooterBuilderUI({ onAdd }: { onAdd: (c: string) => void }) {
   const [text, setText] = useState('Thanks for visiting!')
-  const [subtext, setSubtext] = useState('Made with ♦ and MetalForge')
+  const [subtext, setSubtext] = useState('Made with ♦ and MetalForage')
   const [links, setLinks] = useState('Twitter,GitHub,LinkedIn')
   const [metal, setMetal] = useState('chrome')
   const [colors, setColors] = useState('')
@@ -738,6 +738,37 @@ function SocialBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function Home() {
   const [tab, setTab] = useState<TabId>('banner')
+
+  // Read ?tab= query param OR #showcase hash on load — switch tab accordingly
+  useEffect(() => {
+    // ?tab=banner / ?tab=card etc  (from footer component links)
+    const params = new URLSearchParams(window.location.search)
+    const tabParam = params.get('tab') as TabId | null
+    if (tabParam) {
+      setTab(tabParam)
+      setTimeout(() => {
+        const el = document.getElementById('showcase')
+        if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 72, behavior: 'smooth' })
+      }, 50)
+      return
+    }
+    // #showcase hash (from Navbar Examples / footer Examples links)
+    function handleHash() {
+      if (window.location.hash === '#showcase') {
+        setTab('showcase')
+        const el = document.getElementById('showcase')
+        if (el) {
+          setTimeout(() => {
+            const top = el.getBoundingClientRect().top + window.scrollY - 72
+            window.scrollTo({ top, behavior: 'smooth' })
+          }, 50)
+        }
+      }
+    }
+    handleHash()
+    window.addEventListener('hashchange', handleHash)
+    return () => window.removeEventListener('hashchange', handleHash)
+  }, [])
   const [assembled, setAssembled] = useState<string[]>([])
 
   const addToReadme = useCallback((code: string) => {
@@ -756,20 +787,38 @@ export default function Home() {
       <section className="relative py-16 px-6 text-center overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px]
           bg-[radial-gradient(ellipse,rgba(74,158,255,0.09)_0%,transparent_70%)] pointer-events-none"/>
+
+        {/* Natraj-X attribution pill — top of hero, max visibility */}
+        <a href="https://www.natrajx.in/" target="_blank" rel="noopener"
+          title="Natraj-X — AI & IT Engineering Agency"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5
+            border border-[rgba(240,190,50,0.3)] bg-[rgba(240,190,50,0.06)]
+            font-mono text-[11px] tracking-[1.5px] uppercase text-[#f0c030]
+            hover:bg-[rgba(240,190,50,0.12)] transition-all duration-200 cursor-pointer">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#f0c030] shadow-[0_0_6px_#f0c030]" />
+          A free tool by Natraj-X AI Engineering
+          <svg width="9" height="9" viewBox="0 0 12 12" fill="none">
+            <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        </a>
+
         <p className="font-mono text-[11px] tracking-[3px] text-[#4a9eff] mb-3 opacity-75">
-          // metalforge v3.0 — 44 METALS · 16 COMPONENT TYPES · EDGE RUNTIME
+          // MetalForage V1.0 — 44 METALS · 16 COMPONENT TYPES · EDGE RUNTIME
         </p>
         <h1 className="font-orbitron text-[clamp(24px,5vw,64px)] font-black tracking-[4px] leading-tight mb-4"
           style={{
             background: 'linear-gradient(135deg,#e8e8e8 0%,#a0a8c0 35%,#ffffff 55%,#8090b0 100%)',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
           }}>
-          README FORGE
+          README FORAGE
         </h1>
-        <p className="text-[16px] text-[#7880a0] max-w-[760px] mx-auto mb-8 leading-relaxed">
+        <p className="text-[16px] text-[#7880a0] max-w-[760px] mx-auto mb-2 leading-relaxed">
+          Free GitHub README generator — metallic SVG banners, badges, stat cards,
+          buttons, terminals, skill bars &amp; more. No code needed.
+        </p>
+        <p className="text-[13px] text-[#56607a] max-w-[600px] mx-auto mb-8 leading-relaxed">
           Headers · Footers · Metallic Cards · Neumorphic · Glassmorphic · Text FX ·
-          Progress Bars · Terminals · Logo Containers · Image Frames · GIF Frames ·
-          Social Links · Banners · Buttons · Badges · Dividers
+          Progress Bars · Terminals · Logo Containers · Image Frames · Buttons · Badges · Dividers
         </p>
         <div className="flex gap-3 justify-center flex-wrap">
           <button onClick={() => setTab('showcase')} className="btn-chrome px-6 py-2.5 rounded-md text-sm cursor-pointer">✦ Full Showcase</button>
@@ -793,9 +842,12 @@ export default function Home() {
         </div>
       </section>
 
-      <main className="max-w-[1320px] mx-auto px-6 pb-24">
+      {/* Scroll targets for navbar */}
+      <div id="api" className="absolute" style={{ marginTop: '-80px', pointerEvents: 'none' }} />
+
+      <main id="docs" className="max-w-[1320px] mx-auto px-6 pb-24">
         {/* TAB BAR */}
-        <div className="flex border-b border-[rgba(120,140,200,0.15)] mb-10 overflow-x-auto pb-0 hide-scrollbar">
+        <div id="showcase" className="flex border-b border-[rgba(120,140,200,0.15)] mb-10 overflow-x-auto pb-0 hide-scrollbar">
           {TABS.map(t => (
             <button key={t.id} onClick={() => setTab(t.id)}
               className={`px-4 py-3 font-rajdhani font-semibold text-[12px] tracking-[1.2px] uppercase

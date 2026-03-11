@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
       `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="60">
         <rect width="400" height="60" fill="#1a0010"/>
         <text x="200" y="34" text-anchor="middle" fill="#ff4444" font-family="monospace" font-size="13">
-          MetalForge Error: ${(e as Error).message}
+          Metal Forage Error: ${(e as Error).message}
         </text>
       </svg>`,
       { status: 400, headers: { 'Content-Type': 'image/svg+xml' } }

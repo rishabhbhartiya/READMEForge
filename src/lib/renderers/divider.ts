@@ -106,7 +106,7 @@ export function renderDivider(opts: DividerOptions): string {
   return `<svg xmlns="http://www.w3.org/2000/svg"
   width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"
   role="img" aria-label="Metallic divider" opacity="${opacity}">
-  <title>MetalForge Divider</title>
+  <title>Metal Forage Divider</title>
   <defs>${mainDefs}</defs>
   ${content}
 </svg>`
