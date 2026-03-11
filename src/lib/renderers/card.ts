@@ -84,7 +84,7 @@ export function renderCard(opts: CardOptions): string {
   let borderDefs = ''
   let borderEl = ''
   if (border === 'metal') {
-    const { id: bdId, defs: bdDefs } = resolveColor(colorSpec, w, h)
+    const { defs: bdDefs } = resolveColor(colorSpec, w, h)
     borderDefs = bdDefs
     borderEl = `<rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" rx="10" fill="none" stroke="${mainFill}" stroke-width="1.5"/>`
   } else if (border === 'glow') {
