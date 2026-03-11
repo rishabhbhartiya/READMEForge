@@ -1999,7 +1999,7 @@ export function buildImageElement(
   clipId?: string,
   preserveAspectRatio = 'xMidYMid slice',
 ): string {
-  const href = src.startsWith('http') || src.startsWith('/') ? src : `https://${src}`;
+  const href = src.startsWith('data:') || src.startsWith('http') || src.startsWith('/') ? src : `https://${src}`;
   const clipAttr = clipId ? `clip-path="url(#${clipId})"` : '';
   return `<image href="${href}" x="${x}" y="${y}" width="${w}" height="${h}"
     preserveAspectRatio="${preserveAspectRatio}" ${clipAttr}/>`;
