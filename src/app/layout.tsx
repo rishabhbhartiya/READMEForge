@@ -9,12 +9,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
 
   title: {
-    default: 'Metal Forage — Free GitHub README Generator | SVG Badges, Banners & Cards',
-    template: '%s | Metal Forage by Natraj-X',
+    default: 'MetalForge — Free GitHub README Generator | SVG Badges, Banners & Cards',
+    template: '%s | MetalForge by Natraj-X',
   },
 
   description:
-    'Metal Forage is a free GitHub README generator with 44 metallic SVG themes. Create animated banners, stat cards, badges, buttons, skill trees, terminal blocks and more — no code needed. Built by Natraj-X AI Engineering.',
+    'MetalForge is a free GitHub README generator with 44 metallic SVG themes. Create animated banners, stat cards, badges, buttons, skill trees, terminal blocks and more — no code needed. Built by Natraj-X AI Engineering.',
 
   keywords: [
     // High-volume README keywords
@@ -54,17 +54,17 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: SITE_URL,
-    siteName: 'Metal Forage',
-    title: 'Metal Forage — Free GitHub README SVG Generator',
+    siteName: 'MetalForge',
+    title: 'MetalForge — Free GitHub README SVG Generator',
     description:
       'Generate metallic SVG banners, badges, cards, buttons & terminal blocks for your GitHub README. 44 metal themes. Free. By Natraj-X AI Engineering.',
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: 'Metal Forage by Natraj-X' }],
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: 'MetalForge by Natraj-X' }],
     locale: 'en_US',
   },
 
   twitter: {
     card: 'summary_large_image',
-    title: 'Metal Forage — GitHub README Generator',
+    title: 'MetalForge — GitHub README Generator',
     description: 'Free SVG generator for GitHub READMEs. Metallic banners, badges, cards, terminals & more. By Natraj-X.',
     images: [OG_IMAGE],
     creator: '@natrajx_in',
@@ -77,6 +77,10 @@ export const metadata: Metadata = {
   },
 
   alternates: { canonical: SITE_URL },
+
+  verification: {
+    google: 'IWEPGEkp7gMjjLmtFt0QLnBB627U6Q-XZmZ_CJWCcqE',
+  },
 }
 
 // JSON-LD — WebApplication + Organization (Natraj-X)
@@ -85,7 +89,7 @@ const jsonLd = {
   '@graph': [
     {
       '@type': 'WebApplication',
-      name: 'Metal Forage',
+      name: 'MetalForge',
       url: SITE_URL,
       description:
         'Free GitHub README component generator with 44 metallic SVG themes, 28 design styles, and 20+ text animation effects.',
