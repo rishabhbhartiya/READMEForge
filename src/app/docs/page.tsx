@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
-const BASE = 'https://metal-forage.vercel.app'
+const BASE = 'https://readmeforge.natrajx.in'
 
 // ─── Shared UI ─────────────────────────────────────────────────────────────
 function NavBar() {
@@ -12,7 +12,7 @@ function NavBar() {
             <div className="absolute bottom-0 left-0 right-0 h-px
         bg-[linear-gradient(90deg,transparent,rgba(74,158,255,0.5),rgba(240,190,50,0.4),transparent)]"/>
             <Link href="/" className="font-orbitron text-[20px] font-black tracking-[3px] no-underline">
-                <span style={{ background: 'linear-gradient(135deg,#f0f0f0,#909090,#d8d8d8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>METAL</span>
+                <span style={{ background: 'linear-gradient(135deg,#f0f0f0,#909090,#d8d8d8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>README</span>
                 <span style={{ background: 'linear-gradient(135deg,#fff0a0,#d4a020,#f5d040)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>FORGE</span>
             </Link>
             <div className="hidden md:flex items-center gap-1">
@@ -32,7 +32,7 @@ function NavBar() {
                 </a>
             </div>
             <div className="font-mono text-[11px] px-3 py-1.5 rounded-sm text-[#1a0800] font-bold"
-                style={{ background: 'linear-gradient(135deg,#fff0a0,#d4a020,#f5d040)' }}>v3.0 BETA</div>
+                style={{ background: 'linear-gradient(135deg,#fff0a0,#d4a020,#f5d040)' }}>v1.0 BETA</div>
         </nav>
     )
 }
@@ -116,10 +116,10 @@ export default function DocsPage() {
                     <div className="font-mono text-[11px] tracking-[3px] text-[#4a9eff] opacity-70 mb-2">// DOCUMENTATION</div>
                     <h1 className="font-orbitron text-[36px] font-black tracking-[3px] mb-3"
                         style={{ background: 'linear-gradient(135deg,#e8e8e8,#a0a8c0,#ffffff,#8090b0)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                        MetalForge Docs
+                        ReadmeForge Docs
                     </h1>
                     <p className="text-[15px] text-[#7880a0] max-w-[560px] leading-relaxed">
-                        Everything you need to build stunning GitHub profile READMEs with MetalForge's 44-metal SVG engine.
+                        Everything you need to build stunning GitHub profile READMEs with ReadmeForge's 44-metal SVG engine.
                     </p>
                 </div>
             </div>
@@ -158,20 +158,20 @@ export default function DocsPage() {
 
                     <Section id="quickstart" tag="// 01" title="Quick Start">
                         <p className="text-[15px] text-[#8890b0] leading-[1.8] mb-4">
-                            MetalForge works by embedding SVG image URLs directly into your GitHub README markdown.
+                            ReadmeForge works by embedding SVG image URLs directly into your GitHub README markdown.
                             No installation, no signup, no API keys — just a URL.
                         </p>
-                        <Code>{`<!-- 1. Open the MetalForge app -->
-<!-- https://metal-forage.vercel.app -->
+                        <Code>{`<!-- 1. Open the ReadmeForge app -->
+<!-- https://readmeforge.natrajx.in -->
 
 <!-- 2. Configure your component visually, then copy the generated markdown -->
 
 <!-- 3. Paste directly into your README.md -->
-![My Banner](https://metal-forage.vercel.app/api/banner?text=YOUR+NAME&metal=gold)
+![My Banner](https://readmeforge.natrajx.in/api/banner?text=YOUR+NAME&metal=gold)
 
 <!-- That's it. ✓ -->`}</Code>
                         <Callout type="info">
-                            Every MetalForge component is a plain <code>![alt](url)</code> markdown image.
+                            Every ReadmeForge component is a plain <code>![alt](url)</code> markdown image.
                             It renders anywhere GitHub renders markdown — READMEs, issues, wikis, profiles.
                         </Callout>
                     </Section>
@@ -179,11 +179,11 @@ export default function DocsPage() {
                     <Section id="how-it-works" tag="// 02" title="How It Works">
                         <p className="text-[15px] text-[#8890b0] leading-[1.8] mb-4">
                             When GitHub renders your README, it requests each image URL.
-                            MetalForge's edge functions receive the request, generate an SVG in milliseconds, and return it.
+                            ReadmeForge's edge functions receive the request, generate an SVG in milliseconds, and return it.
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
                             {[
-                                { step: '01', title: 'You add URL', desc: 'Paste a MetalForge URL into your README.md as a markdown image' },
+                                { step: '01', title: 'You add URL', desc: 'Paste a ReadmeForge URL into your README.md as a markdown image' },
                                 { step: '02', title: 'Edge renders', desc: 'Vercel Edge Function generates the SVG from URL parameters in ~10ms' },
                                 { step: '03', title: 'GitHub displays', desc: 'GitHub shows the rendered SVG — visitors see your styled README component' },
                             ].map(s => (
@@ -205,7 +205,7 @@ export default function DocsPage() {
                             Every component follows the same URL pattern:
                         </p>
                         <div className="p-5 rounded-lg bg-[#0a0a14] border border-[rgba(240,190,50,0.2)] font-mono text-[14px] my-4 overflow-x-auto">
-                            <span className="text-[#f0c030]">https://metal-forage.vercel.app</span>
+                            <span className="text-[#f0c030]">https://readmeforge.natrajx.in</span>
                             <span className="text-[#7880a0]">/api/</span>
                             <span className="text-[#4a9eff]">{'{component}'}</span>
                             <span className="text-[#7880a0]">?</span>
@@ -214,11 +214,11 @@ export default function DocsPage() {
                             <span className="text-[#39ff14]">param2=value2</span>
                         </div>
                         <Code>{`<!-- Component examples -->
-https://metal-forage.vercel.app/api/banner?text=Hello&metal=chrome
-https://metal-forage.vercel.app/api/badge?label=Version&value=3.0&metal=gold
-https://metal-forage.vercel.app/api/button?label=Deploy&style=metallic&metal=neon-green
-https://metal-forage.vercel.app/api/card?title=Stars&value=1.2k&metal=silver
-https://metal-forage.vercel.app/api/skill-tree?skills=Python:90,JS:85&metal=neon-blue`}</Code>
+https://readmeforge.natrajx.in/api/banner?text=Hello&metal=chrome
+https://readmeforge.natrajx.in/api/badge?label=Version&value=3.0&metal=gold
+https://readmeforge.natrajx.in/api/button?label=Deploy&style=metallic&metal=neon-green
+https://readmeforge.natrajx.in/api/card?title=Stars&value=1.2k&metal=silver
+https://readmeforge.natrajx.in/api/skill-tree?skills=Python:90,JS:85&metal=neon-blue`}</Code>
                         <Callout type="warning">
                             Use <code>+</code> or <code>%20</code> for spaces in text values.
                             Special characters should be URL-encoded.
@@ -257,13 +257,13 @@ https://metal-forage.vercel.app/api/skill-tree?skills=Python:90,JS:85&metal=neon
                             Pass comma-separated hex values. The <code className="text-[#4a9eff]">angle=</code> param controls the gradient direction.
                         </p>
                         <Code>{`<!-- Two-color gradient, 45° angle -->
-![Banner](https://metal-forage.vercel.app/api/banner?text=Custom&colors=%23ff0080,%230080ff&angle=45)
+![Banner](https://readmeforge.natrajx.in/api/banner?text=Custom&colors=%23ff0080,%230080ff&angle=45)
 
 <!-- Three-color gradient -->
-![Badge](https://metal-forage.vercel.app/api/badge?label=Status&value=Active&colors=%23ff6b35,%23f0c030,%2339ff14)
+![Badge](https://readmeforge.natrajx.in/api/badge?label=Status&value=Active&colors=%23ff6b35,%23f0c030,%2339ff14)
 
 <!-- Named colors also work -->
-![Card](https://metal-forage.vercel.app/api/card?title=Score&value=100&colors=gold,silver)`}</Code>
+![Card](https://readmeforge.natrajx.in/api/card?title=Score&value=100&colors=gold,silver)`}</Code>
                         <Callout type="info">
                             When <code>colors</code> is provided it overrides the <code>metal</code> param for color — but metal
                             still controls glow effects and text colors.
@@ -317,23 +317,23 @@ https://metal-forage.vercel.app/api/skill-tree?skills=Python:90,JS:85&metal=neon
                                 <h3 className="font-mono text-[14px] font-bold text-[#c8d0f0] mb-2">Center your components</h3>
                                 <Code>{`<div align="center">
 
-![Banner](https://metal-forage.vercel.app/api/banner?text=YOUR+NAME&metal=chrome&width=900)
+![Banner](https://readmeforge.natrajx.in/api/banner?text=YOUR+NAME&metal=chrome&width=900)
 
 </div>`}</Code>
                             </div>
                             <div>
                                 <h3 className="font-mono text-[14px] font-bold text-[#c8d0f0] mb-2">Make buttons clickable</h3>
                                 <Code>{`<!-- Wrap the image in a link: [![label](svg-url)](destination-url) -->
-[![Deploy Now](https://metal-forage.vercel.app/api/button?label=Deploy+Now&metal=neon-green)](https://vercel.com)`}</Code>
+[![Deploy Now](https://readmeforge.natrajx.in/api/button?label=Deploy+Now&metal=neon-green)](https://vercel.com)`}</Code>
                             </div>
                             <div>
                                 <h3 className="font-mono text-[14px] font-bold text-[#c8d0f0] mb-2">Side-by-side components</h3>
                                 <Code>{`<!-- Use an HTML table for multi-column layouts -->
 <table>
 <tr>
-<td><img src="https://metal-forage.vercel.app/api/card?title=Stars&value=1.2k&metal=gold"/></td>
-<td><img src="https://metal-forage.vercel.app/api/card?title=Forks&value=340&metal=chrome"/></td>
-<td><img src="https://metal-forage.vercel.app/api/card?title=PRs&value=89&metal=silver"/></td>
+<td><img src="https://readmeforge.natrajx.in/api/card?title=Stars&value=1.2k&metal=gold"/></td>
+<td><img src="https://readmeforge.natrajx.in/api/card?title=Forks&value=340&metal=chrome"/></td>
+<td><img src="https://readmeforge.natrajx.in/api/card?title=PRs&value=89&metal=silver"/></td>
 </tr>
 </table>`}</Code>
                             </div>
@@ -345,23 +345,23 @@ https://metal-forage.vercel.app/api/skill-tree?skills=Python:90,JS:85&metal=neon
                             {[
                                 {
                                     q: 'Do I need an API key or account?',
-                                    a: 'No. MetalForge is completely free with no authentication required. Just use the URLs directly.',
+                                    a: 'No. ReadmeForge is completely free with no authentication required. Just use the URLs directly.',
                                 },
                                 {
                                     q: 'Why is my image not updating in GitHub?',
                                     a: 'GitHub caches external images aggressively. Add a cache-busting query param like ?v=2 to force a refresh. GitHub\'s CDN cache can take up to 24h to clear.',
                                 },
                                 {
-                                    q: 'Can I use MetalForge images outside GitHub?',
+                                    q: 'Can I use ReadmeForge images outside GitHub?',
                                     a: 'Yes — the SVG URLs work in any HTML <img> tag, Notion, GitLab, Bitbucket, anywhere that renders images.',
                                 },
                                 {
-                                    q: 'Can I self-host MetalForge?',
+                                    q: 'Can I self-host ReadmeForge?',
                                     a: 'Yes, it\'s open source. Clone the repo, run npm install && npm run dev, and deploy to your own Vercel account.',
                                 },
                                 {
-                                    q: 'Who built MetalForge?',
-                                    a: 'MetalForge is a free tool by Natraj-X — an AI & IT engineering agency. Visit natrajx.in to learn about our work.',
+                                    q: 'Who built ReadmeForge?',
+                                    a: 'ReadmeForge is a free tool by Natraj-X — an AI & IT engineering agency. Visit natrajx.in to learn about our work.',
                                 },
                             ].map(({ q, a }) => (
                                 <div key={q} className="p-5 rounded-lg border border-[rgba(120,140,200,0.1)] bg-[rgba(255,255,255,0.01)]">
@@ -382,7 +382,7 @@ https://metal-forage.vercel.app/api/skill-tree?skills=Python:90,JS:85&metal=neon
             {/* Footer */}
             <footer className="border-t border-[rgba(120,140,200,0.1)] py-8 px-8 font-mono text-[12px] text-[#56607a]">
                 <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
-                    <span>© 2026 MetalForge · MIT License</span>
+                    <span>© 2026 ReadmeForge · MIT License</span>
                     <span>Built by <a href="https://www.natrajx.in/" target="_blank" rel="noopener"
                         className="text-[#f0c030] hover:underline">Natraj-X AI Engineering</a></span>
                     <div className="flex gap-4">

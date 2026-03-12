@@ -2,10 +2,10 @@
 import { useEffect } from 'react'
 
 const NAV_LINKS = [
-  { label: 'Docs', href: '/docs' },
-  { label: 'API', href: '/api-reference' },
-  { label: 'Examples', href: '/#showcase' },
-  { label: 'GitHub', href: 'https://github.com/rishabhbhartiya/MetalForage.git', target: '_blank' },
+  { label: 'Docs',     href: '/docs'          },
+  { label: 'API',      href: '/api-reference'  },
+  { label: 'Examples', href: '/#showcase'      },
+  { label: 'GitHub',   href: 'https://github.com/rishabhbhartiya/ReadmeForge.git', target: '_blank' },
 ]
 
 export default function Navbar() {
@@ -46,11 +46,11 @@ export default function Navbar() {
         <span style={{
           background: 'linear-gradient(135deg,#f0f0f0,#909090,#d8d8d8,#c8c8c8)',
           WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-        }}>METAL</span>
+        }}>README</span>
         <span style={{
           background: 'linear-gradient(135deg,#fff0a0,#d4a020,#f5d040,#e8c030)',
           WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-        }}>FORAGE</span>
+        }}>FORGE</span>
       </a>
 
       {/* Nav links */}
@@ -88,7 +88,7 @@ export default function Navbar() {
             <span className="text-[9px] opacity-70">BY</span>
             <span className="font-bold tracking-[2px]">NATRAJ-X</span>
             <svg width="10" height="10" viewBox="0 0 12 12" fill="none" className="opacity-60">
-              <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
           </a>
         </li>
@@ -98,7 +98,7 @@ export default function Navbar() {
       <div className="font-mono text-[11px] tracking-[1px] px-3 py-1.5 rounded-sm
         text-[#1a0800] font-bold select-none"
         style={{ background: 'linear-gradient(135deg,#fff0a0,#d4a020,#f5d040,#9a7010)' }}>
-        V1.0
+        v1.0 BETA
       </div>
     </nav>
   )

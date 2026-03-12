@@ -37,8 +37,8 @@ function renderMarkdown(md: string): string {
     // Links: [text](href)
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener" class="md-link">$1</a>')
     // HTML img tags passthrough
-    .replace(/&lt;img ([^&]*)\/&gt;/g, (_, a) => `<img ${a.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')} class="md-img"/>`)
-    .replace(/&lt;img ([^&]*)&gt;/g, (_, a) => `<img ${a.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')} class="md-img"/>`)
+    .replace(/&lt;img ([^&]*)\/&gt;/g, (_, a) => `<img ${a.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')} class="md-img"/>`)
+    .replace(/&lt;img ([^&]*)&gt;/g,  (_, a) => `<img ${a.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')} class="md-img"/>`)
     // div align center
     .replace(/&lt;div align="center"&gt;/g, '<div class="md-center">')
     .replace(/&lt;\/div&gt;/g, '</div>')
@@ -56,12 +56,12 @@ function renderMarkdown(md: string): string {
 type ViewMode = 'edit' | 'split' | 'preview'
 
 export default function ReadmeAssembler({ items, onClear, onRemove }: Props) {
-  const [username, setUsername] = useState('yourusername')
-  const [name, setName] = useState('Your Name')
-  const [copied, setCopied] = useState(false)
+  const [username, setUsername]     = useState('yourusername')
+  const [name, setName]             = useState('Your Name')
+  const [copied, setCopied]         = useState(false)
   const [downloaded, setDownloaded] = useState(false)
-  const [mode, setMode] = useState<ViewMode>('split')
-  const [content, setContent] = useState('')
+  const [mode, setMode]             = useState<ViewMode>('split')
+  const [content, setContent]       = useState('')
   const [manuallyEdited, setManuallyEdited] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -80,7 +80,7 @@ ${items.join('\n\n')}
 
 ---
 
-*Generated with [Metal Forage](https://metal-forage.vercel.app) — Free GitHub README Generator by [Natraj-X](https://www.natrajx.in/)*
+*Generated with [ReadmeForge](https://readmeforge.natrajx.in) — Free GitHub README Generator by [Natraj-X](https://www.natrajx.in/)*
 `
 
   // Sync when items/name changes, unless user has manually edited
@@ -101,15 +101,15 @@ ${items.join('\n\n')}
   }
 
   async function handleCopy() {
-    await navigator.clipboard.writeText(content).catch(() => { })
+    await navigator.clipboard.writeText(content).catch(() => {})
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
 
   function handleDownload() {
     const blob = new Blob([content], { type: 'text/markdown' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
+    const url  = URL.createObjectURL(blob)
+    const a    = document.createElement('a')
     a.href = url; a.download = 'README.md'; a.click()
     URL.revokeObjectURL(url)
     setDownloaded(true)
@@ -131,7 +131,7 @@ ${items.join('\n\n')}
 
   return (
     <div className="mt-16">
-      <div className="h-px bg-[linear-gradient(90deg,transparent,rgba(120,140,200,0.2),transparent)] mb-16" />
+      <div className="h-px bg-[linear-gradient(90deg,transparent,rgba(120,140,200,0.2),transparent)] mb-16"/>
 
       {/* Header */}
       <div className="mb-5 flex items-start justify-between flex-wrap gap-4">
@@ -182,12 +182,12 @@ ${items.join('\n\n')}
           <div className="mb-3">
             <label className="block font-mono text-[10px] tracking-[2px] text-[#7880a0] uppercase mb-1.5">Name</label>
             <input className="metal-input text-[13px]" value={name}
-              onChange={e => { setName(e.target.value); setManuallyEdited(false) }} />
+              onChange={e => { setName(e.target.value); setManuallyEdited(false) }}/>
           </div>
           <div className="mb-5">
             <label className="block font-mono text-[10px] tracking-[2px] text-[#7880a0] uppercase mb-1.5">GitHub Username</label>
             <input className="metal-input text-[13px]" value={username}
-              onChange={e => setUsername(e.target.value)} />
+              onChange={e => setUsername(e.target.value)}/>
           </div>
 
           <p className="font-mono text-[10px] tracking-[2px] text-[#7880a0] uppercase mb-2">
@@ -196,7 +196,7 @@ ${items.join('\n\n')}
           <div className="space-y-1.5 min-h-[60px] max-h-[300px] overflow-y-auto">
             {items.length === 0 ? (
               <p className="font-mono text-[11px] text-[#56607a] italic leading-[1.7]">
-                // Use "+ Add to README"<br />
+                // Use "+ Add to README"<br/>
                 // buttons above ↑
               </p>
             ) : (
@@ -224,7 +224,7 @@ ${items.join('\n\n')}
           {manuallyEdited && (
             <div className="mt-4 p-3 rounded border border-[rgba(240,190,50,0.2)] bg-[rgba(240,190,50,0.04)]">
               <p className="font-mono text-[10px] text-[#f0c030] leading-[1.6]">
-                ✎ Manually edited.<br />
+                ✎ Manually edited.<br/>
                 Click ↺ Reset to rebuild from components.
               </p>
             </div>
@@ -238,7 +238,7 @@ ${items.join('\n\n')}
           <div className="flex items-center justify-between px-4 py-2
             bg-[#0c0c18] border border-[rgba(120,140,200,0.15)] rounded-t-lg">
             <div className="flex items-center gap-1">
-              {(['edit', 'split', 'preview'] as ViewMode[]).map(m => (
+              {(['edit','split','preview'] as ViewMode[]).map(m => (
                 <button key={m} onClick={() => setMode(m)}
                   className={`px-3 py-1 rounded font-mono text-[11px] tracking-[1px] uppercase
                     cursor-pointer transition-all
@@ -325,7 +325,7 @@ ${items.join('\n\n')}
                     .md-li{margin:3px 0;font-size:14px;list-style:disc;color:#24292f}
                     strong{font-weight:700} em{font-style:italic}
                   `}</style>
-                  <div dangerouslySetInnerHTML={{ __html: renderMarkdown(content) }} />
+                  <div dangerouslySetInnerHTML={{ __html: renderMarkdown(content) }}/>
                 </div>
               </div>
             )}

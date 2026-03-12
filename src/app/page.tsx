@@ -13,25 +13,25 @@ import {
   ThemePicker, SelectField, TextField,
 } from '@/components/ui'
 
-const BASE_URL = 'https://metal-forage.vercel.app'
+const BASE_URL = 'https://readmeforge.natrajx.in'
 
 const TABS = [
-  { id: 'banner', icon: '⬛', label: 'Banners' },
-  { id: 'header', icon: '⊞', label: 'Headers' },
-  { id: 'footer', icon: '⊟', label: 'Footers' },
-  { id: 'card', icon: '◈', label: 'Cards' },
-  { id: 'neo', icon: '◑', label: 'Neumorphic' },
-  { id: 'glass', icon: '◻', label: 'Glass' },
-  { id: 'button', icon: '⬟', label: 'Buttons' },
-  { id: 'badge', icon: '◆', label: 'Badges' },
-  { id: 'text', icon: 'Ａ', label: 'Text FX' },
-  { id: 'progress', icon: '▰', label: 'Progress' },
-  { id: 'terminal', icon: '⌨', label: 'Terminal' },
-  { id: 'logo', icon: '⬡', label: 'Logos' },
-  { id: 'image', icon: '▣', label: 'Frames' },
-  { id: 'social', icon: '◈', label: 'Social' },
-  { id: 'divider', icon: '─', label: 'Dividers' },
-  { id: 'showcase', icon: '✦', label: 'Showcase' },
+  { id:'banner',   icon:'⬛', label:'Banners'    },
+  { id:'header',   icon:'⊞',  label:'Headers'    },
+  { id:'footer',   icon:'⊟',  label:'Footers'    },
+  { id:'card',     icon:'◈',  label:'Cards'      },
+  { id:'neo',      icon:'◑',  label:'Neumorphic' },
+  { id:'glass',    icon:'◻',  label:'Glass'      },
+  { id:'button',   icon:'⬟',  label:'Buttons'    },
+  { id:'badge',    icon:'◆',  label:'Badges'     },
+  { id:'text',     icon:'Ａ', label:'Text FX'    },
+  { id:'progress', icon:'▰',  label:'Progress'   },
+  { id:'terminal', icon:'⌨',  label:'Terminal'   },
+  { id:'logo',     icon:'⬡',  label:'Logos'      },
+  { id:'image',    icon:'▣',  label:'Frames'     },
+  { id:'social',   icon:'◈',  label:'Social'     },
+  { id:'divider',  icon:'─',  label:'Dividers'   },
+  { id:'showcase', icon:'✦',  label:'Showcase'   },
 ] as const
 
 type TabId = typeof TABS[number]['id']
@@ -55,15 +55,15 @@ function GithubImageNote() {
 
 // ─── Header Builder ───────────────────────────────────────────────────────────
 function HeaderBuilder({ onAdd }: { onAdd: (c: string) => void }) {
-  const [name, setName] = useState('John Doe')
-  const [title, setTitle] = useState('Full-Stack Developer')
+  const [name, setName]       = useState('John Doe')
+  const [title, setTitle]     = useState('Full-Stack Developer')
   const [tagline, setTagline] = useState('Building things that matter ✦')
-  const [metal, setMetal] = useState('chrome')
-  const [colors, setColors] = useState('')
-  const [angle, setAngle] = useState(135)
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
-  const [style, setStyle] = useState('profile')
-  const [height, setHeight] = useState(280)
+  const [metal, setMetal]     = useState('chrome')
+  const [colors, setColors]   = useState('')
+  const [angle, setAngle]     = useState(135)
+  const [theme, setTheme]     = useState<'dark'|'light'>('dark')
+  const [style, setStyle]     = useState('profile')
+  const [height, setHeight]   = useState(280)
 
   function buildParams(base = false) {
     const p = new URLSearchParams({ name, title, tagline, metal, style, height: String(height), theme })
@@ -75,30 +75,30 @@ function HeaderBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
   return (
     <div>
-      <SectionHeader tag="// component_type: profile_header" title="PROFILE HEADER GENERATOR" />
+      <SectionHeader tag="// component_type: profile_header" title="PROFILE HEADER GENERATOR"/>
       <BuilderGrid
         controls={<>
-          <TextField label="Your Name" value={name} onChange={setName} />
-          <TextField label="Title / Role" value={title} onChange={setTitle} />
-          <TextField label="Tagline" value={tagline} onChange={setTagline} />
+          <TextField label="Your Name"    value={name}    onChange={setName}/>
+          <TextField label="Title / Role" value={title}   onChange={setTitle}/>
+          <TextField label="Tagline"      value={tagline} onChange={setTagline}/>
           <FieldLabel>Theme</FieldLabel>
-          <ThemePicker value={theme} onChange={setTheme} />
+          <ThemePicker value={theme} onChange={setTheme}/>
           <div className="mb-5">
             <FieldLabel>Metal Finish</FieldLabel>
-            <MetalPicker value={metal} onChange={setMetal} compact />
+            <MetalPicker value={metal} onChange={setMetal} compact/>
           </div>
-          <GradientInput value={colors} onChange={setColors} />
-          {colors && <AngleField value={angle} onChange={setAngle} />}
+          <GradientInput value={colors} onChange={setColors}/>
+          {colors && <AngleField value={angle} onChange={setAngle}/>}
           <SelectField label="Style" value={style} onChange={setStyle}
-            options={['profile', 'minimal', 'cyber', 'terminal', 'hologram']} />
-          <RangeField label="Height" id="hh" min={120} max={400} value={height} onChange={setHeight} />
-          <AddButton onClick={() => onAdd(md)} />
+            options={['profile','minimal','cyber','terminal','hologram']}/>
+          <RangeField label="Height" id="hh" min={120} max={400} value={height} onChange={setHeight}/>
+          <AddButton onClick={() => onAdd(md)}/>
         </>}
         preview={<>
           <PreviewBox minHeight={height}>
-            <img src={buildParams()} alt="Header preview" className="max-w-full" />
+            <img src={buildParams()} alt="Header preview" className="max-w-full"/>
           </PreviewBox>
-          <CodeBlock code={md} />
+          <CodeBlock code={md}/>
         </>}
       />
     </div>
@@ -107,16 +107,16 @@ function HeaderBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
 // ─── Footer Builder ───────────────────────────────────────────────────────────
 function FooterBuilderUI({ onAdd }: { onAdd: (c: string) => void }) {
-  const [text, setText] = useState('Thanks for visiting!')
-  const [subtext, setSubtext] = useState('Made with ♦ and MetalForage')
-  const [links, setLinks] = useState('Twitter,GitHub,LinkedIn')
-  const [metal, setMetal] = useState('chrome')
-  const [colors, setColors] = useState('')
-  const [angle, setAngle] = useState(135)
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
-  const [style, setStyle] = useState('wave')
-  const [height, setHeight] = useState(180)
-  const [bg, setBg] = useState('')
+  const [text, setText]       = useState('Thanks for visiting!')
+  const [subtext, setSubtext] = useState('Made with ♦ and ReadmeForge')
+  const [links, setLinks]     = useState('Twitter,GitHub,LinkedIn')
+  const [metal, setMetal]     = useState('chrome')
+  const [colors, setColors]   = useState('')
+  const [angle, setAngle]     = useState(135)
+  const [theme, setTheme]     = useState<'dark'|'light'>('dark')
+  const [style, setStyle]     = useState('wave')
+  const [height, setHeight]   = useState(180)
+  const [bg, setBg]           = useState('')
 
   function buildParams(base = false) {
     const p = new URLSearchParams({ text, subtext, links, metal, style, height: String(height), theme })
@@ -129,38 +129,38 @@ function FooterBuilderUI({ onAdd }: { onAdd: (c: string) => void }) {
 
   return (
     <div>
-      <SectionHeader tag="// component_type: profile_footer" title="PROFILE FOOTER GENERATOR" />
+      <SectionHeader tag="// component_type: profile_footer" title="PROFILE FOOTER GENERATOR"/>
       <BuilderGrid
         controls={<>
-          <TextField label="Main Text" value={text} onChange={setText} />
-          <TextField label="Subtext" value={subtext} onChange={setSubtext} />
+          <TextField label="Main Text" value={text}    onChange={setText}/>
+          <TextField label="Subtext"   value={subtext} onChange={setSubtext}/>
           <div className="mb-5">
             <FieldLabel>Links <span className="normal-case opacity-60">(comma-separated)</span></FieldLabel>
             <input className="metal-input" value={links} onChange={e => setLinks(e.target.value)}
-              placeholder="Twitter,GitHub,LinkedIn" />
+              placeholder="Twitter,GitHub,LinkedIn"/>
           </div>
           <FieldLabel>Theme</FieldLabel>
-          <ThemePicker value={theme} onChange={setTheme} />
+          <ThemePicker value={theme} onChange={setTheme}/>
           <div className="mb-5">
             <FieldLabel>Metal</FieldLabel>
-            <MetalPicker value={metal} onChange={setMetal} compact />
+            <MetalPicker value={metal} onChange={setMetal} compact/>
           </div>
-          <GradientInput value={colors} onChange={setColors} />
-          {colors && <AngleField value={angle} onChange={setAngle} />}
+          <GradientInput value={colors} onChange={setColors}/>
+          {colors && <AngleField value={angle} onChange={setAngle}/>}
           <SelectField label="Style" value={style} onChange={setStyle}
-            options={['wave', 'minimal', 'cyber', 'credits']} />
+            options={['wave','minimal','cyber','credits']}/>
           <div className="mb-5">
             <FieldLabel>Background Override <span className="normal-case opacity-60">(optional)</span></FieldLabel>
-            <input className="metal-input" value={bg} onChange={e => setBg(e.target.value)} placeholder="#0a0a18" />
+            <input className="metal-input" value={bg} onChange={e => setBg(e.target.value)} placeholder="#0a0a18"/>
           </div>
-          <RangeField label="Height" id="fh" min={80} max={300} value={height} onChange={setHeight} />
-          <AddButton onClick={() => onAdd(md)} />
+          <RangeField label="Height" id="fh" min={80} max={300} value={height} onChange={setHeight}/>
+          <AddButton onClick={() => onAdd(md)}/>
         </>}
         preview={<>
           <PreviewBox minHeight={height}>
-            <img src={buildParams()} alt="Footer preview" className="max-w-full" />
+            <img src={buildParams()} alt="Footer preview" className="max-w-full"/>
           </PreviewBox>
-          <CodeBlock code={md} />
+          <CodeBlock code={md}/>
         </>}
       />
     </div>
@@ -169,18 +169,18 @@ function FooterBuilderUI({ onAdd }: { onAdd: (c: string) => void }) {
 
 // ─── Neumorphic Card Builder ──────────────────────────────────────────────────
 function NeoCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
-  const [title, setTitle] = useState('Commits')
-  const [value, setValue] = useState('3,291')
-  const [subtitle, setSub] = useState('This year')
-  const [icon, setIcon] = useState('◉')
+  const [title, setTitle]     = useState('Commits')
+  const [value, setValue]     = useState('3,291')
+  const [subtitle, setSub]    = useState('This year')
+  const [icon, setIcon]       = useState('◉')
   // v3: neoTheme param (not theme)
   const [neoTheme, setNeoTheme] = useState('dark')
   const [neoStyle, setNeoStyle] = useState('raised')
-  const [metal, setMetal] = useState('chrome')
-  const [colors, setColors] = useState('')
-  const [angle, setAngle] = useState(135)
-  const [width, setWidth] = useState(200)
-  const [height, setHeight] = useState(160)
+  const [metal, setMetal]     = useState('chrome')
+  const [colors, setColors]   = useState('')
+  const [angle, setAngle]     = useState(135)
+  const [width, setWidth]     = useState(200)
+  const [height, setHeight]   = useState(160)
 
   function buildParams(base = false) {
     const p = new URLSearchParams({
@@ -198,43 +198,43 @@ function NeoCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
   return (
     <div>
-      <SectionHeader tag="// component_type: neumorphic_card" title="NEUMORPHIC CARD" />
+      <SectionHeader tag="// component_type: neumorphic_card" title="NEUMORPHIC CARD"/>
       <BuilderGrid
         controls={<>
           <div className="grid grid-cols-3 gap-3 mb-5">
-            <div className="col-span-2"><TextField label="Title" value={title} onChange={setTitle} /></div>
+            <div className="col-span-2"><TextField label="Title" value={title} onChange={setTitle}/></div>
             <div>
               <FieldLabel>Icon</FieldLabel>
-              <input className="metal-input text-center" value={icon} onChange={e => setIcon(e.target.value)} />
+              <input className="metal-input text-center" value={icon} onChange={e => setIcon(e.target.value)}/>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-5">
-            <TextField label="Value" value={value} onChange={setValue} />
-            <TextField label="Subtitle" value={subtitle} onChange={setSub} />
+            <TextField label="Value"    value={value}   onChange={setValue}/>
+            <TextField label="Subtitle" value={subtitle} onChange={setSub}/>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-5">
             <SelectField label="Neo Theme" value={neoTheme} onChange={setNeoTheme}
-              options={['dark', 'light', 'warm', 'cool', 'neon-dark']} />
+              options={['dark','light','warm','cool','neon-dark']}/>
             <SelectField label="Style" value={neoStyle} onChange={setNeoStyle}
-              options={['raised', 'pressed', 'floating', 'inset']} />
+              options={['raised','pressed','floating','inset']}/>
           </div>
           <div className="mb-5">
             <FieldLabel>Metal Accent</FieldLabel>
-            <MetalPicker value={metal} onChange={setMetal} compact />
+            <MetalPicker value={metal} onChange={setMetal} compact/>
           </div>
-          <GradientInput value={colors} onChange={setColors} />
-          {colors && <AngleField value={angle} onChange={setAngle} />}
+          <GradientInput value={colors} onChange={setColors}/>
+          {colors && <AngleField value={angle} onChange={setAngle}/>}
           <div className="grid grid-cols-2 gap-4">
-            <RangeField label="Width" id="ncw" min={120} max={400} value={width} onChange={setWidth} />
-            <RangeField label="Height" id="nch" min={80} max={300} value={height} onChange={setHeight} />
+            <RangeField label="Width"  id="ncw" min={120} max={400} value={width}  onChange={setWidth}/>
+            <RangeField label="Height" id="nch" min={80}  max={300} value={height} onChange={setHeight}/>
           </div>
-          <AddButton onClick={() => onAdd(md)} />
+          <AddButton onClick={() => onAdd(md)}/>
         </>}
         preview={<>
           <PreviewBox minHeight={height + 40}>
-            <img src={buildParams()} alt="Neo card preview" />
+            <img src={buildParams()} alt="Neo card preview"/>
           </PreviewBox>
-          <CodeBlock code={md} />
+          <CodeBlock code={md}/>
         </>}
       />
     </div>
@@ -243,17 +243,17 @@ function NeoCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
 // ─── Glass Card Builder ───────────────────────────────────────────────────────
 function GlassCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
-  const [title, setTitle] = useState('Repositories')
-  const [value, setValue] = useState('42')
-  const [subtitle, setSub] = useState('Public repos')
-  const [icon, setIcon] = useState('◈')
+  const [title, setTitle]       = useState('Repositories')
+  const [value, setValue]       = useState('42')
+  const [subtitle, setSub]      = useState('Public repos')
+  const [icon, setIcon]         = useState('◈')
   // v3: glassTheme param (not theme)
   const [glassTheme, setGlassTheme] = useState('dark')
-  const [metal, setMetal] = useState('electric')
-  const [colors, setColors] = useState('')
-  const [angle, setAngle] = useState(135)
-  const [width, setWidth] = useState(220)
-  const [height, setHeight] = useState(170)
+  const [metal, setMetal]       = useState('electric')
+  const [colors, setColors]     = useState('')
+  const [angle, setAngle]       = useState(135)
+  const [width, setWidth]       = useState(220)
+  const [height, setHeight]     = useState(170)
 
   function buildParams(base = false) {
     const p = new URLSearchParams({
@@ -270,39 +270,39 @@ function GlassCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
   return (
     <div>
-      <SectionHeader tag="// component_type: glass_card" title="GLASSMORPHIC CARD" />
+      <SectionHeader tag="// component_type: glass_card" title="GLASSMORPHIC CARD"/>
       <BuilderGrid
         controls={<>
           <div className="grid grid-cols-3 gap-3 mb-5">
-            <div className="col-span-2"><TextField label="Title" value={title} onChange={setTitle} /></div>
+            <div className="col-span-2"><TextField label="Title" value={title} onChange={setTitle}/></div>
             <div>
               <FieldLabel>Icon</FieldLabel>
-              <input className="metal-input text-center" value={icon} onChange={e => setIcon(e.target.value)} />
+              <input className="metal-input text-center" value={icon} onChange={e => setIcon(e.target.value)}/>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-5">
-            <TextField label="Value" value={value} onChange={setValue} />
-            <TextField label="Subtitle" value={subtitle} onChange={setSub} />
+            <TextField label="Value"    value={value}    onChange={setValue}/>
+            <TextField label="Subtitle" value={subtitle} onChange={setSub}/>
           </div>
           <SelectField label="Glass Theme" value={glassTheme} onChange={setGlassTheme}
-            options={['dark', 'light', 'aurora', 'sunset', 'ocean', 'midnight']} />
+            options={['dark','light','aurora','sunset','ocean','midnight']}/>
           <div className="mb-5">
             <FieldLabel>Metal Accent</FieldLabel>
-            <MetalPicker value={metal} onChange={setMetal} compact />
+            <MetalPicker value={metal} onChange={setMetal} compact/>
           </div>
-          <GradientInput value={colors} onChange={setColors} />
-          {colors && <AngleField value={angle} onChange={setAngle} />}
+          <GradientInput value={colors} onChange={setColors}/>
+          {colors && <AngleField value={angle} onChange={setAngle}/>}
           <div className="grid grid-cols-2 gap-4">
-            <RangeField label="Width" id="gcw" min={120} max={400} value={width} onChange={setWidth} />
-            <RangeField label="Height" id="gch" min={80} max={300} value={height} onChange={setHeight} />
+            <RangeField label="Width"  id="gcw" min={120} max={400} value={width}  onChange={setWidth}/>
+            <RangeField label="Height" id="gch" min={80}  max={300} value={height} onChange={setHeight}/>
           </div>
-          <AddButton onClick={() => onAdd(md)} />
+          <AddButton onClick={() => onAdd(md)}/>
         </>}
         preview={<>
           <PreviewBox minHeight={height + 40}>
-            <img src={buildParams()} alt="Glass card preview" />
+            <img src={buildParams()} alt="Glass card preview"/>
           </PreviewBox>
-          <CodeBlock code={md} />
+          <CodeBlock code={md}/>
         </>}
       />
     </div>
@@ -311,20 +311,20 @@ function GlassCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
 // ─── Text Animation Builder ───────────────────────────────────────────────────
 const TEXT_EFFECTS = [
-  'typewriter', 'glitch', 'wave', 'neon-flicker', 'rainbow', 'shimmer',
-  'matrix', 'bounce', 'rotate', 'explode', 'fade-in', 'slide-in',
-  'morph', 'blur-in', 'scale', 'orbit', 'cascade', 'burn', 'freeze', 'glitter',
+  'typewriter','glitch','wave','neon-flicker','rainbow','shimmer',
+  'matrix','bounce','rotate','explode','fade-in','slide-in',
+  'morph','blur-in','scale','orbit','cascade','burn','freeze','glitter',
 ]
 
 function TextAnimBuilder({ onAdd }: { onAdd: (c: string) => void }) {
-  const [text, setText] = useState('Hello, World!')
+  const [text, setText]     = useState('Hello, World!')
   const [effect, setEffect] = useState('typewriter')
-  const [metal, setMetal] = useState('electric')
+  const [metal, setMetal]   = useState('electric')
   const [colors, setColors] = useState('')
-  const [angle, setAngle] = useState(135)
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
-  const [width, setWidth] = useState(600)
-  const [size, setSize] = useState(32)
+  const [angle, setAngle]   = useState(135)
+  const [theme, setTheme]   = useState<'dark'|'light'>('dark')
+  const [width, setWidth]   = useState(600)
+  const [size, setSize]     = useState(32)
 
   function buildParams(base = false) {
     const p = new URLSearchParams({ text, effect, metal, width: String(width), size: String(size), theme })
@@ -336,28 +336,28 @@ function TextAnimBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
   return (
     <div>
-      <SectionHeader tag="// component_type: text_animation" title="TEXT ANIMATION EFFECTS" />
+      <SectionHeader tag="// component_type: text_animation" title="TEXT ANIMATION EFFECTS"/>
       <BuilderGrid
         controls={<>
-          <TextField label="Text" value={text} onChange={setText} />
-          <SelectField label="Effect" value={effect} onChange={setEffect} options={TEXT_EFFECTS} />
+          <TextField label="Text" value={text} onChange={setText}/>
+          <SelectField label="Effect" value={effect} onChange={setEffect} options={TEXT_EFFECTS}/>
           <FieldLabel>Theme</FieldLabel>
-          <ThemePicker value={theme} onChange={setTheme} />
+          <ThemePicker value={theme} onChange={setTheme}/>
           <div className="mb-5">
             <FieldLabel>Metal / Color</FieldLabel>
-            <MetalPicker value={metal} onChange={setMetal} compact />
+            <MetalPicker value={metal} onChange={setMetal} compact/>
           </div>
-          <GradientInput value={colors} onChange={setColors} />
-          {colors && <AngleField value={angle} onChange={setAngle} />}
-          <RangeField label="Font Size" id="tfs" min={14} max={80} value={size} onChange={setSize} />
-          <RangeField label="Width" id="tw" min={200} max={1000} value={width} onChange={setWidth} />
-          <AddButton onClick={() => onAdd(md)} />
+          <GradientInput value={colors} onChange={setColors}/>
+          {colors && <AngleField value={angle} onChange={setAngle}/>}
+          <RangeField label="Font Size" id="tfs" min={14} max={80} value={size}  onChange={setSize}/>
+          <RangeField label="Width"     id="tw"  min={200} max={1000} value={width} onChange={setWidth}/>
+          <AddButton onClick={() => onAdd(md)}/>
         </>}
         preview={<>
           <PreviewBox minHeight={100}>
-            <img src={buildParams()} alt="Text animation preview" className="max-w-full" />
+            <img src={buildParams()} alt="Text animation preview" className="max-w-full"/>
           </PreviewBox>
-          <CodeBlock code={md} />
+          <CodeBlock code={md}/>
         </>}
       />
     </div>
@@ -366,23 +366,23 @@ function TextAnimBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
 // ─── Progress / Skill Builder ─────────────────────────────────────────────────
 const PRESET_SKILLS = [
-  { label: 'TypeScript', v: 92, m: 'electric' },
-  { label: 'React', v: 88, m: 'neon-blue' },
-  { label: 'Python', v: 80, m: 'neon-green' },
-  { label: 'Rust', v: 65, m: 'copper' },
-  { label: 'Go', v: 70, m: 'titanium' },
-  { label: 'CSS', v: 90, m: 'rose-gold' },
+  { label:'TypeScript', v:92, m:'electric'   },
+  { label:'React',      v:88, m:'neon-blue'  },
+  { label:'Python',     v:80, m:'neon-green' },
+  { label:'Rust',       v:65, m:'copper'     },
+  { label:'Go',         v:70, m:'titanium'   },
+  { label:'CSS',        v:90, m:'rose-gold'  },
 ]
 
 function ProgressBuilder({ onAdd }: { onAdd: (c: string) => void }) {
-  const [label, setLabel] = useState('JavaScript')
-  const [value, setValue] = useState(85)
-  const [metal, setMetal] = useState('gold')
+  const [label, setLabel]   = useState('JavaScript')
+  const [value, setValue]   = useState(85)
+  const [metal, setMetal]   = useState('gold')
   const [colors, setColors] = useState('')
-  const [angle, setAngle] = useState(90)
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
-  const [style, setStyle] = useState('metallic')
-  const [width, setWidth] = useState(450)
+  const [angle, setAngle]   = useState(90)
+  const [theme, setTheme]   = useState<'dark'|'light'>('dark')
+  const [style, setStyle]   = useState('metallic')
+  const [width, setWidth]   = useState(450)
 
   function buildParams(base = false) {
     const p = new URLSearchParams({ label, value: String(value), metal, style, width: String(width), theme })
@@ -400,39 +400,39 @@ function ProgressBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
   return (
     <div>
-      <SectionHeader tag="// component_type: progress_bar" title="SKILL PROGRESS BARS" />
+      <SectionHeader tag="// component_type: progress_bar" title="SKILL PROGRESS BARS"/>
       <BuilderGrid
         controls={<>
-          <TextField label="Skill Label" value={label} onChange={setLabel} />
-          <RangeField label="Proficiency" id="pv" min={0} max={100} value={value} onChange={setValue} unit="%" />
+          <TextField label="Skill Label" value={label} onChange={setLabel}/>
+          <RangeField label="Proficiency" id="pv" min={0} max={100} value={value} onChange={setValue} unit="%"/>
           <FieldLabel>Theme</FieldLabel>
-          <ThemePicker value={theme} onChange={setTheme} />
+          <ThemePicker value={theme} onChange={setTheme}/>
           <div className="mb-5">
             <FieldLabel>Metal</FieldLabel>
-            <MetalPicker value={metal} onChange={setMetal} compact />
+            <MetalPicker value={metal} onChange={setMetal} compact/>
           </div>
-          <GradientInput value={colors} onChange={setColors} />
-          {colors && <AngleField value={angle} onChange={setAngle} />}
+          <GradientInput value={colors} onChange={setColors}/>
+          {colors && <AngleField value={angle} onChange={setAngle}/>}
           <SelectField label="Style" value={style} onChange={setStyle}
-            options={['metallic', 'glow-fill', 'segmented', 'glass', 'circuit', 'neo']} />
-          <RangeField label="Width" id="pw" min={200} max={800} value={width} onChange={setWidth} />
+            options={['metallic','glow-fill','segmented','glass','circuit','neo']}/>
+          <RangeField label="Width" id="pw" min={200} max={800} value={width} onChange={setWidth}/>
           <div className="flex gap-3 mt-4">
             <button className="btn-chrome px-4 py-2 rounded text-sm cursor-pointer"
               onClick={() => onAdd(`![Skill Tree](${skillTreeUrl(true)})`)}>
               ⚡ Add Full Skill Tree
             </button>
-            <AddButton onClick={() => onAdd(md)} />
+            <AddButton onClick={() => onAdd(md)}/>
           </div>
         </>}
         preview={<>
           <PreviewBox minHeight={80}>
-            <img src={buildParams()} alt="Progress bar" />
+            <img src={buildParams()} alt="Progress bar"/>
           </PreviewBox>
-          <CodeBlock code={md} />
+          <CodeBlock code={md}/>
           <div className="mt-4">
             <p className="font-mono text-[11px] text-[#4a9eff] mb-3">// Skill tree preview:</p>
             <PreviewBox minHeight={160}>
-              <img src={skillTreeUrl()} alt="Skill tree" className="max-w-full" />
+              <img src={skillTreeUrl()} alt="Skill tree" className="max-w-full"/>
             </PreviewBox>
           </div>
         </>}
@@ -442,15 +442,15 @@ function ProgressBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 }
 
 // ─── Terminal Builder ─────────────────────────────────────────────────────────
-const TERMINAL_METALS = ['chrome', 'gold', 'neon-green', 'electric', 'titanium', 'obsidian']
+const TERMINAL_METALS = ['chrome','gold','neon-green','electric','titanium','obsidian']
 
 function TerminalBuilder({ onAdd }: { onAdd: (c: string) => void }) {
   const [termTitle, setTermTitle] = useState('profile.sh')
-  const [lines, setLines] = useState('$ whoami|full-stack-developer|$ echo $STACK|TypeScript · React · Node.js|$ cat hobbies.txt|Open Source · Gaming · Coffee ☕')
+  const [lines, setLines]         = useState('$ whoami|full-stack-developer|$ echo $STACK|TypeScript · React · Node.js|$ cat hobbies.txt|Open Source · Gaming · Coffee ☕')
   const [termTheme, setTermTheme] = useState('dark')
-  const [metal, setMetal] = useState('chrome')
-  const [colors, setColors] = useState('')
-  const [width, setWidth] = useState(500)
+  const [metal, setMetal]         = useState('chrome')
+  const [colors, setColors]       = useState('')
+  const [width, setWidth]         = useState(500)
 
   function buildParams(base = false) {
     const p = new URLSearchParams({ title: termTitle, lines, theme: termTheme, metal, width: String(width) })
@@ -461,18 +461,18 @@ function TerminalBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
   return (
     <div>
-      <SectionHeader tag="// component_type: terminal" title="TERMINAL BLOCK" />
+      <SectionHeader tag="// component_type: terminal" title="TERMINAL BLOCK"/>
       <BuilderGrid
         controls={<>
-          <TextField label="Window Title" value={termTitle} onChange={setTermTitle} />
+          <TextField label="Window Title" value={termTitle} onChange={setTermTitle}/>
           <div className="mb-5">
             <FieldLabel>Lines <span className="normal-case opacity-60">(separate with |)</span></FieldLabel>
             <textarea className="metal-input" rows={5} value={lines}
-              onChange={e => setLines(e.target.value)} style={{ resize: 'vertical' }} />
+              onChange={e => setLines(e.target.value)} style={{ resize:'vertical' }}/>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-5">
             <SelectField label="Theme" value={termTheme} onChange={setTermTheme}
-              options={['dark', 'matrix', 'amber', 'blue']} />
+              options={['dark','matrix','amber','blue']}/>
             <div>
               <FieldLabel>Frame Metal</FieldLabel>
               <select className="metal-select" value={metal}
@@ -481,15 +481,15 @@ function TerminalBuilder({ onAdd }: { onAdd: (c: string) => void }) {
               </select>
             </div>
           </div>
-          <GradientInput value={colors} onChange={setColors} />
-          <RangeField label="Width" id="termw" min={250} max={800} value={width} onChange={setWidth} />
-          <AddButton onClick={() => onAdd(md)} />
+          <GradientInput value={colors} onChange={setColors}/>
+          <RangeField label="Width" id="termw" min={250} max={800} value={width} onChange={setWidth}/>
+          <AddButton onClick={() => onAdd(md)}/>
         </>}
         preview={<>
           <PreviewBox>
-            <img src={buildParams()} alt="Terminal preview" className="max-w-full" />
+            <img src={buildParams()} alt="Terminal preview" className="max-w-full"/>
           </PreviewBox>
-          <CodeBlock code={md} />
+          <CodeBlock code={md}/>
         </>}
       />
     </div>
@@ -498,14 +498,14 @@ function TerminalBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
 // ─── Logo Builder ─────────────────────────────────────────────────────────────
 function LogoBuilder({ onAdd }: { onAdd: (c: string) => void }) {
-  const [text, setLogoText] = useState('MF')
-  const [metal, setMetal] = useState('gold')
-  const [colors, setColors] = useState('')
-  const [angle, setAngle] = useState(135)
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
-  const [shape, setShape] = useState('hexagon')
-  const [size, setSize] = useState(120)
-  const [glow, setGlow] = useState(true)
+  const [text, setLogoText]   = useState('MF')
+  const [metal, setMetal]     = useState('gold')
+  const [colors, setColors]   = useState('')
+  const [angle, setAngle]     = useState(135)
+  const [theme, setTheme]     = useState<'dark'|'light'>('dark')
+  const [shape, setShape]     = useState('hexagon')
+  const [size, setSize]       = useState(120)
+  const [glow, setGlow]       = useState(true)
 
   function buildParams(base = false, overrideShape?: string, overrideSize?: number) {
     const p = new URLSearchParams({
@@ -523,45 +523,45 @@ function LogoBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
   return (
     <div>
-      <SectionHeader tag="// component_type: logo_container" title="LOGO CONTAINER" />
+      <SectionHeader tag="// component_type: logo_container" title="LOGO CONTAINER"/>
       <BuilderGrid
         controls={<>
           <div className="mb-5">
             <FieldLabel>Initials / Symbol</FieldLabel>
-            <input className="metal-input" value={text} onChange={e => setLogoText(e.target.value)} maxLength={4} />
+            <input className="metal-input" value={text} onChange={e => setLogoText(e.target.value)} maxLength={4}/>
           </div>
           <FieldLabel>Theme</FieldLabel>
-          <ThemePicker value={theme} onChange={setTheme} />
+          <ThemePicker value={theme} onChange={setTheme}/>
           <div className="mb-5">
             <FieldLabel>Metal Finish</FieldLabel>
-            <MetalPicker value={metal} onChange={setMetal} compact />
+            <MetalPicker value={metal} onChange={setMetal} compact/>
           </div>
-          <GradientInput value={colors} onChange={setColors} />
-          {colors && <AngleField value={angle} onChange={setAngle} />}
+          <GradientInput value={colors} onChange={setColors}/>
+          {colors && <AngleField value={angle} onChange={setAngle}/>}
           <SelectField label="Shape" value={shape} onChange={setShape}
-            options={['hexagon', 'shield', 'circle', 'diamond', 'star', 'rounded-square']} />
-          <RangeField label="Size" id="ls" min={40} max={300} value={size} onChange={setSize} />
+            options={['hexagon','shield','circle','diamond','star','rounded-square']}/>
+          <RangeField label="Size" id="ls" min={40} max={300} value={size} onChange={setSize}/>
           <label className="flex items-center gap-3 cursor-pointer mb-5">
             <input type="checkbox" checked={glow} onChange={e => setGlow(e.target.checked)}
-              className="accent-[#4a9eff] w-4 h-4" />
+              className="accent-[#4a9eff] w-4 h-4"/>
             <span className="font-mono text-[12px] text-[#7880a0]">Enable glow</span>
           </label>
-          <AddButton onClick={() => onAdd(md)} />
+          <AddButton onClick={() => onAdd(md)}/>
         </>}
         preview={<>
           <PreviewBox minHeight={size + 40}>
-            <img src={buildParams()} alt="Logo preview" />
+            <img src={buildParams()} alt="Logo preview"/>
           </PreviewBox>
-          <CodeBlock code={md} />
+          <CodeBlock code={md}/>
           <div className="mt-4">
             <p className="font-mono text-[11px] text-[#4a9eff] mb-3">// All shapes preview:</p>
             <div className="flex flex-wrap gap-3">
-              {['hexagon', 'shield', 'circle', 'diamond', 'star', 'rounded-square'].map(s => (
+              {['hexagon','shield','circle','diamond','star','rounded-square'].map(s => (
                 <img key={s}
                   src={buildParams(false, s, 70)}
                   alt={s}
                   className="cursor-pointer hover:opacity-80 transition-opacity"
-                  onClick={() => setShape(s)} />
+                  onClick={() => setShape(s)}/>
               ))}
             </div>
           </div>
@@ -575,20 +575,20 @@ function LogoBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 // Both image and GIF use CSS overlay: SVG frame (no src) + real <img> on top.
 // README output: plain <img> tag — GitHub strips SVG <image> elements anyway.
 function FrameBuilder({ onAdd }: { onAdd: (c: string) => void }) {
-  const [frameType, setFrameType] = useState<'image' | 'gif'>('image')
-  const [src, setSrc] = useState('')
-  const [caption, setCaption] = useState('Project Screenshot')
-  const [frame, setFrame] = useState('metallic')
-  const [metal, setMetal] = useState('chrome')
-  const [colors, setColors] = useState('')
-  const [angle, setAngle] = useState(135)
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
-  const [width, setWidth] = useState(300)
-  const [height, setHeight] = useState(220)
+  const [frameType, setFrameType] = useState<'image'|'gif'>('image')
+  const [src, setSrc]             = useState('')
+  const [caption, setCaption]     = useState('Project Screenshot')
+  const [frame, setFrame]         = useState('metallic')
+  const [metal, setMetal]         = useState('chrome')
+  const [colors, setColors]       = useState('')
+  const [angle, setAngle]         = useState(135)
+  const [theme, setTheme]         = useState<'dark'|'light'>('dark')
+  const [width, setWidth]         = useState(300)
+  const [height, setHeight]       = useState(220)
 
   const PAD = 12 // matches pad in containers.ts
-  const imageFrames = ['metallic', 'glass', 'polaroid', 'circuit', 'neon-sign', 'hologram']
-  const gifFrames = ['neon', 'metallic', 'glass', 'minimal']
+  const imageFrames = ['metallic','glass','polaroid','circuit','neon-sign','hologram']
+  const gifFrames   = ['neon','metallic','glass','minimal']
 
   // SVG frame border shell only (no src — just the decorative border)
   function frameUrl(base = false) {
@@ -606,13 +606,13 @@ function FrameBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
   return (
     <div>
-      <SectionHeader tag="// component_type: image_frame" title="IMAGE / GIF FRAME" />
-      <GithubImageNote />
+      <SectionHeader tag="// component_type: image_frame" title="IMAGE / GIF FRAME"/>
+      <GithubImageNote/>
       <div className="mt-6">
         <BuilderGrid
           controls={<>
             <div className="flex gap-3 mb-5">
-              {(['image', 'gif'] as const).map(t => (
+              {(['image','gif'] as const).map(t => (
                 <button key={t} onClick={() => { setFrameType(t); setFrame(t === 'gif' ? 'neon' : 'metallic') }}
                   className={`px-4 py-2 rounded text-sm font-mono tracking-widest uppercase cursor-pointer border transition-all
                     ${frameType === t ? 'btn-chrome border-transparent' : 'btn-ghost'}`}>
@@ -623,32 +623,32 @@ function FrameBuilder({ onAdd }: { onAdd: (c: string) => void }) {
             <div className="mb-5">
               <FieldLabel>{frameType === 'gif' ? 'GIF URL' : 'Image URL'}</FieldLabel>
               <input className="metal-input" value={src} onChange={e => setSrc(e.target.value)}
-                placeholder="https://..." />
+                placeholder="https://..."/>
             </div>
             {frameType === 'image' && (
-              <TextField label="Caption" value={caption} onChange={setCaption} />
+              <TextField label="Caption" value={caption} onChange={setCaption}/>
             )}
             <FieldLabel>Theme</FieldLabel>
-            <ThemePicker value={theme} onChange={setTheme} />
+            <ThemePicker value={theme} onChange={setTheme}/>
             <SelectField label="Frame Style" value={frame} onChange={setFrame}
-              options={frameType === 'image' ? imageFrames : gifFrames} />
+              options={frameType === 'image' ? imageFrames : gifFrames}/>
             <div className="mb-5">
               <FieldLabel>Metal</FieldLabel>
-              <MetalPicker value={metal} onChange={setMetal} compact />
+              <MetalPicker value={metal} onChange={setMetal} compact/>
             </div>
-            <GradientInput value={colors} onChange={setColors} />
-            {colors && <AngleField value={angle} onChange={setAngle} />}
+            <GradientInput value={colors} onChange={setColors}/>
+            {colors && <AngleField value={angle} onChange={setAngle}/>}
             <div className="grid grid-cols-2 gap-4">
-              <RangeField label="Width" id="fw" min={100} max={600} value={width} onChange={setWidth} />
-              <RangeField label="Height" id="fh2" min={80} max={500} value={height} onChange={setHeight} />
+              <RangeField label="Width"  id="fw"  min={100} max={600} value={width}  onChange={setWidth}/>
+              <RangeField label="Height" id="fh2" min={80}  max={500} value={height} onChange={setHeight}/>
             </div>
-            <AddButton onClick={() => onAdd(md)} />
+            <AddButton onClick={() => onAdd(md)}/>
           </>}
           preview={<>
             <PreviewBox minHeight={height + 40}>
               {/* SVG frame border + real image on top via absolute positioning */}
               <div className="relative inline-block">
-                <img src={frameUrl()} alt="frame" className="block" />
+                <img src={frameUrl()} alt="frame" className="block"/>
                 {src && (
                   <img
                     src={src}
@@ -672,7 +672,7 @@ function FrameBuilder({ onAdd }: { onAdd: (c: string) => void }) {
                 <span className="text-[#7880a0]"> Uses a plain <code>&lt;img&gt;</code> tag so the GIF animates correctly.</span>
               </div>
             )}
-            <CodeBlock code={md} />
+            <CodeBlock code={md}/>
           </>}
         />
       </div>
@@ -682,13 +682,13 @@ function FrameBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
 // ─── Social Links Builder ─────────────────────────────────────────────────────
 function SocialBuilder({ onAdd }: { onAdd: (c: string) => void }) {
-  const [links, setLinks] = useState('github:@yourusername,twitter:@yourusername,linkedin:yourname,email:you@email.com')
-  const [metal, setMetal] = useState('chrome')
+  const [links, setLinks]   = useState('github:@yourusername,twitter:@yourusername,linkedin:yourname,email:you@email.com')
+  const [metal, setMetal]   = useState('chrome')
   const [colors, setColors] = useState('')
-  const [angle, setAngle] = useState(135)
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
-  const [style, setStyle] = useState('pills')
-  const [width, setWidth] = useState(600)
+  const [angle, setAngle]   = useState(135)
+  const [theme, setTheme]   = useState<'dark'|'light'>('dark')
+  const [style, setStyle]   = useState('pills')
+  const [width, setWidth]   = useState(600)
 
   function buildParams(base = false) {
     const p = new URLSearchParams({ links, metal, style, width: String(width), theme })
@@ -700,35 +700,35 @@ function SocialBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
   return (
     <div>
-      <SectionHeader tag="// component_type: social_links" title="SOCIAL LINKS ROW" />
+      <SectionHeader tag="// component_type: social_links" title="SOCIAL LINKS ROW"/>
       <BuilderGrid
         controls={<>
           <div className="mb-5">
             <FieldLabel>Links <span className="normal-case opacity-60">(platform:username, comma-separated)</span></FieldLabel>
             <textarea className="metal-input" rows={4} value={links}
-              onChange={e => setLinks(e.target.value)} />
+              onChange={e => setLinks(e.target.value)}/>
             <p className="font-mono text-[10px] text-[#7880a0] mt-1">
               Platforms: github · twitter · linkedin · discord · youtube · instagram · email · npm · medium
             </p>
           </div>
           <FieldLabel>Theme</FieldLabel>
-          <ThemePicker value={theme} onChange={setTheme} />
+          <ThemePicker value={theme} onChange={setTheme}/>
           <div className="mb-5">
             <FieldLabel>Metal</FieldLabel>
-            <MetalPicker value={metal} onChange={setMetal} compact />
+            <MetalPicker value={metal} onChange={setMetal} compact/>
           </div>
-          <GradientInput value={colors} onChange={setColors} />
-          {colors && <AngleField value={angle} onChange={setAngle} />}
+          <GradientInput value={colors} onChange={setColors}/>
+          {colors && <AngleField value={angle} onChange={setAngle}/>}
           <SelectField label="Style" value={style} onChange={setStyle}
-            options={['pills', 'icons', 'minimal']} />
-          <RangeField label="Width" id="slw" min={200} max={1000} value={width} onChange={setWidth} />
-          <AddButton onClick={() => onAdd(md)} />
+            options={['pills','icons','minimal']}/>
+          <RangeField label="Width" id="slw" min={200} max={1000} value={width} onChange={setWidth}/>
+          <AddButton onClick={() => onAdd(md)}/>
         </>}
         preview={<>
           <PreviewBox minHeight={80}>
-            <img src={buildParams()} alt="Social links" className="max-w-full" />
+            <img src={buildParams()} alt="Social links" className="max-w-full"/>
           </PreviewBox>
-          <CodeBlock code={md} />
+          <CodeBlock code={md}/>
         </>}
       />
     </div>
@@ -737,7 +737,7 @@ function SocialBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function Home() {
-  const [tab, setTab] = useState<TabId>('banner')
+  const [tab, setTab]           = useState<TabId>('banner')
 
   // Read ?tab= query param OR #showcase hash on load — switch tab accordingly
   useEffect(() => {
@@ -781,7 +781,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen grid-bg">
-      <Navbar />
+      <Navbar/>
 
       {/* HERO */}
       <section className="relative py-16 px-6 text-center overflow-hidden">
@@ -795,22 +795,22 @@ export default function Home() {
             border border-[rgba(240,190,50,0.3)] bg-[rgba(240,190,50,0.06)]
             font-mono text-[11px] tracking-[1.5px] uppercase text-[#f0c030]
             hover:bg-[rgba(240,190,50,0.12)] transition-all duration-200 cursor-pointer">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#f0c030] shadow-[0_0_6px_#f0c030]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#f0c030] shadow-[0_0_6px_#f0c030]"/>
           A free tool by Natraj-X AI Engineering
           <svg width="9" height="9" viewBox="0 0 12 12" fill="none">
-            <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
           </svg>
         </a>
 
         <p className="font-mono text-[11px] tracking-[3px] text-[#4a9eff] mb-3 opacity-75">
-          // MetalForage V1.0 — 44 METALS · 16 COMPONENT TYPES · EDGE RUNTIME
+          // readmeforge v3.0 — 44 METALS · 16 COMPONENT TYPES · EDGE RUNTIME
         </p>
         <h1 className="font-orbitron text-[clamp(24px,5vw,64px)] font-black tracking-[4px] leading-tight mb-4"
           style={{
-            background: 'linear-gradient(135deg,#e8e8e8 0%,#a0a8c0 35%,#ffffff 55%,#8090b0 100%)',
-            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+            background:'linear-gradient(135deg,#e8e8e8 0%,#a0a8c0 35%,#ffffff 55%,#8090b0 100%)',
+            WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text',
           }}>
-          README FORAGE
+          README FORGE
         </h1>
         <p className="text-[16px] text-[#7880a0] max-w-[760px] mx-auto mb-2 leading-relaxed">
           Free GitHub README generator — metallic SVG banners, badges, stat cards,
@@ -822,18 +822,18 @@ export default function Home() {
         </p>
         <div className="flex gap-3 justify-center flex-wrap">
           <button onClick={() => setTab('showcase')} className="btn-chrome px-6 py-2.5 rounded-md text-sm cursor-pointer">✦ Full Showcase</button>
-          <button onClick={() => setTab('header')} className="btn-gold px-6 py-2.5 rounded-md text-sm cursor-pointer">⊞ Build Profile</button>
+          <button onClick={() => setTab('header')}   className="btn-gold px-6 py-2.5 rounded-md text-sm cursor-pointer">⊞ Build Profile</button>
         </div>
         <div className="flex gap-6 justify-center mt-10 flex-wrap">
           {[
-            ['44', 'Metal Finishes'],
-            ['16', 'Component Types'],
-            ['28', 'Design Styles'],
+            ['44',  'Metal Finishes'],
+            ['16',  'Component Types'],
+            ['28',  'Design Styles'],
             ['20+', 'Text Effects'],
           ].map(([n, l]) => (
             <div key={l} className="text-center">
               <div className="font-orbitron text-2xl font-black"
-                style={{ background: 'var(--gold)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                style={{ background:'var(--gold)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent' }}>
                 {n}
               </div>
               <div className="font-mono text-[10px] text-[#7880a0] tracking-widest mt-1">{l}</div>
@@ -843,7 +843,7 @@ export default function Home() {
       </section>
 
       {/* Scroll targets for navbar */}
-      <div id="api" className="absolute" style={{ marginTop: '-80px', pointerEvents: 'none' }} />
+      <div id="api" className="absolute" style={{marginTop:'-80px', pointerEvents:'none'}}/>
 
       <main id="docs" className="max-w-[1320px] mx-auto px-6 pb-24">
         {/* TAB BAR */}
@@ -860,22 +860,22 @@ export default function Home() {
           ))}
         </div>
 
-        {tab === 'banner' && <BannerBuilder onAdd={addToReadme} />}
-        {tab === 'header' && <HeaderBuilder onAdd={addToReadme} />}
-        {tab === 'footer' && <FooterBuilderUI onAdd={addToReadme} />}
-        {tab === 'card' && <CardBuilder onAdd={addToReadme} />}
-        {tab === 'neo' && <NeoCardBuilder onAdd={addToReadme} />}
-        {tab === 'glass' && <GlassCardBuilder onAdd={addToReadme} />}
-        {tab === 'button' && <ButtonBuilder onAdd={addToReadme} />}
-        {tab === 'badge' && <BadgeBuilder onAdd={addToReadme} />}
-        {tab === 'text' && <TextAnimBuilder onAdd={addToReadme} />}
-        {tab === 'progress' && <ProgressBuilder onAdd={addToReadme} />}
-        {tab === 'terminal' && <TerminalBuilder onAdd={addToReadme} />}
-        {tab === 'logo' && <LogoBuilder onAdd={addToReadme} />}
-        {tab === 'image' && <FrameBuilder onAdd={addToReadme} />}
-        {tab === 'social' && <SocialBuilder onAdd={addToReadme} />}
-        {tab === 'divider' && <DividerBuilder onAdd={addToReadme} />}
-        {tab === 'showcase' && <ShowcaseGrid onAdd={addToReadme} />}
+        {tab === 'banner'   && <BannerBuilder    onAdd={addToReadme}/>}
+        {tab === 'header'   && <HeaderBuilder    onAdd={addToReadme}/>}
+        {tab === 'footer'   && <FooterBuilderUI  onAdd={addToReadme}/>}
+        {tab === 'card'     && <CardBuilder      onAdd={addToReadme}/>}
+        {tab === 'neo'      && <NeoCardBuilder   onAdd={addToReadme}/>}
+        {tab === 'glass'    && <GlassCardBuilder onAdd={addToReadme}/>}
+        {tab === 'button'   && <ButtonBuilder    onAdd={addToReadme}/>}
+        {tab === 'badge'    && <BadgeBuilder     onAdd={addToReadme}/>}
+        {tab === 'text'     && <TextAnimBuilder  onAdd={addToReadme}/>}
+        {tab === 'progress' && <ProgressBuilder  onAdd={addToReadme}/>}
+        {tab === 'terminal' && <TerminalBuilder  onAdd={addToReadme}/>}
+        {tab === 'logo'     && <LogoBuilder      onAdd={addToReadme}/>}
+        {tab === 'image'    && <FrameBuilder     onAdd={addToReadme}/>}
+        {tab === 'social'   && <SocialBuilder    onAdd={addToReadme}/>}
+        {tab === 'divider'  && <DividerBuilder   onAdd={addToReadme}/>}
+        {tab === 'showcase' && <ShowcaseGrid     onAdd={addToReadme}/>}
 
         <ReadmeAssembler
           items={assembled}
@@ -884,7 +884,7 @@ export default function Home() {
         />
       </main>
 
-      <Footer />
+      <Footer/>
     </div>
   )
 }

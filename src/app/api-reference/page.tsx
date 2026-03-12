@@ -10,7 +10,7 @@ function NavBar() {
             <div className="absolute bottom-0 left-0 right-0 h-px
         bg-[linear-gradient(90deg,transparent,rgba(74,158,255,0.5),rgba(240,190,50,0.4),transparent)]"/>
             <Link href="/" className="font-orbitron text-[20px] font-black tracking-[3px] no-underline">
-                <span style={{ background: 'linear-gradient(135deg,#f0f0f0,#909090,#d8d8d8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>METAL</span>
+                <span style={{ background: 'linear-gradient(135deg,#f0f0f0,#909090,#d8d8d8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>README</span>
                 <span style={{ background: 'linear-gradient(135deg,#fff0a0,#d4a020,#f5d040)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>FORGE</span>
             </Link>
             <div className="hidden md:flex items-center gap-1">
@@ -30,7 +30,7 @@ function NavBar() {
                 </a>
             </div>
             <div className="font-mono text-[11px] px-3 py-1.5 rounded-sm text-[#1a0800] font-bold"
-                style={{ background: 'linear-gradient(135deg,#fff0a0,#d4a020,#f5d040)' }}>v3.0 BETA</div>
+                style={{ background: 'linear-gradient(135deg,#fff0a0,#d4a020,#f5d040)' }}>v1.0 BETA</div>
         </nav>
     )
 }
@@ -153,12 +153,12 @@ export default function ApiReferencePage() {
                         API Reference
                     </h1>
                     <p className="text-[15px] text-[#7880a0] max-w-[520px] leading-relaxed mb-4">
-                        All MetalForge endpoints. Every route accepts <code>GET</code> requests and returns
+                        All ReadmeForge endpoints. Every route accepts <code>GET</code> requests and returns
                         an <code>image/svg+xml</code> response — usable directly as a markdown image URL.
                     </p>
                     <div className="flex gap-3 flex-wrap font-mono text-[12px]">
                         <span className="px-3 py-1.5 rounded border border-[rgba(57,255,20,0.25)] text-[#39ff14] bg-[rgba(57,255,20,0.05)]">
-                            Base URL: metal-forage.vercel.app
+                            Base URL: readmeforge.natrajx.in
                         </span>
                         <span className="px-3 py-1.5 rounded border border-[rgba(74,158,255,0.25)] text-[#4a9eff] bg-[rgba(74,158,255,0.05)]">
                             Runtime: Vercel Edge
@@ -207,7 +207,7 @@ export default function ApiReferencePage() {
                             style={{ background: 'linear-gradient(135deg,#e0e4f8,#8090c0)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                             Request Format
                         </h2>
-                        <Code>{`GET https://metal-forage.vercel.app/api/{component}?param=value&param=value
+                        <Code>{`GET https://readmeforge.natrajx.in/api/{component}?param=value&param=value
 
 Response Headers:
   Content-Type: image/svg+xml; charset=utf-8
@@ -215,7 +215,7 @@ Response Headers:
   Access-Control-Allow-Origin: *
 
 Usage in GitHub README:
-  ![Alt text](https://metal-forage.vercel.app/api/banner?text=Hello&metal=gold)`}</Code>
+  ![Alt text](https://readmeforge.natrajx.in/api/banner?text=Hello&metal=gold)`}</Code>
 
                         <div className="mt-6">
                             <h3 className="font-mono text-[13px] font-bold text-[#c8d0f0] mb-3 tracking-[1px]">Common Parameters</h3>
@@ -231,7 +231,7 @@ Usage in GitHub README:
                         path="/api/banner"
                         desc="Full-width SVG banner with main heading, optional subtitle, and 28 design styles. Supports 20 SMIL text animation effects."
                         params={[
-                            { name: 'text', type: 'string', default: 'METALFORGE', desc: 'Main heading text' },
+                            { name: 'text', type: 'string', default: 'READMEFORGE', desc: 'Main heading text' },
                             { name: 'sub', type: 'string', default: '—', desc: 'Subtitle / tagline below the heading' },
                             { name: 'style', type: 'string', default: 'default', desc: '28 design styles: cyber-grid, neon-sign, hologram, retro-wave, glassmorphic, etc.' },
                             { name: 'anim', type: 'string', default: '—', desc: 'Text animation effect (see /api/text-anim for full list)' },
@@ -240,7 +240,7 @@ Usage in GitHub README:
                             { name: 'width', type: 'number', default: '800', desc: 'Width in px (100–1200)' },
                             { name: 'height', type: 'number', default: '160', desc: 'Height in px (60–400)' },
                         ]}
-                        example={`![Banner](https://metal-forage.vercel.app/api/banner?text=MY+PROJECT&sub=Built+with+AI&metal=neon-green&style=cyber-grid&width=900&height=180)`}
+                        example={`![Banner](https://readmeforge.natrajx.in/api/banner?text=MY+PROJECT&sub=Built+with+AI&metal=neon-green&style=cyber-grid&width=900&height=180)`}
                     />
 
                     <Endpoint
@@ -255,7 +255,7 @@ Usage in GitHub README:
                             { name: 'width', type: 'number', default: '320', desc: 'Width in px' },
                             { name: 'height', type: 'number', default: '160', desc: 'Height in px' },
                         ]}
-                        example={`![Stars](https://metal-forage.vercel.app/api/card?title=GitHub+Stars&value=1.2k&metal=gold&style=hologram)`}
+                        example={`![Stars](https://readmeforge.natrajx.in/api/card?title=GitHub+Stars&value=1.2k&metal=gold&style=hologram)`}
                     />
 
                     <Endpoint
@@ -268,7 +268,7 @@ Usage in GitHub README:
                             { name: 'neoTheme', type: 'dark | light', default: 'dark', desc: 'Neumorphic background theme' },
                             { name: 'neoStyle', type: 'string', default: 'raised', desc: 'raised | inset | flat' },
                         ]}
-                        example={`![Neo Card](https://metal-forage.vercel.app/api/card-neo?title=Projects&value=12&metal=chrome&neoTheme=dark)`}
+                        example={`![Neo Card](https://readmeforge.natrajx.in/api/card-neo?title=Projects&value=12&metal=chrome&neoTheme=dark)`}
                     />
 
                     <Endpoint
@@ -280,7 +280,7 @@ Usage in GitHub README:
                             { name: 'value', type: 'string', default: '—', desc: 'Card value' },
                             { name: 'glassTheme', type: 'dark | light', default: 'dark', desc: 'Glass background theme' },
                         ]}
-                        example={`![Glass Card](https://metal-forage.vercel.app/api/card-glass?title=Rating&value=5.0&metal=holographic&glassTheme=dark)`}
+                        example={`![Glass Card](https://readmeforge.natrajx.in/api/card-glass?title=Rating&value=5.0&metal=holographic&glassTheme=dark)`}
                     />
 
                     <Endpoint
@@ -295,7 +295,7 @@ Usage in GitHub README:
                             { name: 'height', type: 'number', default: '48', desc: 'Height in px' },
                         ]}
                         example={`<!-- Clickable button (link wraps the image) -->
-[![Deploy](https://metal-forage.vercel.app/api/button?label=Deploy+Now&metal=neon-green&style=metallic)](https://vercel.com)`}
+[![Deploy](https://readmeforge.natrajx.in/api/button?label=Deploy+Now&metal=neon-green&style=metallic)](https://vercel.com)`}
                     />
 
                     <Endpoint
@@ -308,8 +308,8 @@ Usage in GitHub README:
                             { name: 'shape', type: 'string', default: 'pill', desc: 'pill | sharp | hex | rounded | flat' },
                             { name: 'valueColor', type: 'string', default: '—', desc: 'Override the value text color (hex)' },
                         ]}
-                        example={`![Version](https://metal-forage.vercel.app/api/badge?label=Version&value=3.0.0&metal=gold&shape=pill)
-![Status](https://metal-forage.vercel.app/api/badge?label=Status&value=Active&metal=neon-green&shape=sharp)`}
+                        example={`![Version](https://readmeforge.natrajx.in/api/badge?label=Version&value=3.0.0&metal=gold&shape=pill)
+![Status](https://readmeforge.natrajx.in/api/badge?label=Status&value=Active&metal=neon-green&shape=sharp)`}
                     />
 
                     <Endpoint
@@ -324,7 +324,7 @@ Usage in GitHub README:
                             { name: 'width', type: 'number', default: '800', desc: 'Width in px' },
                             { name: 'height', type: 'number', default: '200', desc: 'Height in px' },
                         ]}
-                        example={`![Header](https://metal-forage.vercel.app/api/header?name=John+Doe&title=Full+Stack+Developer&metal=chrome&style=cyber-grid&width=900)`}
+                        example={`![Header](https://readmeforge.natrajx.in/api/header?name=John+Doe&title=Full+Stack+Developer&metal=chrome&style=cyber-grid&width=900)`}
                     />
 
                     <Endpoint
@@ -337,7 +337,7 @@ Usage in GitHub README:
                             { name: 'width', type: 'number', default: '800', desc: 'Width in px' },
                             { name: 'height', type: 'number', default: '60', desc: 'Height in px' },
                         ]}
-                        example={`![Footer](https://metal-forage.vercel.app/api/footer?text=Thanks+for+visiting&metal=chrome&style=wave&width=900)`}
+                        example={`![Footer](https://readmeforge.natrajx.in/api/footer?text=Thanks+for+visiting&metal=chrome&style=wave&width=900)`}
                     />
 
                     <Endpoint
@@ -349,8 +349,8 @@ Usage in GitHub README:
                             { name: 'width', type: 'number', default: '800', desc: 'Width in px' },
                             { name: 'height', type: 'number', default: '40', desc: 'Height in px' },
                         ]}
-                        example={`![Divider](https://metal-forage.vercel.app/api/divider?style=wave&metal=gold&width=900)
-![Divider](https://metal-forage.vercel.app/api/divider?style=zigzag&metal=neon-blue&width=900)`}
+                        example={`![Divider](https://readmeforge.natrajx.in/api/divider?style=wave&metal=gold&width=900)
+![Divider](https://readmeforge.natrajx.in/api/divider?style=zigzag&metal=neon-blue&width=900)`}
                     />
 
                     <Endpoint
@@ -364,8 +364,8 @@ Usage in GitHub README:
                             { name: 'width', type: 'number', default: '600', desc: 'Width in px' },
                             { name: 'height', type: 'number', default: '80', desc: 'Height in px' },
                         ]}
-                        example={`![Typing](https://metal-forage.vercel.app/api/text-anim?text=Hello+World&effect=typewriter&metal=neon-green&size=36)
-![Glitch](https://metal-forage.vercel.app/api/text-anim?text=SYSTEM+ERROR&effect=glitch&metal=neon-pink&size=40)`}
+                        example={`![Typing](https://readmeforge.natrajx.in/api/text-anim?text=Hello+World&effect=typewriter&metal=neon-green&size=36)
+![Glitch](https://readmeforge.natrajx.in/api/text-anim?text=SYSTEM+ERROR&effect=glitch&metal=neon-pink&size=40)`}
                     />
 
                     <Endpoint
@@ -378,7 +378,7 @@ Usage in GitHub README:
                             { name: 'width', type: 'number', default: '400', desc: 'Width in px' },
                             { name: 'height', type: 'number', default: '40', desc: 'Height in px' },
                         ]}
-                        example={`![Python](https://metal-forage.vercel.app/api/progress-bar?skill=Python&value=90&metal=neon-blue&width=400)`}
+                        example={`![Python](https://readmeforge.natrajx.in/api/progress-bar?skill=Python&value=90&metal=neon-blue&width=400)`}
                     />
 
                     <Endpoint
@@ -390,7 +390,7 @@ Usage in GitHub README:
                             { name: 'title', type: 'string', default: 'Tech Stack', desc: 'Section title above the bars' },
                             { name: 'width', type: 'number', default: '500', desc: 'Width in px' },
                         ]}
-                        example={`![Skills](https://metal-forage.vercel.app/api/skill-tree?skills=Python:90,TypeScript:85,Next.js:80,AWS:70&metal=neon-blue&title=Tech+Stack&width=500)`}
+                        example={`![Skills](https://readmeforge.natrajx.in/api/skill-tree?skills=Python:90,TypeScript:85,Next.js:80,AWS:70&metal=neon-blue&title=Tech+Stack&width=500)`}
                     />
 
                     <Endpoint
@@ -402,7 +402,7 @@ Usage in GitHub README:
                             { name: 'title', type: 'string', default: 'terminal', desc: 'Title bar text' },
                             { name: 'width', type: 'number', default: '500', desc: 'Width in px' },
                         ]}
-                        example={`![Terminal](https://metal-forage.vercel.app/api/terminal?title=~/me&lines=whoami:+fullstack+dev|focus:+AI+%26+web|status:+building+cool+stuff&metal=matrix&width=500)`}
+                        example={`![Terminal](https://readmeforge.natrajx.in/api/terminal?title=~/me&lines=whoami:+fullstack+dev|focus:+AI+%26+web|status:+building+cool+stuff&metal=matrix&width=500)`}
                     />
 
                     <Endpoint
@@ -414,7 +414,7 @@ Usage in GitHub README:
                             { name: 'style', type: 'string', default: 'pills', desc: 'pills | icons | minimal' },
                             { name: 'width', type: 'number', default: '600', desc: 'Width in px' },
                         ]}
-                        example={`![Social](https://metal-forage.vercel.app/api/social-links?links=github:@yourname,twitter:@yourname,linkedin:yourname&metal=chrome&style=pills&width=600)`}
+                        example={`![Social](https://readmeforge.natrajx.in/api/social-links?links=github:@yourname,twitter:@yourname,linkedin:yourname&metal=chrome&style=pills&width=600)`}
                     />
 
                     <Endpoint
@@ -429,7 +429,7 @@ Usage in GitHub README:
                             { name: 'spin', type: 'boolean', default: 'false', desc: 'Slow rotation animation' },
                             { name: 'glow', type: 'boolean', default: 'true', desc: 'Glow filter effect' },
                         ]}
-                        example={`![Logo](https://metal-forage.vercel.app/api/logo-container?text=NX&metal=gold&style=hexagon&size=120&glow=true)`}
+                        example={`![Logo](https://readmeforge.natrajx.in/api/logo-container?text=NX&metal=gold&style=hexagon&size=120&glow=true)`}
                     />
 
                     <Endpoint
@@ -444,7 +444,7 @@ Usage in GitHub README:
                             { name: 'width', type: 'number', default: '300', desc: 'Width in px' },
                             { name: 'height', type: 'number', default: '220', desc: 'Height in px' },
                         ]}
-                        example={`![Screenshot](https://metal-forage.vercel.app/api/image-container?src=https://your-image.com/shot.png&metal=chrome&frame=metallic&caption=My+Project&width=400)`}
+                        example={`![Screenshot](https://readmeforge.natrajx.in/api/image-container?src=https://your-image.com/shot.png&metal=chrome&frame=metallic&caption=My+Project&width=400)`}
                     />
 
                     {/* Response format */}
@@ -492,7 +492,7 @@ HTTP 400
 
             <footer className="border-t border-[rgba(120,140,200,0.1)] py-8 px-8 font-mono text-[12px] text-[#56607a]">
                 <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
-                    <span>© 2026 MetalForge · MIT License</span>
+                    <span>© 2026 ReadmeForge · MIT License</span>
                     <span>Built by <a href="https://www.natrajx.in/" target="_blank" rel="noopener"
                         className="text-[#f0c030] hover:underline">Natraj-X AI Engineering</a></span>
                     <div className="flex gap-4">
