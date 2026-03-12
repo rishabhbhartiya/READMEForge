@@ -2,35 +2,35 @@ const COLS = [
   {
     title: 'Components',
     links: [
-      { label: 'Banners',         href: '/?tab=banner'   },
-      { label: 'Stat Cards',      href: '/?tab=card'     },
-      { label: 'Buttons',         href: '/?tab=button'   },
-      { label: 'Badges',          href: '/?tab=badge'    },
-      { label: 'Text Animations', href: '/?tab=text'     },
-      { label: 'Progress Bars',   href: '/?tab=progress' },
+      { label: 'Banners', href: '/?tab=banner' },
+      { label: 'Stat Cards', href: '/?tab=card' },
+      { label: 'Buttons', href: '/?tab=button' },
+      { label: 'Badges', href: '/?tab=badge' },
+      { label: 'Text Animations', href: '/?tab=text' },
+      { label: 'Progress Bars', href: '/?tab=progress' },
       { label: 'Terminal Blocks', href: '/?tab=terminal' },
-      { label: 'Dividers',        href: '/?tab=divider'  },
+      { label: 'Dividers', href: '/?tab=divider' },
     ],
   },
   {
     title: 'Resources',
     links: [
-      { label: 'Documentation', href: '/docs'                                              },
-      { label: 'API Reference',  href: '/api-reference'                                    },
-      { label: 'Examples',       href: '/#showcase'                                        },
-      { label: 'GitHub',         href: 'https://github.com/rishabhbhartiya/ReadmeForge.git', external: true },
+      { label: 'Documentation', href: '/docs' },
+      { label: 'API Reference', href: '/api-reference' },
+      { label: 'Examples', href: '/#showcase' },
+      { label: 'GitHub', href: 'https://github.com/rishabhbhartiya/ReadmeForge.git', external: true },
     ],
   },
   {
     title: 'Built by Natraj-X',
     natrajx: true,
     links: [
-      { label: 'AI & ML Engineering', href: 'https://www.natrajx.in/aiml',       external: true },
-      { label: 'Web Development',     href: 'https://www.natrajx.in/webdev',     external: true },
-      { label: 'Cloud / Infra',       href: 'https://www.natrajx.in/cloudinfra', external: true },
-      { label: 'Our Work',            href: 'https://www.natrajx.in/work',       external: true },
-      { label: 'Blog',                href: 'https://www.natrajx.in/blog',       external: true },
-      { label: 'Contact Us',          href: 'https://www.natrajx.in/contact',    external: true },
+      { label: 'AI & ML Engineering', href: 'https://www.natrajx.in/aiml', external: true },
+      { label: 'Web Development', href: 'https://www.natrajx.in/webdev', external: true },
+      { label: 'Cloud / Infra', href: 'https://www.natrajx.in/cloudinfra', external: true },
+      { label: 'Our Work', href: 'https://www.natrajx.in/work', external: true },
+      { label: 'Blog', href: 'https://www.natrajx.in/blog', external: true },
+      { label: 'Contact Us', href: 'https://www.natrajx.in/contact', external: true },
     ],
   },
 ]
@@ -98,7 +98,7 @@ export default function Footer() {
               <span style={{
                 background: 'linear-gradient(135deg,#fff0a0,#d4a020,#f5d040)',
                 WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-              }}>FORAGE</span>
+              }}>FORGE</span>
             </div>
             <p className="text-[13px] text-[#7880a0] leading-[1.7] max-w-[240px] mb-5">
               Free GitHub README SVG generator. 44 metal themes, 28 design styles,
@@ -132,9 +132,8 @@ export default function Footer() {
           {/* Link columns */}
           {COLS.map(col => (
             <div key={col.title}>
-              <h4 className={`font-mono text-[11px] tracking-[2px] uppercase mb-4 ${
-                (col as any).natrajx ? 'text-[#f0c030]' : 'text-[#7880a0]'
-              }`}>
+              <h4 className={`font-mono text-[11px] tracking-[2px] uppercase mb-4 ${(col as any).natrajx ? 'text-[#f0c030]' : 'text-[#7880a0]'
+                }`}>
                 {(col as any).natrajx && <span className="mr-1.5">★</span>}
                 {col.title}
               </h4>
@@ -147,9 +146,8 @@ export default function Footer() {
                       rel={l.external ? 'noopener' : undefined}
                       className="flex items-center gap-2 text-[13px] text-[#7880a0]
                         transition-colors duration-150 hover:text-[#e0e4f0] group">
-                      <span className={`opacity-50 group-hover:opacity-100 transition-opacity ${
-                        (col as any).natrajx ? 'text-[#f0c030]' : 'text-[#4a9eff]'
-                      }`}>›</span>
+                      <span className={`opacity-50 group-hover:opacity-100 transition-opacity ${(col as any).natrajx ? 'text-[#f0c030]' : 'text-[#4a9eff]'
+                        }`}>›</span>
                       {l.label}
                     </a>
                   </li>
@@ -196,7 +194,7 @@ export default function Footer() {
               }}>NATRAJ-X</span>
             <svg width="9" height="9" viewBox="0 0 12 12" fill="none"
               className="text-[#f0c030] opacity-50 group-hover:opacity-100 transition-opacity">
-              <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </a>
 
