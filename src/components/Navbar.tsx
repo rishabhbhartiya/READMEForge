@@ -5,7 +5,7 @@ const NAV_LINKS = [
   { label: 'Docs',     href: '/docs'          },
   { label: 'API',      href: '/api-reference'  },
   { label: 'Examples', href: '/#showcase'      },
-  { label: 'GitHub',   href: 'https://github.com/rishabhbhartiya/ReadmeForge.git', target: '_blank' },
+  { label: 'GitHub',   href: 'https://github.com/rishabhbhartiya/READMEForge', target: '_blank' },
 ]
 
 export default function Navbar() {
