@@ -20,12 +20,24 @@ export function CardBuilder({ onAdd }: { onAdd: (code: string) => void }) {
   const [width, setWidth]       = useState(495)
   const [compact, setCompact]   = useState(false)
   const [theme, setTheme]       = useState<'dark' | 'light'>('dark')
+  const [stat1, setStat1] = useState('')
+  const [stat2, setStat2] = useState('')
+  const [stat3, setStat3] = useState('')
+  const [label1, setLabel1] = useState('')
+  const [label2, setLabel2] = useState('')
+  const [label3, setLabel3] = useState('')
 
   function buildParams(base = false) {
     const p = new URLSearchParams({ username, type, metal, border, width: String(width), theme })
     if (compact) p.set('compact', 'true')
-    if (colors)  p.set('colors', colors)
+    if (colors) p.set('colors', colors)
     if (angle !== 135) p.set('angle', String(angle))
+    if (stat1) p.set('stat1', stat1)
+    if (stat2) p.set('stat2', stat2)
+    if (stat3) p.set('stat3', stat3)
+    if (label1) p.set('label1', label1)
+    if (label2) p.set('label2', label2)
+    if (label3) p.set('label3', label3)
     return `${base ? BASE_URL : ''}/api/card?${p}`
   }
 
@@ -36,13 +48,45 @@ export function CardBuilder({ onAdd }: { onAdd: (code: string) => void }) {
       <SectionHeader tag="// component_type: stat_card" title="METALLIC STAT CARDS"/>
       <BuilderGrid
         controls={<>
-          <TextField label="GitHub Username" value={username} onChange={setUsername}/>
+          <TextField label="GitHub Username" value={username} onChange={setUsername} />
 
           <div className="grid grid-cols-2 gap-4">
-            <SelectField label="Card Type"    value={type}   onChange={setType}
-              options={['stats','langs','streak','trophy','activity']}/>
+            <SelectField label="Card Type" value={type} onChange={setType}
+              options={['stats', 'langs', 'streak', 'trophy', 'activity']} />
             <SelectField label="Border Style" value={border} onChange={setBorder}
-              options={['metal','glow','minimal','ridge','none']}/>
+              options={['metal', 'glow', 'minimal', 'ridge', 'none']} />
+          </div>
+
+          {/* Custom stat overrides */}
+          <div className="mb-2">
+            <p className="font-mono text-[10px] text-[#4a9eff] tracking-[1px] mb-3">// CUSTOM STAT OVERRIDES <span className="text-[#7880a0] normal-case">(optional)</span></p>
+            <div className="space-y-2">
+              {([
+                { lv: label1, sv: stat1, sl: setLabel1, ss: setStat1 },
+                { lv: label2, sv: stat2, sl: setLabel2, ss: setStat2 },
+                { lv: label3, sv: stat3, sl: setLabel3, ss: setStat3 },
+              ] as const).map(({ lv, sv, sl, ss }, i) => (
+                <div key={i} className="grid grid-cols-2 gap-2">
+                  <div>
+                    <FieldLabel>Label {i + 1}</FieldLabel>
+                    <input className="metal-input" value={lv}
+                      onChange={e => sl(e.target.value)}
+                      placeholder="e.g. Stars" />
+                  </div>
+                  <div>
+                    <FieldLabel>Value {i + 1}</FieldLabel>
+                    <input className="metal-input" value={sv}
+                      onChange={e => ss(e.target.value)}
+                      placeholder="e.g. 12.4k" />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-2 p-2.5 rounded border border-[rgba(74,158,255,0.15)] bg-[rgba(74,158,255,0.04)]">
+              <p className="font-mono text-[10px] text-[#7880a0] leading-[1.8]">
+                Leave blank to use default values for the selected card type.
+              </p>
+            </div>
           </div>
 
           <FieldLabel>Theme</FieldLabel>

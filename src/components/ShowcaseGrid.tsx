@@ -105,6 +105,17 @@ const SECTIONS = [
       { name:'banner-electric-arch', url:'/api/banner?text=OPEN+SOURCE&subtext=Building+the+future%2C+one+commit+at+a+time&metal=electric&type=arch&height=200&width=860&animation=shimmer', type:'banner' },
     ]
   },
+  {
+    label: '// Tables',
+    items: [
+      { name: 'table-stats-chrome', url: '/api/table?type=stats&metal=chrome&width=600', type: 'table' },
+      { name: 'table-skills-gold', url: '/api/table?type=skills&metal=gold&width=600', type: 'table' },
+      { name: 'table-projects-electric', url: '/api/table?type=projects&metal=electric&width=600', type: 'table' },
+      { name: 'table-timeline-neon', url: '/api/table?type=timeline&metal=neon-blue&width=600', type: 'table' },
+      { name: 'table-comparison-rose', url: '/api/table?type=comparison&metal=rose-gold&width=600', type: 'table' },
+      { name: 'table-custom-neon-green', url: '/api/table?type=stats&metal=neon-green&headers=Tool,Usage,Rating&rows=VSCode,Daily,★★★★★|Neovim,Often,★★★★☆|Cursor,Weekly,★★★☆☆&width=600', type: 'table' },
+    ]
+  },
 ]
 
 const TYPE_COLORS: Record<string, string> = {
@@ -125,6 +136,7 @@ const TYPE_COLORS: Record<string, string> = {
   button:      'text-[#ff6b35] border-[rgba(255,107,53,0.25)] bg-[rgba(255,107,53,0.08)]',
   badge:       'text-[#39ff14] border-[rgba(57,255,20,0.25)] bg-[rgba(57,255,20,0.08)]',
   divider:     'text-[#c0c8e8] border-[rgba(192,200,232,0.2)] bg-[rgba(192,200,232,0.05)]',
+  table: 'text-[#c0c8e8] border-[rgba(192,200,232,0.2)] bg-[rgba(192,200,232,0.05)]',
 }
 
 export default function ShowcaseGrid({ onAdd }: { onAdd: (code: string) => void }) {

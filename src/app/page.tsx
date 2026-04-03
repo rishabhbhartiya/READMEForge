@@ -31,6 +31,7 @@ const TABS = [
   { id: 'image', icon: '▣', label: 'Frames' },
   { id: 'social', icon: '◈', label: 'Social' },
   { id: 'divider', icon: '─', label: 'Dividers' },
+  { id: 'table', icon: '⊞', label: 'Tables' }, 
   { id: 'showcase', icon: '✦', label: 'Showcase' },
 ] as const
 
@@ -735,6 +736,85 @@ function SocialBuilder({ onAdd }: { onAdd: (c: string) => void }) {
   )
 }
 
+// ─── Table Builder ────────────────────────────────────────────────────────────
+function TableBuilder({ onAdd }: { onAdd: (c: string) => void }) {
+  const [type, setType] = useState('stats')
+  const [title, setTitle] = useState('')
+  const [headers, setHeaders] = useState('')
+  const [rows, setRows] = useState('')
+  const [metal, setMetal] = useState('chrome')
+  const [colors, setColors] = useState('')
+  const [angle, setAngle] = useState(135)
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
+  const [width, setWidth] = useState(600)
+
+  function buildParams(base = false) {
+    const p = new URLSearchParams({ type, metal, width: String(width), theme })
+    if (title) p.set('title', title)
+    if (headers) p.set('headers', headers)
+    if (rows) p.set('rows', rows)
+    if (colors) p.set('colors', colors)
+    if (angle !== 135) p.set('angle', String(angle))
+    return `${base ? BASE_URL : ''}/api/table?${p}`
+  }
+  const md = `![Table](${buildParams(true)})`
+
+  return (
+    <div>
+      <SectionHeader tag="// component_type: table" title="TABLE GENERATOR" />
+      <BuilderGrid
+        controls={<>
+          <SelectField label="Table Type" value={type} onChange={setType}
+            options={['stats', 'skills', 'projects', 'timeline', 'comparison']} />
+          <TextField label="Title (optional)" value={title} onChange={setTitle} />
+          <div className="mb-5">
+            <FieldLabel>Headers <span className="normal-case opacity-60">(comma-separated)</span></FieldLabel>
+            <input className="metal-input" value={headers} onChange={e => setHeaders(e.target.value)}
+              placeholder="e.g. Tool, Usage, Rating" />
+          </div>
+          <div className="mb-5">
+            <FieldLabel>Rows <span className="normal-case opacity-60">(cells: comma · rows: pipe |)</span></FieldLabel>
+            <textarea className="metal-input" rows={4} value={rows}
+              onChange={e => setRows(e.target.value)}
+              placeholder={"VSCode,Daily,★★★★★|Neovim,Often,★★★★☆"}
+              style={{ resize: 'vertical' }} />
+            <div className="mt-2 p-2.5 rounded border border-[rgba(74,158,255,0.15)] bg-[rgba(74,158,255,0.04)] space-y-1">
+              <p className="font-mono text-[10px] text-[#4a9eff] tracking-[1px]">// FORMAT RULES</p>
+              <p className="font-mono text-[10px] text-[#7880a0] leading-[1.8]">
+                <span className="text-[#f0c030]">,</span> separates cells within a row
+              </p>
+              <p className="font-mono text-[10px] text-[#7880a0] leading-[1.8]">
+                <span className="text-[#f0c030]">|</span> separates rows
+              </p>
+              <p className="font-mono text-[10px] text-[#56607a] leading-[1.8] pt-0.5 border-t border-[rgba(120,140,200,0.1)]">
+                e.g. <span className="text-[#39ff14]">goog,43,+2%|meta,12,-1%|msft,88,+5%</span>
+              </p>
+            </div>
+          </div>
+
+          <FieldLabel>Theme</FieldLabel>
+          <ThemePicker value={theme} onChange={setTheme} />
+          <div className="mb-5">
+            <FieldLabel>Metal Finish</FieldLabel>
+            <MetalPicker value={metal} onChange={setMetal} compact />
+          </div>
+          <GradientInput value={colors} onChange={setColors} />
+          {colors && <AngleField value={angle} onChange={setAngle} />}
+          <RangeField label="Width" id="tbw" min={300} max={900} value={width} onChange={setWidth} />
+          <AddButton onClick={() => onAdd(md)} />
+        </>}
+        preview={<>
+          <PreviewBox>
+            <img src={buildParams()} alt="Table preview" className="max-w-full" />
+          </PreviewBox>
+          <CodeBlock code={md} />
+        </>}
+      />
+    </div>
+  )
+}
+
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function Home() {
   const [tab, setTab] = useState<TabId>('banner')
@@ -818,7 +898,7 @@ export default function Home() {
         </p>
         <p className="text-[13px] text-[#56607a] max-w-[600px] mx-auto mb-8 leading-relaxed">
           Headers · Footers · Metallic Cards · Neumorphic · Glassmorphic · Text FX ·
-          Progress Bars · Terminals · Logo Containers · Image Frames · Buttons · Badges · Dividers
+          Progress Bars · Terminals · Logo Containers · Image Frames · Buttons · Badges · Dividers · Tables
         </p>
         <div className="flex gap-3 justify-center flex-wrap">
           <button onClick={() => setTab('showcase')} className="btn-chrome px-6 py-2.5 rounded-md text-sm cursor-pointer">✦ Full Showcase</button>
@@ -827,7 +907,7 @@ export default function Home() {
         <div className="flex gap-6 justify-center mt-10 flex-wrap">
           {[
             ['44', 'Metal Finishes'],
-            ['16', 'Component Types'],
+            ['17', 'Component Types'],
             ['28', 'Design Styles'],
             ['20+', 'Text Effects'],
           ].map(([n, l]) => (
@@ -875,6 +955,7 @@ export default function Home() {
         {tab === 'image' && <FrameBuilder onAdd={addToReadme} />}
         {tab === 'social' && <SocialBuilder onAdd={addToReadme} />}
         {tab === 'divider' && <DividerBuilder onAdd={addToReadme} />}
+        {tab === 'table' && <TableBuilder onAdd={addToReadme} />}
         {tab === 'showcase' && <ShowcaseGrid onAdd={addToReadme} />}
 
         <ReadmeAssembler

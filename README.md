@@ -587,3 +587,89 @@ MIT © 2026 [Natraj-X](https://www.natrajx.in/) — free to use, fork, and deplo
 <sub>ReadmeForge · Free GitHub README Generator · Made with ♦ by <a href="https://www.natrajx.in/">Natraj-X AI Engineering</a></sub>
 
 </div>
+.
+├── README.md
+├── next-env.d.ts
+├── next.config.js
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── public
+│   └── googlee8f72494fea21ae2.html
+├── src
+│   ├── app
+│   │   ├── api
+│   │   │   ├── badge
+│   │   │   │   └── route.ts
+│   │   │   ├── banner
+│   │   │   │   └── route.ts
+│   │   │   ├── button
+│   │   │   │   └── route.ts
+│   │   │   ├── card
+│   │   │   │   └── route.ts
+│   │   │   ├── card-glass
+│   │   │   │   └── route.ts
+│   │   │   ├── card-neo
+│   │   │   │   └── route.ts
+│   │   │   ├── divider
+│   │   │   │   └── route.ts
+│   │   │   ├── footer
+│   │   │   │   └── route.ts
+│   │   │   ├── gif-container
+│   │   │   │   └── route.ts
+│   │   │   ├── header
+│   │   │   │   └── route.ts
+│   │   │   ├── image-container
+│   │   │   │   └── route.ts
+│   │   │   ├── logo-container
+│   │   │   │   └── route.ts
+│   │   │   ├── progress-bar
+│   │   │   │   └── route.ts
+│   │   │   ├── proxy
+│   │   │   │   └── route.ts
+│   │   │   ├── skill-tree
+│   │   │   │   └── route.ts
+│   │   │   ├── social-links
+│   │   │   │   └── route.ts
+│   │   │   ├── terminal
+│   │   │   │   └── route.ts
+│   │   │   └── text-anim
+│   │   │       └── route.ts
+│   │   ├── api-reference
+│   │   │   └── page.tsx
+│   │   ├── docs
+│   │   │   └── page.tsx
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── robots.ts
+│   │   └── sitemap.ts
+│   ├── components
+│   │   ├── Footer.tsx
+│   │   ├── Navbar.tsx
+│   │   ├── ReadmeAssembler.tsx
+│   │   ├── ShowcaseGrid.tsx
+│   │   ├── builders
+│   │   │   ├── BannerBuilder.tsx
+│   │   │   └── CardBuilder.tsx
+│   │   └── ui.tsx
+│   └── lib
+│       ├── metals.ts
+│       └── renderers
+│           ├── badge.ts
+│           ├── banner.ts
+│           ├── button.ts
+│           ├── card-glass.ts
+│           ├── card-neo.ts
+│           ├── card.ts
+│           ├── containers.ts
+│           ├── divider.ts
+│           ├── extras.ts
+│           ├── footer.ts
+│           ├── header.ts
+│           └── text-anim.ts
+├── tailwind.config.ts
+├── tsconfig.json
+└── vercel.json
+
+29 directories, 55 files
