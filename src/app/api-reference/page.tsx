@@ -1,3 +1,4 @@
+// src/app/api-reference/page.tsx
 'use client'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -274,13 +275,33 @@ Usage in GitHub README:
                     <Endpoint
                         id="ep-card-glass"
                         path="/api/card-glass"
-                        desc="Glassmorphic card with frosted blur effect, translucent backgrounds, and light border."
+                        desc="Glassmorphic card with frosted blur effect, translucent backgrounds, and a light border. Supports live GitHub stat fetching via ?username= — no token required. Add ?linkUrl= to make the card clickable."
                         params={[
-                            { name: 'title', type: 'string', default: 'Glass Card', desc: 'Card title' },
-                            { name: 'value', type: 'string', default: '—', desc: 'Card value' },
-                            { name: 'glassTheme', type: 'dark | light', default: 'dark', desc: 'Glass background theme' },
+                            { name: 'title', type: 'string', default: 'Glass Card', desc: 'Card title (auto-set when username is provided)' },
+                            { name: 'value', type: 'string', default: '—', desc: 'Card value (auto-fetched from GitHub when username is provided)' },
+                            { name: 'subtitle', type: 'string', default: '—', desc: 'Subtitle below the value (auto-set when username is provided)' },
+                            { name: 'icon', type: 'string', default: '◈', desc: 'Icon symbol (auto-set per stat when username is provided)' },
+                            { name: 'glassTheme', type: 'string', default: 'dark', desc: '12 themes: dark, light, aurora, sunset, ocean, midnight, neon, rose, forest, gold, ice, void' },
+                            { name: 'style', type: 'string', default: 'card', desc: 'card | pill | panel | chip' },
+                            { name: 'blur', type: 'number', default: '8', desc: 'Frosted blur intensity (1–20)' },
+                            { name: 'tint', type: 'string', default: '—', desc: 'Override glass tint color (CSS rgba)' },
+                            { name: 'username', type: 'string', default: '—', desc: 'GitHub username — when set, value is fetched live from the GitHub API' },
+                            { name: 'stat', type: 'string', default: 'repos', desc: 'Which GitHub stat to display: repos | stars | followers | forks' },
+                            { name: 'linkUrl', type: 'string', default: '—', desc: 'URL to open when the card is clicked (opens in new tab). Use URL-encoded value.' },
+                            { name: 'width', type: 'number', default: '220', desc: 'Width in px (120–600)' },
+                            { name: 'height', type: 'number', default: '170', desc: 'Height in px (80–400)' },
                         ]}
-                        example={`![Glass Card](https://readmeforge.natrajx.in/api/card-glass?title=Rating&value=5.0&metal=holographic&glassTheme=dark)`}
+                        example={`# Static card
+![Glass Card](https://readmeforge.natrajx.in/api/card-glass?title=Rating&value=5.0&glassTheme=ice)
+
+# Clickable card — opens your GitHub profile
+![Repos](https://readmeforge.natrajx.in/api/card-glass?username=torvalds&stat=repos&glassTheme=aurora&linkUrl=https%3A%2F%2Fgithub.com%2Ftorvalds)
+
+# Stars card linking to repo
+![Stars](https://readmeforge.natrajx.in/api/card-glass?username=torvalds&stat=stars&glassTheme=gold&linkUrl=https%3A%2F%2Fgithub.com%2Ftorvalds%3Ftab%3Drepositories)
+
+# In README — wrap image in a markdown link for GitHub (SVG onclick blocked by GitHub CSP)
+[![Stars](https://readmeforge.natrajx.in/api/card-glass?username=torvalds&stat=stars&glassTheme=gold)](https://github.com/torvalds)`}
                     />
 
                     <Endpoint

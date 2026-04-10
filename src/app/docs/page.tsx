@@ -1,3 +1,5 @@
+// src/app/docs/page.tsx
+
 'use client'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -276,7 +278,7 @@ https://readmeforge.natrajx.in/api/skill-tree?skills=Python:90,JS:85&metal=neon-
                                 { name: 'Banner', route: '/api/banner', desc: 'Full-width header banner with title, subtitle, and optional text animation', key_params: 'text, sub, style, anim, width, height' },
                                 { name: 'Stat Card', route: '/api/card', desc: 'Compact card showing a title and value — great for GitHub stats', key_params: 'title, value, style, icon' },
                                 { name: 'Neo Card', route: '/api/card-neo', desc: 'Neumorphic style card with soft shadows and depth', key_params: 'title, value, neoTheme, neoStyle' },
-                                { name: 'Glass Card', route: '/api/card-glass', desc: 'Glassmorphic card with frosted blur effect', key_params: 'title, value, glassTheme' },
+                                { name: 'Glass Card', route: '/api/card-glass', desc: 'Glassmorphic card with frosted blur effect. Supports live GitHub stat fetching via ?username=', key_params: 'title, value, glassTheme (12 themes), username, stat (repos|stars|followers|forks)' },
                                 { name: 'Button', route: '/api/button', desc: '16 clickable button styles — wrap in []() for a link', key_params: 'label, style (16 options), icon' },
                                 { name: 'Badge', route: '/api/badge', desc: 'Two-part label/value badge in 5 shapes', key_params: 'label, value, shape, valueColor' },
                                 { name: 'Header', route: '/api/header', desc: 'Full page header with name, title, and avatar area', key_params: 'name, title, avatar, style' },

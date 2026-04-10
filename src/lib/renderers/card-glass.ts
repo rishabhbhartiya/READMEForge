@@ -4,7 +4,10 @@ import {
   buildGradientDef, getThemeColors, Theme, uniqueId, hexToRgba,
 } from '../metals'
 
-export type GlassTheme = 'dark' | 'light' | 'aurora' | 'sunset' | 'ocean' | 'midnight'
+export type GlassTheme =
+  | 'dark' | 'light' | 'aurora' | 'sunset' | 'ocean' | 'midnight'
+  | 'neon' | 'rose' | 'forest' | 'gold' | 'ice' | 'void'
+
 export type GlassStyle = 'card' | 'pill' | 'panel' | 'chip'
 
 export interface GlassCardOptions {
@@ -14,7 +17,6 @@ export interface GlassCardOptions {
   icon?: string
   glassTheme?: GlassTheme
   style?: GlassStyle
-  /** MetalName, CSS color, or comma-separated gradient for accent */
   metal?: string
   colors?: string
   angle?: number
@@ -23,6 +25,7 @@ export interface GlassCardOptions {
   tint?: string
   blur?: number
   theme?: Theme
+  linkUrl?: string
 }
 
 const GLASS_THEMES: Record<GlassTheme, {
@@ -61,6 +64,36 @@ const GLASS_THEMES: Record<GlassTheme, {
     tint: 'rgba(120,80,255,0.08)', border: 'rgba(120,80,255,0.2)',
     text: '#e8e0ff', textDim: '#6050a0', glow: 'rgba(120,80,255,0.4)',
   },
+  neon: {
+    bg1: '#020d0d', bg2: '#041818', bg3: '#062020',
+    tint: 'rgba(0,255,200,0.07)', border: 'rgba(0,255,200,0.25)',
+    text: '#ccffe8', textDim: '#00c896', glow: 'rgba(0,255,180,0.5)',
+  },
+  rose: {
+    bg1: '#12020a', bg2: '#200510', bg3: '#2e0818',
+    tint: 'rgba(255,60,120,0.09)', border: 'rgba(255,100,150,0.28)',
+    text: '#ffe0ec', textDim: '#c06080', glow: 'rgba(255,60,120,0.45)',
+  },
+  forest: {
+    bg1: '#020d04', bg2: '#041808', bg3: '#06220a',
+    tint: 'rgba(40,200,80,0.07)', border: 'rgba(60,200,80,0.22)',
+    text: '#d8ffe0', textDim: '#50a060', glow: 'rgba(40,200,80,0.4)',
+  },
+  gold: {
+    bg1: '#100a00', bg2: '#1a1000', bg3: '#261800',
+    tint: 'rgba(255,200,40,0.08)', border: 'rgba(255,200,40,0.28)',
+    text: '#fff4cc', textDim: '#b09040', glow: 'rgba(255,190,30,0.45)',
+  },
+  ice: {
+    bg1: '#020d18', bg2: '#061828', bg3: '#0a2235',
+    tint: 'rgba(160,220,255,0.1)', border: 'rgba(180,230,255,0.3)',
+    text: '#e8f8ff', textDim: '#70b8d8', glow: 'rgba(120,210,255,0.4)',
+  },
+  void: {
+    bg1: '#000000', bg2: '#060006', bg3: '#0c000c',
+    tint: 'rgba(180,0,255,0.07)', border: 'rgba(180,0,255,0.2)',
+    text: '#f0e0ff', textDim: '#8040b0', glow: 'rgba(160,0,255,0.45)',
+  },
 }
 
 export function renderGlassCard(opts: GlassCardOptions): string {
@@ -86,7 +119,6 @@ export function renderGlassCard(opts: GlassCardOptions): string {
     style === 'pill' ? h / 2 :
       style === 'chip' ? 8 : 16
 
-  // Background gradients
   const bg1Id = `${uid}_bg1`
   const bg2Id = `${uid}_bg2`
   const hiId = `${uid}_hi`
@@ -117,7 +149,6 @@ export function renderGlassCard(opts: GlassCardOptions): string {
     <feComposite in="SourceGraphic" in2="blurred" operator="over"/>
   </filter>`
 
-  // Resolve accent color from metal/colors param
   let accentFill = t.glow.replace(/rgba?\([^)]+\)/, t.textDim)
   let accentDefs = ''
   if (opts.colors) {
@@ -132,23 +163,31 @@ export function renderGlassCard(opts: GlassCardOptions): string {
   const valueFontSize = Math.min(38, h * 0.26)
   const titleFontSize = Math.min(11, h * 0.08)
 
-  return `<svg xmlns="http://www.w3.org/2000/svg"
-  width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"
-  role="img" aria-label="${title}: ${value}">
-  <title>${title}: ${value}</title>
-  <defs>
-    ${gradDefs}
-    ${glassFilter}
-    ${accentDefs}
-  </defs>
+  // ── Link hover indicator (small arrow icon top-right when linkUrl set) ──────
+  const linkIndicator = opts.linkUrl
+    ? `<!-- Link indicator arrow -->
+  <g opacity="0.5">
+    <line x1="${w - 18}" y1="12" x2="${w - 10}" y2="12"
+      stroke="${t.textDim}" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="${w - 10}" y1="12" x2="${w - 10}" y2="20"
+      stroke="${t.textDim}" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="${w - 18}" y1="20" x2="${w - 10}" y2="12"
+      stroke="${t.textDim}" stroke-width="1.2" stroke-linecap="round"/>
+  </g>`
+    : ''
 
+  // ── Clickable overlay (SVG <a> tag — works in browsers, Notion, GitLab) ─────
+  // GitHub README CSP blocks onclick; for GitHub users the md output wraps in [![]()]()
+  const cardContent = `
   <!-- Background -->
   <rect width="${w}" height="${h}" rx="${r}" fill="url(#${bg1Id})"/>
+
   <!-- Glow blobs -->
   <circle cx="${w * 0.2}" cy="${h * 0.25}" r="${Math.min(w, h) * 0.5}"
     fill="${t.glow}" opacity="0.3"/>
   <circle cx="${w * 0.8}" cy="${h * 0.75}" r="${Math.min(w, h) * 0.35}"
     fill="${t.glow}" opacity="0.15"/>
+
   <!-- Ambient glow radial -->
   <rect width="${w}" height="${h}" rx="${r}" fill="url(#${bg2Id})"/>
 
@@ -196,9 +235,35 @@ export function renderGlassCard(opts: GlassCardOptions): string {
   <!-- Bottom accent line -->
   <line x1="${w * 0.08}" y1="${h - 3}" x2="${w * 0.5}" y2="${h - 3}"
     stroke="${t.border}" stroke-width="1" opacity="0.5"/>
+
+  ${linkIndicator}`
+
+  // Wrap everything in <a> when linkUrl provided — native SVG linking
+  const body = opts.linkUrl
+    ? `<a href="${escapeXml(opts.linkUrl)}" target="_blank" rel="noopener noreferrer"
+    style="cursor:pointer">
+    ${cardContent}
+  </a>`
+    : cardContent
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"
+  role="img" aria-label="${escapeXml(title)}: ${escapeXml(value)}">
+  <title>${escapeXml(title)}: ${escapeXml(value)}</title>
+  <defs>
+    ${gradDefs}
+    ${glassFilter}
+    ${accentDefs}
+  </defs>
+  ${body}
 </svg>`
 }
 
 function escapeXml(s: string) {
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
 }

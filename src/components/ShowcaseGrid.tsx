@@ -1,3 +1,5 @@
+// src/components/ShowcaseGrid.tsx
+
 'use client'
 
 import { SectionHeader } from './ui'
@@ -28,11 +30,22 @@ const SECTIONS = [
   {
     label: '// Glassmorphic Cards',
     items: [
-      { name:'glass-dark',     url:'/api/card-glass?title=Repositories&value=42&subtitle=Public+repos&icon=%E2%97%88&glassTheme=dark&metal=chrome',   type:'glass-card' },
-      { name:'glass-aurora',   url:'/api/card-glass?title=Followers&value=5.2k&subtitle=GitHub+followers&icon=%E2%98%85&glassTheme=aurora&metal=aurora', type:'glass-card' },
-      { name:'glass-sunset',   url:'/api/card-glass?title=Streak&value=89+days&subtitle=Longest+streak&icon=%E2%9A%A1&glassTheme=sunset&metal=rose-gold', type:'glass-card' },
-      { name:'glass-ocean',    url:'/api/card-glass?title=Stars&value=12.4k&subtitle=Total+earned&icon=%E2%9C%A6&glassTheme=ocean&metal=aurora-ocean',  type:'glass-card' },
-      { name:'glass-midnight', url:'/api/card-glass?title=Commits&value=3.2k&subtitle=All+time&icon=%E2%97%89&glassTheme=midnight&metal=neon-blue',  type:'glass-card' },
+      // Original themes
+      { name: 'glass-dark', url: '/api/card-glass?title=Repositories&value=42&subtitle=Public+repos&icon=%E2%97%88&glassTheme=dark&metal=chrome', type: 'glass-card' },
+      { name: 'glass-aurora', url: '/api/card-glass?title=Followers&value=5.2k&subtitle=GitHub+followers&icon=%E2%98%85&glassTheme=aurora&metal=aurora', type: 'glass-card' },
+      { name: 'glass-sunset', url: '/api/card-glass?title=Streak&value=89+days&subtitle=Longest+streak&icon=%E2%9A%A1&glassTheme=sunset&metal=rose-gold', type: 'glass-card' },
+      { name: 'glass-ocean', url: '/api/card-glass?title=Stars&value=12.4k&subtitle=Total+earned&icon=%E2%9C%A6&glassTheme=ocean&metal=aurora-ocean', type: 'glass-card' },
+      { name: 'glass-midnight', url: '/api/card-glass?title=Commits&value=3.2k&subtitle=All+time&icon=%E2%97%89&glassTheme=midnight&metal=neon-blue', type: 'glass-card' },
+      // New themes
+      { name: 'glass-neon', url: '/api/card-glass?title=Pull+Requests&value=284&subtitle=Merged&icon=%E2%8E%87&glassTheme=neon&metal=neon-green', type: 'glass-card' },
+      { name: 'glass-rose', url: '/api/card-glass?title=Sponsors&value=18&subtitle=Thank+you&icon=%E2%99%A5&glassTheme=rose&metal=rose-gold', type: 'glass-card' },
+      { name: 'glass-forest', url: '/api/card-glass?title=Issues+Closed&value=531&subtitle=All+time&icon=%E2%9C%93&glassTheme=forest&metal=neon-green', type: 'glass-card' },
+      { name: 'glass-gold', url: '/api/card-glass?title=Gists&value=47&subtitle=Public&icon=%E2%97%87&glassTheme=gold&metal=gold', type: 'glass-card' },
+      { name: 'glass-ice', url: '/api/card-glass?title=Watching&value=312&subtitle=Repos&icon=%E2%97%8E&glassTheme=ice&metal=electric', type: 'glass-card' },
+      { name: 'glass-void', url: '/api/card-glass?title=Discussions&value=96&subtitle=Started&icon=%E2%97%8F&glassTheme=void&metal=neon-blue', type: 'glass-card' },
+      // GitHub live stat examples
+      { name: 'glass-gh-repos', url: '/api/card-glass?username=torvalds&stat=repos&glassTheme=aurora&metal=chrome', type: 'glass-card' },
+      { name: 'glass-gh-stars', url: '/api/card-glass?username=torvalds&stat=stars&glassTheme=gold&metal=gold', type: 'glass-card' },
     ]
   },
   {

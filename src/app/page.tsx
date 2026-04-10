@@ -1,3 +1,5 @@
+// src/app/page.tsx
+
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
@@ -31,13 +33,13 @@ const TABS = [
   { id: 'image', icon: '▣', label: 'Frames' },
   { id: 'social', icon: '◈', label: 'Social' },
   { id: 'divider', icon: '─', label: 'Dividers' },
-  { id: 'table', icon: '⊞', label: 'Tables' }, 
+  { id: 'table', icon: '⊞', label: 'Tables' },
   { id: 'showcase', icon: '✦', label: 'Showcase' },
 ] as const
 
 type TabId = typeof TABS[number]['id']
 
-// ─── Image / GIF note ────────────────────────────────────────────────────────
+// ─── Image / GIF note ─────────────────────────────────────────────────────────
 function GithubImageNote() {
   return (
     <div className="font-mono text-[11px] p-3 mt-2 leading-[1.9]
@@ -174,7 +176,6 @@ function NeoCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
   const [value, setValue] = useState('3,291')
   const [subtitle, setSub] = useState('This year')
   const [icon, setIcon] = useState('◉')
-  // v3: neoTheme param (not theme)
   const [neoTheme, setNeoTheme] = useState('dark')
   const [neoStyle, setNeoStyle] = useState('raised')
   const [metal, setMetal] = useState('chrome')
@@ -186,7 +187,7 @@ function NeoCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
   function buildParams(base = false) {
     const p = new URLSearchParams({
       title, value, subtitle, icon,
-      neoTheme,   // ← v3 renamed param
+      neoTheme,
       style: neoStyle,
       metal,
       width: String(width), height: String(height),
@@ -248,60 +249,147 @@ function GlassCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
   const [value, setValue] = useState('42')
   const [subtitle, setSub] = useState('Public repos')
   const [icon, setIcon] = useState('◈')
-  // v3: glassTheme param (not theme)
   const [glassTheme, setGlassTheme] = useState('dark')
   const [metal, setMetal] = useState('electric')
   const [colors, setColors] = useState('')
   const [angle, setAngle] = useState(135)
   const [width, setWidth] = useState(220)
   const [height, setHeight] = useState(170)
+  const [username, setUsername] = useState('')
+  const [stat, setStat] = useState('repos')
+  const [linkUrl, setLinkUrl] = useState('')
 
   function buildParams(base = false) {
     const p = new URLSearchParams({
-      title, value, subtitle, icon,
-      glassTheme,  // ← v3 renamed param
+      glassTheme,
       metal,
-      width: String(width), height: String(height),
+      width: String(width),
+      height: String(height),
     })
+    if (username.trim()) {
+      p.set('username', username.trim())
+      p.set('stat', stat)
+    } else {
+      p.set('title', title)
+      p.set('value', value)
+      p.set('subtitle', subtitle)
+      p.set('icon', icon)
+    }
+    if (linkUrl.trim()) p.set('linkUrl', linkUrl.trim())
     if (colors) p.set('colors', colors)
     if (angle !== 135) p.set('angle', String(angle))
     return `${base ? BASE_URL : ''}/api/card-glass?${p}`
   }
-  const md = `![${title}](${buildParams(true)})`
+
+  const displayTitle = username.trim()
+    ? ({ repos: 'Repositories', stars: 'Stars', followers: 'Followers', forks: 'Forks' } as Record<string, string>)[stat] ?? title
+    : title
+
+  // For GitHub README: wrap image in markdown link so click works despite CSP
+  const md = linkUrl.trim()
+    ? `[![${displayTitle}](${buildParams(true)})](${linkUrl.trim()})`
+    : `![${displayTitle}](${buildParams(true)})`
 
   return (
     <div>
       <SectionHeader tag="// component_type: glass_card" title="GLASSMORPHIC CARD" />
       <BuilderGrid
         controls={<>
+
+          {/* ── GitHub live fetch ─────────────────────────────────────────── */}
+          <div className="mb-5 p-4 rounded-lg border border-[rgba(0,255,200,0.15)] bg-[rgba(0,255,200,0.03)]">
+            <p className="font-mono text-[10px] tracking-[2px] text-[#00ffc8] uppercase mb-3">
+              // Live GitHub Stats
+            </p>
+            <TextField label="GitHub Username (optional)" value={username} onChange={setUsername} />
+            {username.trim() && (
+              <SelectField label="Stat to display" value={stat} onChange={setStat}
+                options={['repos', 'stars', 'followers', 'forks']} />
+            )}
+            {username.trim() && (
+              <p className="font-mono text-[10px] text-[#7880a0] mt-2">
+                Title, subtitle &amp; icon are auto-set from GitHub. Fill the fields below to override them.
+              </p>
+            )}
+          </div>
+
+          {/* ── Manual / override fields ──────────────────────────────────── */}
           <div className="grid grid-cols-3 gap-3 mb-5">
-            <div className="col-span-2"><TextField label="Title" value={title} onChange={setTitle} /></div>
+            <div className="col-span-2">
+              <TextField
+                label={username.trim() ? 'Title override' : 'Title'}
+                value={title} onChange={setTitle}
+              />
+            </div>
             <div>
               <FieldLabel>Icon</FieldLabel>
-              <input className="metal-input text-center" value={icon} onChange={e => setIcon(e.target.value)} />
+              <input className="metal-input text-center" value={icon}
+                onChange={e => setIcon(e.target.value)} />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-5">
-            <TextField label="Value" value={value} onChange={setValue} />
-            <TextField label="Subtitle" value={subtitle} onChange={setSub} />
+            <TextField label={username.trim() ? 'Value override' : 'Value'} value={value} onChange={setValue} />
+            <TextField label={username.trim() ? 'Subtitle override' : 'Subtitle'} value={subtitle} onChange={setSub} />
           </div>
+
+          {/* ── Appearance ────────────────────────────────────────────────── */}
           <SelectField label="Glass Theme" value={glassTheme} onChange={setGlassTheme}
-            options={['dark', 'light', 'aurora', 'sunset', 'ocean', 'midnight']} />
+            options={['dark', 'light', 'aurora', 'sunset', 'ocean', 'midnight', 'neon', 'rose', 'forest', 'gold', 'ice', 'void']} />
           <div className="mb-5">
             <FieldLabel>Metal Accent</FieldLabel>
             <MetalPicker value={metal} onChange={setMetal} compact />
           </div>
           <GradientInput value={colors} onChange={setColors} />
           {colors && <AngleField value={angle} onChange={setAngle} />}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 mb-5">
             <RangeField label="Width" id="gcw" min={120} max={400} value={width} onChange={setWidth} />
             <RangeField label="Height" id="gch" min={80} max={300} value={height} onChange={setHeight} />
           </div>
+
+          {/* ── Link URL ──────────────────────────────────────────────────── */}
+          <div className="mb-5">
+            <FieldLabel>
+              Embed Link URL&nbsp;
+              <span className="normal-case opacity-60">(optional — makes card clickable)</span>
+            </FieldLabel>
+            <input
+              className="metal-input"
+              value={linkUrl}
+              onChange={e => setLinkUrl(e.target.value)}
+              placeholder="https://github.com/yourusername"
+            />
+            {linkUrl.trim() && (
+              <div className="mt-2 p-2.5 rounded border border-[rgba(240,190,50,0.2)] bg-[rgba(240,190,50,0.04)]
+                font-mono text-[10px] leading-[1.8] space-y-1">
+                <p className="text-[#f0c030] font-bold">⚠ GitHub README note</p>
+                <p className="text-[#7880a0]">
+                  GitHub's CSP blocks SVG clicks. The generated markdown already wraps the image
+                  in a link so it works in GitHub READMEs:
+                </p>
+                <p className="text-[#39ff14]">
+                  {`[![title](svg-url)](your-link)`}
+                </p>
+                <p className="text-[#7880a0]">
+                  The SVG <code>&lt;a&gt;</code> tag inside still makes it clickable in
+                  browsers, Notion, GitLab, and any other renderer.
+                </p>
+              </div>
+            )}
+          </div>
+
           <AddButton onClick={() => onAdd(md)} />
         </>}
         preview={<>
           <PreviewBox minHeight={height + 40}>
-            <img src={buildParams()} alt="Glass card preview" />
+            {/* Wrap preview in anchor so click is testable in the app itself */}
+            {linkUrl.trim() ? (
+              <a href={linkUrl} target="_blank" rel="noopener noreferrer">
+                <img src={buildParams()} alt="Glass card preview"
+                  className="cursor-pointer hover:opacity-90 transition-opacity" />
+              </a>
+            ) : (
+              <img src={buildParams()} alt="Glass card preview" />
+            )}
           </PreviewBox>
           <CodeBlock code={md} />
         </>}
@@ -476,8 +564,7 @@ function TerminalBuilder({ onAdd }: { onAdd: (c: string) => void }) {
               options={['dark', 'matrix', 'amber', 'blue']} />
             <div>
               <FieldLabel>Frame Metal</FieldLabel>
-              <select className="metal-select" value={metal}
-                onChange={e => setMetal(e.target.value)}>
+              <select className="metal-select" value={metal} onChange={e => setMetal(e.target.value)}>
                 {TERMINAL_METALS.map(m => <option key={m} value={m}>{m}</option>)}
               </select>
             </div>
@@ -558,9 +645,7 @@ function LogoBuilder({ onAdd }: { onAdd: (c: string) => void }) {
             <p className="font-mono text-[11px] text-[#4a9eff] mb-3">// All shapes preview:</p>
             <div className="flex flex-wrap gap-3">
               {['hexagon', 'shield', 'circle', 'diamond', 'star', 'rounded-square'].map(s => (
-                <img key={s}
-                  src={buildParams(false, s, 70)}
-                  alt={s}
+                <img key={s} src={buildParams(false, s, 70)} alt={s}
                   className="cursor-pointer hover:opacity-80 transition-opacity"
                   onClick={() => setShape(s)} />
               ))}
@@ -572,9 +657,7 @@ function LogoBuilder({ onAdd }: { onAdd: (c: string) => void }) {
   )
 }
 
-// ─── Frame Builder (Image / GIF) ─────────────────────────────────────────────
-// Both image and GIF use CSS overlay: SVG frame (no src) + real <img> on top.
-// README output: plain <img> tag — GitHub strips SVG <image> elements anyway.
+// ─── Frame Builder (Image / GIF) ──────────────────────────────────────────────
 function FrameBuilder({ onAdd }: { onAdd: (c: string) => void }) {
   const [frameType, setFrameType] = useState<'image' | 'gif'>('image')
   const [src, setSrc] = useState('')
@@ -587,11 +670,10 @@ function FrameBuilder({ onAdd }: { onAdd: (c: string) => void }) {
   const [width, setWidth] = useState(300)
   const [height, setHeight] = useState(220)
 
-  const PAD = 12 // matches pad in containers.ts
+  const PAD = 12
   const imageFrames = ['metallic', 'glass', 'polaroid', 'circuit', 'neon-sign', 'hologram']
   const gifFrames = ['neon', 'metallic', 'glass', 'minimal']
 
-  // SVG frame border shell only (no src — just the decorative border)
   function frameUrl(base = false) {
     const endpoint = frameType === 'image' ? 'image-container' : 'gif-container'
     const p = new URLSearchParams({ metal, frame, width: String(width), height: String(height), theme })
@@ -600,7 +682,6 @@ function FrameBuilder({ onAdd }: { onAdd: (c: string) => void }) {
     return `${base ? BASE_URL : ''}/api/${endpoint}?${p}`
   }
 
-  // README: plain <img> works everywhere and animates GIFs
   const md = src
     ? `<img src="${src}" width="${width}" style="border-radius:8px"/>`
     : `![Frame](${frameUrl(true)})`
@@ -614,7 +695,8 @@ function FrameBuilder({ onAdd }: { onAdd: (c: string) => void }) {
           controls={<>
             <div className="flex gap-3 mb-5">
               {(['image', 'gif'] as const).map(t => (
-                <button key={t} onClick={() => { setFrameType(t); setFrame(t === 'gif' ? 'neon' : 'metallic') }}
+                <button key={t}
+                  onClick={() => { setFrameType(t); setFrame(t === 'gif' ? 'neon' : 'metallic') }}
                   className={`px-4 py-2 rounded text-sm font-mono tracking-widest uppercase cursor-pointer border transition-all
                     ${frameType === t ? 'btn-chrome border-transparent' : 'btn-ghost'}`}>
                   {t}
@@ -647,22 +729,15 @@ function FrameBuilder({ onAdd }: { onAdd: (c: string) => void }) {
           </>}
           preview={<>
             <PreviewBox minHeight={height + 40}>
-              {/* SVG frame border + real image on top via absolute positioning */}
               <div className="relative inline-block">
                 <img src={frameUrl()} alt="frame" className="block" />
                 {src && (
-                  <img
-                    src={src}
-                    alt="preview"
-                    className="absolute"
+                  <img src={src} alt="preview" className="absolute"
                     style={{
                       top: PAD, left: PAD,
-                      width: width - PAD * 2,
-                      height: height - PAD * 2,
-                      objectFit: 'cover',
-                      borderRadius: 6,
-                    }}
-                  />
+                      width: width - PAD * 2, height: height - PAD * 2,
+                      objectFit: 'cover', borderRadius: 6,
+                    }} />
                 )}
               </div>
             </PreviewBox>
@@ -706,8 +781,7 @@ function SocialBuilder({ onAdd }: { onAdd: (c: string) => void }) {
         controls={<>
           <div className="mb-5">
             <FieldLabel>Links <span className="normal-case opacity-60">(platform:username, comma-separated)</span></FieldLabel>
-            <textarea className="metal-input" rows={4} value={links}
-              onChange={e => setLinks(e.target.value)} />
+            <textarea className="metal-input" rows={4} value={links} onChange={e => setLinks(e.target.value)} />
             <p className="font-mono text-[10px] text-[#7880a0] mt-1">
               Platforms: github · twitter · linkedin · discord · youtube · instagram · email · npm · medium
             </p>
@@ -776,7 +850,7 @@ function TableBuilder({ onAdd }: { onAdd: (c: string) => void }) {
             <FieldLabel>Rows <span className="normal-case opacity-60">(cells: comma · rows: pipe |)</span></FieldLabel>
             <textarea className="metal-input" rows={4} value={rows}
               onChange={e => setRows(e.target.value)}
-              placeholder={"VSCode,Daily,★★★★★|Neovim,Often,★★★★☆"}
+              placeholder="VSCode,Daily,★★★★★|Neovim,Often,★★★★☆"
               style={{ resize: 'vertical' }} />
             <div className="mt-2 p-2.5 rounded border border-[rgba(74,158,255,0.15)] bg-[rgba(74,158,255,0.04)] space-y-1">
               <p className="font-mono text-[10px] text-[#4a9eff] tracking-[1px]">// FORMAT RULES</p>
@@ -791,7 +865,6 @@ function TableBuilder({ onAdd }: { onAdd: (c: string) => void }) {
               </p>
             </div>
           </div>
-
           <FieldLabel>Theme</FieldLabel>
           <ThemePicker value={theme} onChange={setTheme} />
           <div className="mb-5">
@@ -814,14 +887,11 @@ function TableBuilder({ onAdd }: { onAdd: (c: string) => void }) {
   )
 }
 
-
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function Home() {
   const [tab, setTab] = useState<TabId>('banner')
 
-  // Read ?tab= query param OR #showcase hash on load — switch tab accordingly
   useEffect(() => {
-    // ?tab=banner / ?tab=card etc  (from footer component links)
     const params = new URLSearchParams(window.location.search)
     const tabParam = params.get('tab') as TabId | null
     if (tabParam) {
@@ -832,15 +902,13 @@ export default function Home() {
       }, 50)
       return
     }
-    // #showcase hash (from Navbar Examples / footer Examples links)
     function handleHash() {
       if (window.location.hash === '#showcase') {
         setTab('showcase')
         const el = document.getElementById('showcase')
         if (el) {
           setTimeout(() => {
-            const top = el.getBoundingClientRect().top + window.scrollY - 72
-            window.scrollTo({ top, behavior: 'smooth' })
+            window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 72, behavior: 'smooth' })
           }, 50)
         }
       }
@@ -849,15 +917,11 @@ export default function Home() {
     window.addEventListener('hashchange', handleHash)
     return () => window.removeEventListener('hashchange', handleHash)
   }, [])
+
   const [assembled, setAssembled] = useState<string[]>([])
 
-  const addToReadme = useCallback((code: string) => {
-    setAssembled(prev => [...prev, code])
-  }, [])
-
-  const removeFromReadme = useCallback((index: number) => {
-    setAssembled(prev => prev.filter((_, i) => i !== index))
-  }, [])
+  const addToReadme = useCallback((code: string) => setAssembled(prev => [...prev, code]), [])
+  const removeFromReadme = useCallback((index: number) => setAssembled(prev => prev.filter((_, i) => i !== index)), [])
 
   return (
     <div className="min-h-screen grid-bg">
@@ -868,7 +932,6 @@ export default function Home() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px]
           bg-[radial-gradient(ellipse,rgba(74,158,255,0.09)_0%,transparent_70%)] pointer-events-none"/>
 
-        {/* Natraj-X attribution pill — top of hero, max visibility */}
         <a href="https://www.natrajx.in/" target="_blank" rel="noopener"
           title="Natraj-X — AI & IT Engineering Agency"
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5
@@ -922,7 +985,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Scroll targets for navbar */}
       <div id="api" className="absolute" style={{ marginTop: '-80px', pointerEvents: 'none' }} />
 
       <main id="docs" className="max-w-[1320px] mx-auto px-6 pb-24">
