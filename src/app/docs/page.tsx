@@ -275,7 +275,7 @@ https://readmeforge.natrajx.in/api/skill-tree?skills=Python:90,JS:85&metal=neon-
                     <Section id="components" tag="// 06" title="All Components">
                         <div className="space-y-4">
                             {[
-                                { name: 'Banner', route: '/api/banner', desc: 'Full-width header banner with title, subtitle, and optional text animation', key_params: 'text, sub, style, anim, width, height' },
+                                { name: 'Banner', route: '/api/banner', desc: 'Full-width header banner with title and subtitle. 16 advanced visual styles: metallic, glass, neo, cyberpunk, holographic, aurora, neon, minimal, retro, gradient, circuit, plasma, crystalline, void, inferno, matrix.', key_params: 'text, subtext, visualStyle (16 styles), border, textColor, subtextColor, align' },
                                 { name: 'Stat Card', route: '/api/card', desc: 'Compact card showing a title and value — great for GitHub stats', key_params: 'title, value, style, icon' },
                                 { name: 'Neo Card', route: '/api/card-neo', desc: 'Neumorphic style card with soft shadows and depth', key_params: 'title, value, neoTheme, neoStyle' },
                                 { name: 'Glass Card', route: '/api/card-glass', desc: 'Glassmorphic card with frosted blur effect. Supports live GitHub stat fetching via ?username=', key_params: 'title, value, glassTheme (12 themes), username, stat (repos|stars|followers|forks)' },

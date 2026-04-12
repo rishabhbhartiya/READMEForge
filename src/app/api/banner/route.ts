@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import {
   renderBanner,
-  BannerShape, BannerAnimation, BannerVisualStyle, BannerBorder,
+  BannerVisualStyle, BannerBorder,
 } from '@/lib/renderers/banner'
 
 export const runtime = 'edge'
@@ -17,10 +17,8 @@ export async function GET(req: NextRequest) {
       metal: p.get('metal') ?? p.get('color') ?? 'chrome',
       colors: p.get('colors') ?? undefined,
       angle: p.get('angle') ? Number(p.get('angle')) : undefined,
-      shape: (p.get('type') ?? p.get('shape') ?? 'wave') as BannerShape,
       height: Number(p.get('height') ?? p.get('h') ?? 200),
       width: Number(p.get('width') ?? p.get('w') ?? 900),
-      animation: (p.get('animation') ?? p.get('anim') ?? 'none') as BannerAnimation,
       fontSize: p.get('fontSize') ? Number(p.get('fontSize')) : undefined,
       subtextSize: p.get('subtextSize') ? Number(p.get('subtextSize')) : undefined,
       fontFamily: p.get('fontFamily') ?? 'Orbitron',
@@ -30,14 +28,14 @@ export async function GET(req: NextRequest) {
       textAlign: (p.get('align') ?? 'center') as 'left' | 'center' | 'right',
       theme: (p.get('theme') ?? 'dark') as 'dark' | 'light',
       bg: p.get('bg') ?? undefined,
-      // v4 params
-      visualStyle: (p.get('visualStyle') ?? 'metallic') as BannerVisualStyle,
+      visualStyle: (p.get('visualStyle') ?? p.get('style') ?? 'metallic') as BannerVisualStyle,
       textColor: p.get('textColor') ?? undefined,
       subtextColor: p.get('subtextColor') ?? undefined,
       border: (p.get('border') ?? 'none') as BannerBorder,
       borderColor: p.get('borderColor') ?? undefined,
       borderWidth: p.get('borderWidth') ? Number(p.get('borderWidth')) : 2,
     })
+
     return new NextResponse(svg, {
       headers: {
         'Content-Type': 'image/svg+xml; charset=utf-8',

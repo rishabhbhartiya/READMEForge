@@ -230,18 +230,49 @@ Usage in GitHub README:
                     <Endpoint
                         id="ep-banner"
                         path="/api/banner"
-                        desc="Full-width SVG banner with main heading, optional subtitle, and 28 design styles. Supports 20 SMIL text animation effects."
+                        desc="Full-width SVG banner with main heading, optional subtitle, and 16 advanced visual styles. No shape or animation params — the visual style IS the full aesthetic experience."
                         params={[
-                            { name: 'text', type: 'string', default: 'READMEFORGE', desc: 'Main heading text' },
-                            { name: 'sub', type: 'string', default: '—', desc: 'Subtitle / tagline below the heading' },
-                            { name: 'style', type: 'string', default: 'default', desc: '28 design styles: cyber-grid, neon-sign, hologram, retro-wave, glassmorphic, etc.' },
-                            { name: 'anim', type: 'string', default: '—', desc: 'Text animation effect (see /api/text-anim for full list)' },
-                            { name: 'bg', type: 'string', default: '—', desc: 'Background color override' },
+                            { name: 'text', type: 'string', default: '', desc: 'Main heading text' },
+                            { name: 'subtext', type: 'string', default: '—', desc: 'Subtitle / tagline below the heading. Also accepts desc or s.' },
+                            { name: 'visualStyle', type: 'string', default: 'metallic', desc: '16 styles: metallic, glass, neo, cyberpunk, holographic, aurora, neon, minimal, retro, gradient, circuit, plasma, crystalline, void, inferno, matrix' },
+                            { name: 'bg', type: 'string', default: '—', desc: 'Background color override (any CSS color)' },
+                            { name: 'textColor', type: 'string', default: '—', desc: 'Override main text color (hex or CSS)' },
+                            { name: 'subtextColor', type: 'string', default: '—', desc: 'Override subtext color (hex or CSS)' },
                             { name: 'fontFamily', type: 'string', default: 'Orbitron', desc: 'Heading font family' },
-                            { name: 'width', type: 'number', default: '800', desc: 'Width in px (100–1200)' },
-                            { name: 'height', type: 'number', default: '160', desc: 'Height in px (60–400)' },
+                            { name: 'subtextFont', type: 'string', default: 'Rajdhani', desc: 'Subtext font family' },
+                            { name: 'fontSize', type: 'number', default: 'auto', desc: 'Heading font size in px (auto-scaled from height if omitted)' },
+                            { name: 'subtextSize', type: 'number', default: 'auto', desc: 'Subtext font size in px' },
+                            { name: 'align', type: 'string', default: 'center', desc: 'Text alignment: left | center | right' },
+                            { name: 'border', type: 'string', default: 'none', desc: 'Border style: none | metallic | normal | gradient | glow | double | dashed | animated | neon | circuit' },
+                            { name: 'borderColor', type: 'string', default: '—', desc: 'Border color override' },
+                            { name: 'borderWidth', type: 'number', default: '2', desc: 'Border width in px' },
+                            { name: 'theme', type: 'string', default: 'dark', desc: 'dark | light — controls background and text defaults' },
+                            { name: 'width', type: 'number', default: '900', desc: 'Width in px (200–1200)' },
+                            { name: 'height', type: 'number', default: '200', desc: 'Height in px (60–500)' },
                         ]}
-                        example={`![Banner](https://readmeforge.natrajx.in/api/banner?text=MY+PROJECT&sub=Built+with+AI&metal=neon-green&style=cyber-grid&width=900&height=180)`}
+                        example={`# Metallic brushed steel
+![Banner](https://readmeforge.natrajx.in/api/banner?text=MY+PROJECT&subtext=Built+with+AI&metal=chrome&visualStyle=metallic&width=900&height=200)
+
+# Deep glassmorphism
+![Banner](https://readmeforge.natrajx.in/api/banner?text=PORTFOLIO&subtext=Design+%C2%B7+Code+%C2%B7+Deploy&metal=electric&visualStyle=glass&width=900&height=200)
+
+# Cyberpunk grid with neon border
+![Banner](https://readmeforge.natrajx.in/api/banner?text=HACKER+MODE&subtext=Security+%C2%B7+Systems+%C2%B7+Code&metal=neon-green&visualStyle=cyberpunk&border=neon&width=900&height=200)
+
+# Animated holographic foil
+![Banner](https://readmeforge.natrajx.in/api/banner?text=OPEN+SOURCE&metal=holographic&visualStyle=holographic&width=900&height=200)
+
+# Aurora borealis
+![Banner](https://readmeforge.natrajx.in/api/banner?text=FULL+STACK&subtext=React+%C2%B7+Node+%C2%B7+Cloud&metal=aurora&visualStyle=aurora&width=900&height=220)
+
+# Matrix code rain
+![Banner](https://readmeforge.natrajx.in/api/banner?text=THE+MATRIX&subtext=Follow+the+white+rabbit&metal=neon-green&visualStyle=matrix&width=900&height=200)
+
+# Deep space void
+![Banner](https://readmeforge.natrajx.in/api/banner?text=VOID+WALKER&metal=neon-blue&visualStyle=void&width=900&height=200)
+
+# Inferno fire
+![Banner](https://readmeforge.natrajx.in/api/banner?text=FIRE+STARTER&metal=gold&visualStyle=inferno&width=900&height=200)`}
                     />
 
                     <Endpoint

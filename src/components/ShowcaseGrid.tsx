@@ -113,9 +113,22 @@ const SECTIONS = [
   {
     label: '// Banners',
     items: [
-      { name:'banner-chrome-wave',   url:'/api/banner?text=Welcome+to+my+Profile&subtext=Full-Stack+Developer&metal=chrome&type=wave&height=200&width=860', type:'banner' },
-      { name:'banner-gold-diagonal', url:'/api/banner?text=PORTFOLIO&subtext=Design+%C2%B7+Code+%C2%B7+Deploy&metal=gold&type=diagonal&height=200&width=860', type:'banner' },
-      { name:'banner-electric-arch', url:'/api/banner?text=OPEN+SOURCE&subtext=Building+the+future%2C+one+commit+at+a+time&metal=electric&type=arch&height=200&width=860&animation=shimmer', type:'banner' },
+      { name: 'banner-metallic-chrome', url: '/api/banner?text=Welcome+to+my+Profile&subtext=Full-Stack+Developer&metal=chrome&visualStyle=metallic&height=200&width=860', type: 'banner' },
+      { name: 'banner-glass-electric', url: '/api/banner?text=PORTFOLIO&subtext=Design+%C2%B7+Code+%C2%B7+Deploy&metal=electric&visualStyle=glass&height=200&width=860', type: 'banner' },
+      { name: 'banner-cyberpunk-neon-green', url: '/api/banner?text=HACKER+MODE&subtext=Security+%C2%B7+Systems&metal=neon-green&visualStyle=cyberpunk&border=neon&height=200&width=860', type: 'banner' },
+      { name: 'banner-holographic', url: '/api/banner?text=OPEN+SOURCE&subtext=Building+the+future&metal=holographic&visualStyle=holographic&height=200&width=860', type: 'banner' },
+      { name: 'banner-aurora-blue', url: '/api/banner?text=FULL+STACK&subtext=React+%C2%B7+Node+%C2%B7+Cloud&metal=aurora&visualStyle=aurora&height=200&width=860', type: 'banner' },
+      { name: 'banner-neon-pink', url: '/api/banner?text=NEON+DREAMS&subtext=Glow+in+the+dark&metal=neon-pink&visualStyle=neon&border=neon&height=200&width=860', type: 'banner' },
+      { name: 'banner-retro-gold', url: '/api/banner?text=RETRO+VIBES&subtext=Est.+1984&metal=gold&visualStyle=retro&height=200&width=860', type: 'banner' },
+      { name: 'banner-matrix-neon-green', url: '/api/banner?text=THE+MATRIX&subtext=Follow+the+white+rabbit&metal=neon-green&visualStyle=matrix&height=200&width=860', type: 'banner' },
+      { name: 'banner-void-neon-blue', url: '/api/banner?text=VOID+WALKER&subtext=Lost+in+the+cosmos&metal=neon-blue&visualStyle=void&height=200&width=860', type: 'banner' },
+      { name: 'banner-inferno-gold', url: '/api/banner?text=FIRE+STARTER&subtext=Burn+bright&metal=gold&visualStyle=inferno&height=200&width=860', type: 'banner' },
+      { name: 'banner-circuit-electric', url: '/api/banner?text=CIRCUIT+BOARD&subtext=Hardware+%C2%B7+Firmware+%C2%B7+Software&metal=electric&visualStyle=circuit&border=circuit&height=200&width=860', type: 'banner' },
+      { name: 'banner-plasma-purple', url: '/api/banner?text=PLASMA+CORE&subtext=High+energy+computing&metal=neon-blue&visualStyle=plasma&height=200&width=860', type: 'banner' },
+      { name: 'banner-crystalline-chrome', url: '/api/banner?text=CRYSTALLINE&subtext=Faceted+precision&metal=chrome&visualStyle=crystalline&height=200&width=860', type: 'banner' },
+      { name: 'banner-minimal-titanium', url: '/api/banner?text=MINIMAL+MARK&subtext=Less+is+more&metal=titanium&visualStyle=minimal&height=160&width=860', type: 'banner' },
+      { name: 'banner-neo-warm', url: '/api/banner?text=SOFT+UI&subtext=Neumorphic+depth&metal=rose-gold&visualStyle=neo&height=200&width=860', type: 'banner' },
+      { name: 'banner-gradient-gold', url: '/api/banner?text=GRADIENT+FLOW&subtext=Smooth+depth+and+light&metal=gold&visualStyle=gradient&border=metallic&height=200&width=860', type: 'banner' },
     ]
   },
   {

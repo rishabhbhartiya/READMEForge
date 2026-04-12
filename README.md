@@ -673,3 +673,22 @@ MIT © 2026 [Natraj-X](https://www.natrajx.in/) — free to use, fork, and deplo
 └── vercel.json
 
 29 directories, 55 files
+
+
+
+
+
+
+
+
+
+
+if we have to make change in any component
+
+
+app/api/header/route.ts          ← API route (query params → renderer)
+lib/renderers/header.ts          ← SVG renderer (actual visual logic)
+app/page.tsx                     ← HeaderBuilder component (UI controls)
+app/api-reference/page.tsx       ← ep-header Endpoint block (docs)
+app/docs/page.tsx                ← Header entry in components list
+components/ShowcaseGrid.tsx      ← Header items in SECTIONS array
