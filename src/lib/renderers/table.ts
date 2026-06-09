@@ -209,7 +209,7 @@ export function renderTable(opts: TableOptions): string {
   <text x="${w - 16}" y="${totalH - 9}" text-anchor="end"
     font-family="'Share Tech Mono',monospace"
     font-size="9" fill="${tc.textMuted}" opacity="0.35" letter-spacing="1"
-  >READMEFORGE.DEV</text>
+  >READMEFORGE</text>
 
   <!-- Border -->
   <rect x="0.5" y="0.5" width="${w - 1}" height="${totalH - 1}"

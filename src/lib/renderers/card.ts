@@ -151,7 +151,7 @@ export function renderCard(opts: CardOptions): string {
   <text x="${w - 16}" y="${h - 9}" text-anchor="end"
     font-family="'Share Tech Mono',monospace"
     font-size="9" fill="${dimColor}" opacity="0.35" letter-spacing="1"
-  >METALFORGE.DEV</text>
+  >READMEFORGE</text>
 
   ${borderEl}
 </svg>`
