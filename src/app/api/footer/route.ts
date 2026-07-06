@@ -20,6 +20,9 @@ export async function GET(req: NextRequest) {
       links: p.get('links') ?? '',
       theme: (p.get('theme') ?? 'dark') as 'dark' | 'light',
       bg: p.get('bg') ?? undefined,
+      animated: p.get('animated') !== 'false',
+      speed: p.get('speed') ? Number(p.get('speed')) : undefined,
+      particles: p.get('particles') ? Number(p.get('particles')) : undefined,
     })
     return new NextResponse(svg, {
       headers: {

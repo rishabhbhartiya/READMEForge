@@ -1,11 +1,10 @@
 // src/app/api/card-glass/route.ts
 // ─────────────────────────────────────────────────────────────────────────────
 import { NextRequest, NextResponse } from 'next/server'
-import { renderGlassCard, GlassTheme, GlassStyle } from '@/lib/renderers/card-glass'
+import { renderGlassCard, GlassTheme, GlassStyle, GlassBorder } from '@/lib/renderers/card-glass'
 
 export const runtime = 'edge'
 
-// ── Stat config ───────────────────────────────────────────────────────────────
 type StatKey = 'repos' | 'stars' | 'followers' | 'forks'
 
 const STAT_META: Record<StatKey, { icon: string; title: string; subtitle: string }> = {
@@ -15,16 +14,8 @@ const STAT_META: Record<StatKey, { icon: string; title: string; subtitle: string
   forks: { icon: '⑂', title: 'Forks', subtitle: 'Total forks' },
 }
 
-// ── GitHub fetcher ────────────────────────────────────────────────────────────
-interface GitHubUser {
-  public_repos: number
-  followers: number
-}
-
-interface GitHubRepo {
-  stargazers_count: number
-  forks_count: number
-}
+interface GitHubUser { public_repos: number; followers: number }
+interface GitHubRepo { stargazers_count: number; forks_count: number }
 
 async function fetchGitHubStat(username: string, stat: StatKey): Promise<string> {
   const headers: HeadersInit = { 'Accept': 'application/vnd.github+json' }
@@ -33,12 +24,9 @@ async function fetchGitHubStat(username: string, stat: StatKey): Promise<string>
     const res = await fetch(`https://api.github.com/users/${username}`, { headers })
     if (!res.ok) throw new Error(`GitHub user fetch failed: ${res.status}`)
     const data: GitHubUser = await res.json()
-    return stat === 'repos'
-      ? String(data.public_repos)
-      : String(data.followers)
+    return stat === 'repos' ? String(data.public_repos) : String(data.followers)
   }
 
-  // stars or forks — need to page through all repos
   let page = 1
   let total = 0
   while (true) {
@@ -49,16 +37,13 @@ async function fetchGitHubStat(username: string, stat: StatKey): Promise<string>
     if (!res.ok) throw new Error(`GitHub repos fetch failed: ${res.status}`)
     const repos: GitHubRepo[] = await res.json()
     if (repos.length === 0) break
-    for (const r of repos) {
-      total += stat === 'stars' ? r.stargazers_count : r.forks_count
-    }
+    for (const r of repos) total += stat === 'stars' ? r.stargazers_count : r.forks_count
     if (repos.length < 100) break
     page++
   }
   return String(total)
 }
 
-// ── Route handler ─────────────────────────────────────────────────────────────
 export async function GET(req: NextRequest) {
   const p = req.nextUrl.searchParams
 
@@ -66,16 +51,15 @@ export async function GET(req: NextRequest) {
   const stat = (p.get('stat') ?? 'repos') as StatKey
   const glassTheme = (p.get('glassTheme') ?? p.get('theme') ?? 'dark') as GlassTheme
 
-  // Resolve value, title, subtitle, icon
-  let value = p.get('value') ?? '—'
-  let title = p.get('title') ?? undefined
-  let subtitle = p.get('subtitle') ?? undefined
-  let icon = p.get('icon') ?? undefined
+  // No forced fallbacks — undefined means the renderer skips that row entirely
+  let value: string | undefined = p.get('value') ?? undefined
+  let title: string | undefined = p.get('title') ?? undefined
+  let subtitle: string | undefined = p.get('subtitle') ?? undefined
+  let icon: string | undefined = p.get('icon') ?? undefined
 
   try {
     if (username) {
       const meta = STAT_META[stat] ?? STAT_META.repos
-      // Auto-fill from GitHub unless caller explicitly overrides each field
       value = await fetchGitHubStat(username, stat)
       title = title ?? meta.title
       subtitle = subtitle ?? `@${username} · ${meta.subtitle}`
@@ -83,12 +67,10 @@ export async function GET(req: NextRequest) {
     }
 
     const svg = renderGlassCard({
-      title: title ?? 'Card',
-      value: value,
-      subtitle: subtitle ?? '',
-      icon: icon ?? '◈',
+      title, value, subtitle, icon,
       glassTheme,
       style: (p.get('style') ?? 'card') as GlassStyle,
+      border: (p.get('border') ?? 'edge') as GlassBorder,
       metal: p.get('metal') ?? undefined,
       colors: p.get('colors') ?? undefined,
       angle: p.get('angle') ? Number(p.get('angle')) : undefined,
@@ -97,15 +79,18 @@ export async function GET(req: NextRequest) {
       tint: p.get('tint') ?? undefined,
       blur: Number(p.get('blur') ?? 8),
       theme: (p.get('theme') ?? 'dark') as 'dark' | 'light',
-      linkUrl: p.get('linkUrl') ?? undefined, 
+      linkUrl: p.get('linkUrl') ?? undefined,
+      fontFamily: (p.get('fontFamily') ?? undefined) as any,
+      textColor: p.get('textColor') ?? undefined,
+      fontScale: p.get('fontScale') ? Number(p.get('fontScale')) : undefined,
     })
 
     return new NextResponse(svg, {
       headers: {
         'Content-Type': 'image/svg+xml; charset=utf-8',
         'Cache-Control': username
-          ? 'public, max-age=3600, stale-while-revalidate=86400'  // 1h cache for live stats
-          : 'public, max-age=86400',                               // 24h for static cards
+          ? 'public, max-age=3600, stale-while-revalidate=86400'
+          : 'public, max-age=86400',
         'Access-Control-Allow-Origin': '*',
       },
     })

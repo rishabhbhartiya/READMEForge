@@ -7,6 +7,9 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import BannerBuilder from '@/components/builders/BannerBuilder'
 import { CardBuilder, ButtonBuilder, BadgeBuilder, DividerBuilder } from '@/components/builders/CardBuilder'
+import {
+  NeoBrutalCardBuilder, ClayCardBuilder, GlowCardBuilder, SkeuoCardBuilder,
+} from '@/components/builders/NewCardsBuilder'
 import ShowcaseGrid from '@/components/ShowcaseGrid'
 import ReadmeAssembler from '@/components/ReadmeAssembler'
 import {
@@ -24,6 +27,10 @@ const TABS = [
   { id: 'card', icon: '◈', label: 'Cards' },
   { id: 'neo', icon: '◑', label: 'Neumorphic' },
   { id: 'glass', icon: '◻', label: 'Glass' },
+  { id: 'brutal', icon: '▟', label: 'Neo-Brutal' },
+  { id: 'clay', icon: '◍', label: 'Clay' },
+  { id: 'glow', icon: '◉', label: 'Glow' },
+  { id: 'skeuo', icon: '▦', label: 'Skeuomorphic' },
   { id: 'button', icon: '⬟', label: 'Buttons' },
   { id: 'badge', icon: '◆', label: 'Badges' },
   { id: 'text', icon: 'Ａ', label: 'Text FX' },
@@ -57,6 +64,21 @@ function GithubImageNote() {
 }
 
 // ─── Header Builder ───────────────────────────────────────────────────────────
+const HEADER_STYLES = [
+  'profile', 'minimal', 'cyber', 'terminal', 'hologram',
+  'aurora', 'matrix', 'wave-flow', 'particles', 'neon-grid',
+  'liquid-metal', 'orbit', 'gradient-mesh', 'glass',
+  'split', 'constellation', 'circuit-board', 'skyline',
+  'blueprint', 'geometric', 'signal-wave', 'ribbon',
+] as const
+
+const ANIMATED_HEADER_STYLES = new Set([
+  'aurora', 'matrix', 'wave-flow', 'particles', 'neon-grid',
+  'liquid-metal', 'orbit', 'gradient-mesh', 'glass', 'hologram',
+  'split', 'constellation', 'circuit-board', 'skyline',
+  'blueprint', 'geometric', 'signal-wave', 'ribbon',
+])
+
 function HeaderBuilder({ onAdd }: { onAdd: (c: string) => void }) {
   const [name, setName] = useState('John Doe')
   const [title, setTitle] = useState('Full-Stack Developer')
@@ -67,11 +89,21 @@ function HeaderBuilder({ onAdd }: { onAdd: (c: string) => void }) {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
   const [style, setStyle] = useState('profile')
   const [height, setHeight] = useState(280)
+  const [animated, setAnimated] = useState(true)
+  const [speed, setSpeed] = useState('1')
+  const [particles, setParticles] = useState(16)
+
+  const isAnimatedStyle = ANIMATED_HEADER_STYLES.has(style)
 
   function buildParams(base = false) {
     const p = new URLSearchParams({ name, title, tagline, metal, style, height: String(height), theme })
     if (colors) p.set('colors', colors)
     if (angle !== 135) p.set('angle', String(angle))
+    if (isAnimatedStyle) {
+      if (!animated) p.set('animated', 'false')
+      if (animated && speed !== '1') p.set('speed', speed)
+      if (style === 'particles' || style === 'constellation') p.set('particles', String(particles))
+    }
     return `${base ? BASE_URL : ''}/api/header?${p}`
   }
   const md = `![Header](${buildParams(true)})`
@@ -92,9 +124,26 @@ function HeaderBuilder({ onAdd }: { onAdd: (c: string) => void }) {
           </div>
           <GradientInput value={colors} onChange={setColors} />
           {colors && <AngleField value={angle} onChange={setAngle} />}
-          <SelectField label="Style" value={style} onChange={setStyle}
-            options={['profile', 'minimal', 'cyber', 'terminal', 'hologram']} />
+          <SelectField label="Style" value={style} onChange={setStyle} options={[...HEADER_STYLES]} />
           <RangeField label="Height" id="hh" min={120} max={400} value={height} onChange={setHeight} />
+
+          {isAnimatedStyle && (
+            <>
+              <label className="flex items-center gap-3 cursor-pointer mb-5">
+                <input type="checkbox" checked={animated} onChange={e => setAnimated(e.target.checked)}
+                  className="accent-[#4a9eff] w-4 h-4" />
+                <span className="font-mono text-[12px] text-[#7880a0]">Animated (flowing / moving background)</span>
+              </label>
+              {animated && (
+                <SelectField label="Animation Speed" value={speed} onChange={setSpeed}
+                  options={['0.5', '1', '1.5', '2', '3']} />
+              )}
+              {(style === 'particles' || style === 'constellation') && (
+                <RangeField label="Particle Count" id="hp" min={4} max={40} value={particles} onChange={setParticles} />
+              )}
+            </>
+          )}
+
           <AddButton onClick={() => onAdd(md)} />
         </>}
         preview={<>
@@ -102,6 +151,17 @@ function HeaderBuilder({ onAdd }: { onAdd: (c: string) => void }) {
             <img src={buildParams()} alt="Header preview" className="max-w-full" />
           </PreviewBox>
           <CodeBlock code={md} />
+          <div className="mt-4">
+            <p className="font-mono text-[11px] text-[#4a9eff] mb-3">// All styles preview:</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {HEADER_STYLES.map(s => (
+                <img key={s} src={`/api/header?name=${encodeURIComponent(name)}&title=${encodeURIComponent(title)}&metal=${metal}&style=${s}&height=110`}
+                  alt={s}
+                  className="cursor-pointer rounded border border-[rgba(120,140,200,0.15)] hover:border-[rgba(74,158,255,0.4)] transition-colors w-full"
+                  onClick={() => setStyle(s)} />
+              ))}
+            </div>
+          </div>
         </>}
       />
     </div>
@@ -109,6 +169,21 @@ function HeaderBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 }
 
 // ─── Footer Builder ───────────────────────────────────────────────────────────
+const FOOTER_STYLES = [
+  'wave', 'minimal', 'cyber', 'credits', 'snake', 'terminal', 'hologram',
+  'aurora', 'matrix', 'wave-flow', 'particles', 'neon-grid',
+  'liquid-metal', 'orbit', 'gradient-mesh', 'glass',
+  'split', 'constellation', 'circuit-board', 'skyline',
+  'blueprint', 'geometric', 'signal-wave', 'ribbon',
+] as const
+
+const ANIMATED_FOOTER_STYLES = new Set([
+  'aurora', 'matrix', 'wave-flow', 'particles', 'neon-grid',
+  'liquid-metal', 'orbit', 'gradient-mesh', 'glass', 'hologram',
+  'split', 'constellation', 'circuit-board', 'skyline',
+  'blueprint', 'geometric', 'signal-wave', 'ribbon',
+])
+
 function FooterBuilderUI({ onAdd }: { onAdd: (c: string) => void }) {
   const [text, setText] = useState('Thanks for visiting!')
   const [subtext, setSubtext] = useState('Made with ♦ and ReadmeForge')
@@ -120,12 +195,22 @@ function FooterBuilderUI({ onAdd }: { onAdd: (c: string) => void }) {
   const [style, setStyle] = useState('wave')
   const [height, setHeight] = useState(180)
   const [bg, setBg] = useState('')
+  const [animated, setAnimated] = useState(true)
+  const [speed, setSpeed] = useState('1')
+  const [particles, setParticles] = useState(16)
+
+  const isAnimatedStyle = ANIMATED_FOOTER_STYLES.has(style)
 
   function buildParams(base = false) {
     const p = new URLSearchParams({ text, subtext, links, metal, style, height: String(height), theme })
     if (colors) p.set('colors', colors)
     if (angle !== 135) p.set('angle', String(angle))
     if (bg) p.set('bg', bg)
+    if (isAnimatedStyle) {
+      if (!animated) p.set('animated', 'false')
+      if (animated && speed !== '1') p.set('speed', speed)
+      if (style === 'particles' || style === 'constellation') p.set('particles', String(particles))
+    }
     return `${base ? BASE_URL : ''}/api/footer?${p}`
   }
   const md = `![Footer](${buildParams(true)})`
@@ -150,13 +235,30 @@ function FooterBuilderUI({ onAdd }: { onAdd: (c: string) => void }) {
           </div>
           <GradientInput value={colors} onChange={setColors} />
           {colors && <AngleField value={angle} onChange={setAngle} />}
-          <SelectField label="Style" value={style} onChange={setStyle}
-            options={['wave', 'minimal', 'cyber', 'credits']} />
+          <SelectField label="Style" value={style} onChange={setStyle} options={[...FOOTER_STYLES]} />
           <div className="mb-5">
             <FieldLabel>Background Override <span className="normal-case opacity-60">(optional)</span></FieldLabel>
             <input className="metal-input" value={bg} onChange={e => setBg(e.target.value)} placeholder="#0a0a18" />
           </div>
           <RangeField label="Height" id="fh" min={80} max={300} value={height} onChange={setHeight} />
+
+          {isAnimatedStyle && (
+            <>
+              <label className="flex items-center gap-3 cursor-pointer mb-5">
+                <input type="checkbox" checked={animated} onChange={e => setAnimated(e.target.checked)}
+                  className="accent-[#4a9eff] w-4 h-4" />
+                <span className="font-mono text-[12px] text-[#7880a0]">Animated (flowing / moving background)</span>
+              </label>
+              {animated && (
+                <SelectField label="Animation Speed" value={speed} onChange={setSpeed}
+                  options={['0.5', '1', '1.5', '2', '3']} />
+              )}
+              {(style === 'particles' || style === 'constellation') && (
+                <RangeField label="Particle Count" id="fp" min={4} max={40} value={particles} onChange={setParticles} />
+              )}
+            </>
+          )}
+
           <AddButton onClick={() => onAdd(md)} />
         </>}
         preview={<>
@@ -164,6 +266,17 @@ function FooterBuilderUI({ onAdd }: { onAdd: (c: string) => void }) {
             <img src={buildParams()} alt="Footer preview" className="max-w-full" />
           </PreviewBox>
           <CodeBlock code={md} />
+          <div className="mt-4">
+            <p className="font-mono text-[11px] text-[#4a9eff] mb-3">// All styles preview:</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {FOOTER_STYLES.map(s => (
+                <img key={s} src={`/api/footer?text=${encodeURIComponent(text)}&metal=${metal}&style=${s}&height=90`}
+                  alt={s}
+                  className="cursor-pointer rounded border border-[rgba(120,140,200,0.15)] hover:border-[rgba(74,158,255,0.4)] transition-colors w-full"
+                  onClick={() => setStyle(s)} />
+              ))}
+            </div>
+          </div>
         </>}
       />
     </div>
@@ -1008,6 +1121,10 @@ export default function Home() {
         {tab === 'card' && <CardBuilder onAdd={addToReadme} />}
         {tab === 'neo' && <NeoCardBuilder onAdd={addToReadme} />}
         {tab === 'glass' && <GlassCardBuilder onAdd={addToReadme} />}
+        {tab === 'brutal' && <NeoBrutalCardBuilder onAdd={addToReadme} />}
+        {tab === 'clay' && <ClayCardBuilder onAdd={addToReadme} />}
+        {tab === 'glow' && <GlowCardBuilder onAdd={addToReadme} />}
+        {tab === 'skeuo' && <SkeuoCardBuilder onAdd={addToReadme} />}
         {tab === 'button' && <ButtonBuilder onAdd={addToReadme} />}
         {tab === 'badge' && <BadgeBuilder onAdd={addToReadme} />}
         {tab === 'text' && <TextAnimBuilder onAdd={addToReadme} />}

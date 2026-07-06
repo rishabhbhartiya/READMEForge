@@ -692,3 +692,4 @@ app/page.tsx                     ← HeaderBuilder component (UI controls)
 app/api-reference/page.tsx       ← ep-header Endpoint block (docs)
 app/docs/page.tsx                ← Header entry in components list
 components/ShowcaseGrid.tsx      ← Header items in SECTIONS array
+
