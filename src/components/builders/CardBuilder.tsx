@@ -244,6 +244,11 @@ export function ButtonBuilder({ onAdd }: { onAdd: (code: string) => void }) {
             <AddToCompositeButton type="button" label={`Button — ${label}`}
               url={buildParams(true)} width={width} height={50} />
           </div>
+        </>}
+        preview={<>
+          <PreviewBox minHeight={80}>
+            <img src={buildParams()} alt="Button preview" />
+          </PreviewBox>
           <CodeBlock code={markdown} />
           <div>
             <p className="font-mono text-[11px] text-[#4a9eff] mb-3">// Quick presets:</p>
@@ -424,6 +429,11 @@ export function DividerBuilder({ onAdd }: { onAdd: (code: string) => void }) {
             <AddToCompositeButton type="divider" label="Divider"
               url={buildParams(true)} width={width} height={height} />
           </div>
+        </>}
+        preview={<>
+          <PreviewBox minHeight={80}>
+            <img src={buildParams()} alt="Divider preview" />
+          </PreviewBox>
           <CodeBlock code={markdown} />
         </>}
       />
