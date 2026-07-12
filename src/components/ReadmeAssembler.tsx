@@ -60,23 +60,23 @@ export default function ReadmeAssembler({ items, onClear, onRemove }: Props) {
   const [name, setName]             = useState('Your Name')
   const [copied, setCopied]         = useState(false)
   const [downloaded, setDownloaded] = useState(false)
-  const [mode, setMode]             = useState<ViewMode>('split')
+  const [mode, setMode]             = useState<ViewMode>('edit')
   const [content, setContent]       = useState('')
   const [manuallyEdited, setManuallyEdited] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  const buildDefault = (n: string) => `# Hi there, I'm ${n} 👋
+  const buildDefault = (n: string) => `# Hi there, I'm ${n} 
 
 ${items.join('\n\n')}
 
 ---
 
-## 🛠 About Me
+## About Me
 
-- 🔭 I'm currently working on something awesome
-- 🌱 I'm learning new things every day
-- 💬 Ask me about anything tech-related
-- 📫 How to reach me: your@email.com
+- I'm currently working on something awesome
+- I'm learning new things every day
+- Ask me about anything tech-related
+- How to reach me: your@email.com
 
 ---
 

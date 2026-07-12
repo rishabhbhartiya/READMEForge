@@ -12,6 +12,9 @@ import {
 } from '@/components/builders/NewCardsBuilder'
 import ShowcaseGrid from '@/components/ShowcaseGrid'
 import ReadmeAssembler from '@/components/ReadmeAssembler'
+import CompositeBuilder from '@/components/CompositeBuilder'
+import { AddToCompositeButton, CompositeCartBadge } from '@/components/CompositeWidgets'
+import { CompositeCartProvider } from '@/lib/compositeCart'
 import {
   SectionHeader, MetalPicker, FieldLabel, CodeBlock, PreviewBox,
   BuilderGrid, RangeField, AddButton, GradientInput, AngleField,
@@ -41,6 +44,7 @@ const TABS = [
   { id: 'social', icon: '◈', label: 'Social' },
   { id: 'divider', icon: '─', label: 'Dividers' },
   { id: 'table', icon: '⊞', label: 'Tables' },
+  { id: 'composite', icon: '⊕', label: 'Composite' },
   { id: 'showcase', icon: '✦', label: 'Showcase' },
 ] as const
 
@@ -64,21 +68,6 @@ function GithubImageNote() {
 }
 
 // ─── Header Builder ───────────────────────────────────────────────────────────
-const HEADER_STYLES = [
-  'profile', 'minimal', 'cyber', 'terminal', 'hologram',
-  'aurora', 'matrix', 'wave-flow', 'particles', 'neon-grid',
-  'liquid-metal', 'orbit', 'gradient-mesh', 'glass',
-  'split', 'constellation', 'circuit-board', 'skyline',
-  'blueprint', 'geometric', 'signal-wave', 'ribbon',
-] as const
-
-const ANIMATED_HEADER_STYLES = new Set([
-  'aurora', 'matrix', 'wave-flow', 'particles', 'neon-grid',
-  'liquid-metal', 'orbit', 'gradient-mesh', 'glass', 'hologram',
-  'split', 'constellation', 'circuit-board', 'skyline',
-  'blueprint', 'geometric', 'signal-wave', 'ribbon',
-])
-
 function HeaderBuilder({ onAdd }: { onAdd: (c: string) => void }) {
   const [name, setName] = useState('John Doe')
   const [title, setTitle] = useState('Full-Stack Developer')
@@ -89,21 +78,11 @@ function HeaderBuilder({ onAdd }: { onAdd: (c: string) => void }) {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
   const [style, setStyle] = useState('profile')
   const [height, setHeight] = useState(280)
-  const [animated, setAnimated] = useState(true)
-  const [speed, setSpeed] = useState('1')
-  const [particles, setParticles] = useState(16)
-
-  const isAnimatedStyle = ANIMATED_HEADER_STYLES.has(style)
 
   function buildParams(base = false) {
     const p = new URLSearchParams({ name, title, tagline, metal, style, height: String(height), theme })
     if (colors) p.set('colors', colors)
     if (angle !== 135) p.set('angle', String(angle))
-    if (isAnimatedStyle) {
-      if (!animated) p.set('animated', 'false')
-      if (animated && speed !== '1') p.set('speed', speed)
-      if (style === 'particles' || style === 'constellation') p.set('particles', String(particles))
-    }
     return `${base ? BASE_URL : ''}/api/header?${p}`
   }
   const md = `![Header](${buildParams(true)})`
@@ -124,44 +103,20 @@ function HeaderBuilder({ onAdd }: { onAdd: (c: string) => void }) {
           </div>
           <GradientInput value={colors} onChange={setColors} />
           {colors && <AngleField value={angle} onChange={setAngle} />}
-          <SelectField label="Style" value={style} onChange={setStyle} options={[...HEADER_STYLES]} />
+          <SelectField label="Style" value={style} onChange={setStyle}
+            options={['profile', 'minimal', 'cyber', 'terminal', 'hologram']} />
           <RangeField label="Height" id="hh" min={120} max={400} value={height} onChange={setHeight} />
-
-          {isAnimatedStyle && (
-            <>
-              <label className="flex items-center gap-3 cursor-pointer mb-5">
-                <input type="checkbox" checked={animated} onChange={e => setAnimated(e.target.checked)}
-                  className="accent-[#4a9eff] w-4 h-4" />
-                <span className="font-mono text-[12px] text-[#7880a0]">Animated (flowing / moving background)</span>
-              </label>
-              {animated && (
-                <SelectField label="Animation Speed" value={speed} onChange={setSpeed}
-                  options={['0.5', '1', '1.5', '2', '3']} />
-              )}
-              {(style === 'particles' || style === 'constellation') && (
-                <RangeField label="Particle Count" id="hp" min={4} max={40} value={particles} onChange={setParticles} />
-              )}
-            </>
-          )}
-
-          <AddButton onClick={() => onAdd(md)} />
+          <div className="flex gap-3">
+            <AddButton onClick={() => onAdd(md)} />
+            <AddToCompositeButton type="header" label={`Header — ${name}`}
+              url={buildParams(true)} width={900} height={height} />
+          </div>
         </>}
         preview={<>
-          <PreviewBox minHeight={height}>
-            <img src={buildParams()} alt="Header preview" className="max-w-full" />
+          <PreviewBox minHeight={height + 40}>
+            <img src={buildParams()} alt="Header preview" />
           </PreviewBox>
           <CodeBlock code={md} />
-          <div className="mt-4">
-            <p className="font-mono text-[11px] text-[#4a9eff] mb-3">// All styles preview:</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              {HEADER_STYLES.map(s => (
-                <img key={s} src={`/api/header?name=${encodeURIComponent(name)}&title=${encodeURIComponent(title)}&metal=${metal}&style=${s}&height=110`}
-                  alt={s}
-                  className="cursor-pointer rounded border border-[rgba(120,140,200,0.15)] hover:border-[rgba(74,158,255,0.4)] transition-colors w-full"
-                  onClick={() => setStyle(s)} />
-              ))}
-            </div>
-          </div>
         </>}
       />
     </div>
@@ -169,21 +124,6 @@ function HeaderBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 }
 
 // ─── Footer Builder ───────────────────────────────────────────────────────────
-const FOOTER_STYLES = [
-  'wave', 'minimal', 'cyber', 'credits', 'snake', 'terminal', 'hologram',
-  'aurora', 'matrix', 'wave-flow', 'particles', 'neon-grid',
-  'liquid-metal', 'orbit', 'gradient-mesh', 'glass',
-  'split', 'constellation', 'circuit-board', 'skyline',
-  'blueprint', 'geometric', 'signal-wave', 'ribbon',
-] as const
-
-const ANIMATED_FOOTER_STYLES = new Set([
-  'aurora', 'matrix', 'wave-flow', 'particles', 'neon-grid',
-  'liquid-metal', 'orbit', 'gradient-mesh', 'glass', 'hologram',
-  'split', 'constellation', 'circuit-board', 'skyline',
-  'blueprint', 'geometric', 'signal-wave', 'ribbon',
-])
-
 function FooterBuilderUI({ onAdd }: { onAdd: (c: string) => void }) {
   const [text, setText] = useState('Thanks for visiting!')
   const [subtext, setSubtext] = useState('Made with ♦ and ReadmeForge')
@@ -195,22 +135,12 @@ function FooterBuilderUI({ onAdd }: { onAdd: (c: string) => void }) {
   const [style, setStyle] = useState('wave')
   const [height, setHeight] = useState(180)
   const [bg, setBg] = useState('')
-  const [animated, setAnimated] = useState(true)
-  const [speed, setSpeed] = useState('1')
-  const [particles, setParticles] = useState(16)
-
-  const isAnimatedStyle = ANIMATED_FOOTER_STYLES.has(style)
 
   function buildParams(base = false) {
     const p = new URLSearchParams({ text, subtext, links, metal, style, height: String(height), theme })
     if (colors) p.set('colors', colors)
     if (angle !== 135) p.set('angle', String(angle))
     if (bg) p.set('bg', bg)
-    if (isAnimatedStyle) {
-      if (!animated) p.set('animated', 'false')
-      if (animated && speed !== '1') p.set('speed', speed)
-      if (style === 'particles' || style === 'constellation') p.set('particles', String(particles))
-    }
     return `${base ? BASE_URL : ''}/api/footer?${p}`
   }
   const md = `![Footer](${buildParams(true)})`
@@ -235,48 +165,24 @@ function FooterBuilderUI({ onAdd }: { onAdd: (c: string) => void }) {
           </div>
           <GradientInput value={colors} onChange={setColors} />
           {colors && <AngleField value={angle} onChange={setAngle} />}
-          <SelectField label="Style" value={style} onChange={setStyle} options={[...FOOTER_STYLES]} />
+          <SelectField label="Style" value={style} onChange={setStyle}
+            options={['wave', 'minimal', 'cyber', 'credits']} />
           <div className="mb-5">
             <FieldLabel>Background Override <span className="normal-case opacity-60">(optional)</span></FieldLabel>
             <input className="metal-input" value={bg} onChange={e => setBg(e.target.value)} placeholder="#0a0a18" />
           </div>
           <RangeField label="Height" id="fh" min={80} max={300} value={height} onChange={setHeight} />
-
-          {isAnimatedStyle && (
-            <>
-              <label className="flex items-center gap-3 cursor-pointer mb-5">
-                <input type="checkbox" checked={animated} onChange={e => setAnimated(e.target.checked)}
-                  className="accent-[#4a9eff] w-4 h-4" />
-                <span className="font-mono text-[12px] text-[#7880a0]">Animated (flowing / moving background)</span>
-              </label>
-              {animated && (
-                <SelectField label="Animation Speed" value={speed} onChange={setSpeed}
-                  options={['0.5', '1', '1.5', '2', '3']} />
-              )}
-              {(style === 'particles' || style === 'constellation') && (
-                <RangeField label="Particle Count" id="fp" min={4} max={40} value={particles} onChange={setParticles} />
-              )}
-            </>
-          )}
-
-          <AddButton onClick={() => onAdd(md)} />
+          <div className="flex gap-3">
+            <AddButton onClick={() => onAdd(md)} />
+            <AddToCompositeButton type="footer" label={`Footer — ${text}`}
+              url={buildParams(true)} width={900} height={height} />
+          </div>
         </>}
         preview={<>
-          <PreviewBox minHeight={height}>
-            <img src={buildParams()} alt="Footer preview" className="max-w-full" />
+          <PreviewBox minHeight={height + 40}>
+            <img src={buildParams()} alt="Footer preview" />
           </PreviewBox>
           <CodeBlock code={md} />
-          <div className="mt-4">
-            <p className="font-mono text-[11px] text-[#4a9eff] mb-3">// All styles preview:</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              {FOOTER_STYLES.map(s => (
-                <img key={s} src={`/api/footer?text=${encodeURIComponent(text)}&metal=${metal}&style=${s}&height=90`}
-                  alt={s}
-                  className="cursor-pointer rounded border border-[rgba(120,140,200,0.15)] hover:border-[rgba(74,158,255,0.4)] transition-colors w-full"
-                  onClick={() => setStyle(s)} />
-              ))}
-            </div>
-          </div>
         </>}
       />
     </div>
@@ -285,31 +191,45 @@ function FooterBuilderUI({ onAdd }: { onAdd: (c: string) => void }) {
 
 // ─── Neumorphic Card Builder ──────────────────────────────────────────────────
 function NeoCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
-  const [title, setTitle] = useState('Commits')
-  const [value, setValue] = useState('3,291')
-  const [subtitle, setSub] = useState('This year')
-  const [icon, setIcon] = useState('◉')
+  const [title, setTitle] = useState('')
+  const [value, setValue] = useState('')
+  const [subtitle, setSub] = useState('')
+  const [icon, setIcon] = useState('')
   const [neoTheme, setNeoTheme] = useState('dark')
   const [neoStyle, setNeoStyle] = useState('raised')
+  const [border, setBorder] = useState('none')
   const [metal, setMetal] = useState('chrome')
   const [colors, setColors] = useState('')
   const [angle, setAngle] = useState(135)
   const [width, setWidth] = useState(200)
   const [height, setHeight] = useState(160)
+  const [linkUrl, setLinkUrl] = useState('')
+  const [fontFamily, setFontFamily] = useState('display')
+  const [textColor, setTextColor] = useState('')
+  const [fontScale, setFontScale] = useState(1)
 
   function buildParams(base = false) {
     const p = new URLSearchParams({
-      title, value, subtitle, icon,
       neoTheme,
-      style: neoStyle,
+      neoStyle,
+      border,
       metal,
       width: String(width), height: String(height),
     })
+    if (title) p.set('title', title)
+    if (value) p.set('value', value)
+    if (subtitle) p.set('subtitle', subtitle)
+    if (icon) p.set('icon', icon)
     if (colors) p.set('colors', colors)
     if (angle !== 135) p.set('angle', String(angle))
+    if (linkUrl) p.set('linkUrl', linkUrl)
+    if (fontFamily !== 'display') p.set('fontFamily', fontFamily)
+    if (textColor) p.set('textColor', textColor)
+    if (fontScale !== 1) p.set('fontScale', String(fontScale))
     return `${base ? BASE_URL : ''}/api/card-neo?${p}`
   }
-  const md = `![${title}](${buildParams(true)})`
+  const rawMd = `![${title || 'Card'}](${buildParams(true)})`
+  const md = linkUrl ? `[${rawMd}](${linkUrl})` : rawMd
 
   return (
     <div>
@@ -317,22 +237,40 @@ function NeoCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
       <BuilderGrid
         controls={<>
           <div className="grid grid-cols-3 gap-3 mb-5">
-            <div className="col-span-2"><TextField label="Title" value={title} onChange={setTitle} /></div>
+            <div className="col-span-2"><TextField label="Title (optional)" value={title} onChange={setTitle} placeholder="e.g. Commits" /></div>
             <div>
               <FieldLabel>Icon</FieldLabel>
-              <input className="metal-input text-center" value={icon} onChange={e => setIcon(e.target.value)} />
+              <input className="metal-input text-center" value={icon} onChange={e => setIcon(e.target.value)} placeholder="◉" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-5">
-            <TextField label="Value" value={value} onChange={setValue} />
-            <TextField label="Subtitle" value={subtitle} onChange={setSub} />
+            <TextField label="Value (optional)" value={value} onChange={setValue} placeholder="e.g. 3,291" />
+            <TextField label="Subtitle (optional)" value={subtitle} onChange={setSub} placeholder="e.g. This year" />
           </div>
           <div className="grid grid-cols-2 gap-4 mb-5">
             <SelectField label="Neo Theme" value={neoTheme} onChange={setNeoTheme}
-              options={['dark', 'light', 'warm', 'cool', 'neon-dark']} />
+              options={['dark', 'light', 'warm', 'cool', 'neon-dark', 'rose', 'forest', 'sunset', 'arctic']} />
             <SelectField label="Style" value={neoStyle} onChange={setNeoStyle}
-              options={['raised', 'pressed', 'floating', 'inset']} />
+              options={['raised', 'pressed', 'floating', 'inset', 'outline', 'gradient']} />
           </div>
+          <SelectField label="Border" value={border} onChange={setBorder}
+            options={['none', 'thin', 'accent', 'glow']} />
+
+          <div className="mb-5 mt-5">
+            <FieldLabel>Typography</FieldLabel>
+            <div className="grid grid-cols-2 gap-4 mb-3">
+              <SelectField label="Font" value={fontFamily} onChange={setFontFamily}
+                options={['sans', 'serif', 'mono', 'display', 'rounded']} />
+              <div>
+                <label className="block font-mono text-[11px] text-[#7880a0] mb-1.5">Text Color</label>
+                <input type="color" value={textColor || '#ffffff'} onChange={e => setTextColor(e.target.value)}
+                  className="w-full h-9 rounded-md border border-white/10 bg-transparent cursor-pointer" />
+              </div>
+            </div>
+            <RangeField label="Font Scale" id="nc-fs" min={60} max={180}
+              value={Math.round(fontScale * 100)} onChange={v => setFontScale(v / 100)} unit="%" />
+          </div>
+
           <div className="mb-5">
             <FieldLabel>Metal Accent</FieldLabel>
             <MetalPicker value={metal} onChange={setMetal} compact />
@@ -343,7 +281,14 @@ function NeoCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
             <RangeField label="Width" id="ncw" min={120} max={400} value={width} onChange={setWidth} />
             <RangeField label="Height" id="nch" min={80} max={300} value={height} onChange={setHeight} />
           </div>
-          <AddButton onClick={() => onAdd(md)} />
+
+          <TextField label="Link URL (optional)" value={linkUrl} onChange={setLinkUrl} placeholder="https://github.com/you" />
+
+          <div className="flex gap-3">
+            <AddButton onClick={() => onAdd(md)} />
+            <AddToCompositeButton type="card-neo" label={title || 'Neo card'}
+              url={buildParams(true)} width={width} height={height} />
+          </div>
         </>}
         preview={<>
           <PreviewBox minHeight={height + 40}>
@@ -358,11 +303,13 @@ function NeoCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
 
 // ─── Glass Card Builder ───────────────────────────────────────────────────────
 function GlassCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
-  const [title, setTitle] = useState('Repositories')
-  const [value, setValue] = useState('42')
-  const [subtitle, setSub] = useState('Public repos')
-  const [icon, setIcon] = useState('◈')
+  const [title, setTitle] = useState('')
+  const [value, setValue] = useState('')
+  const [subtitle, setSub] = useState('')
+  const [icon, setIcon] = useState('')
   const [glassTheme, setGlassTheme] = useState('dark')
+  const [style, setStyle] = useState('card')
+  const [border, setBorder] = useState('edge')
   const [metal, setMetal] = useState('electric')
   const [colors, setColors] = useState('')
   const [angle, setAngle] = useState(135)
@@ -371,10 +318,15 @@ function GlassCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
   const [username, setUsername] = useState('')
   const [stat, setStat] = useState('repos')
   const [linkUrl, setLinkUrl] = useState('')
+  const [fontFamily, setFontFamily] = useState('mono')
+  const [textColor, setTextColor] = useState('')
+  const [fontScale, setFontScale] = useState(1)
 
   function buildParams(base = false) {
     const p = new URLSearchParams({
       glassTheme,
+      style,
+      border,
       metal,
       width: String(width),
       height: String(height),
@@ -382,23 +334,26 @@ function GlassCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
     if (username.trim()) {
       p.set('username', username.trim())
       p.set('stat', stat)
-    } else {
-      p.set('title', title)
-      p.set('value', value)
-      p.set('subtitle', subtitle)
-      p.set('icon', icon)
     }
+    // Manual fields always act as overrides — they're independent of username now,
+    // and simply omitted (not sent) when left blank, so the renderer skips that row.
+    if (title) p.set('title', title)
+    if (value) p.set('value', value)
+    if (subtitle) p.set('subtitle', subtitle)
+    if (icon) p.set('icon', icon)
     if (linkUrl.trim()) p.set('linkUrl', linkUrl.trim())
     if (colors) p.set('colors', colors)
     if (angle !== 135) p.set('angle', String(angle))
+    if (fontFamily !== 'mono') p.set('fontFamily', fontFamily)
+    if (textColor) p.set('textColor', textColor)
+    if (fontScale !== 1) p.set('fontScale', String(fontScale))
     return `${base ? BASE_URL : ''}/api/card-glass?${p}`
   }
 
   const displayTitle = username.trim()
-    ? ({ repos: 'Repositories', stars: 'Stars', followers: 'Followers', forks: 'Forks' } as Record<string, string>)[stat] ?? title
-    : title
+    ? ({ repos: 'Repositories', stars: 'Stars', followers: 'Followers', forks: 'Forks' } as Record<string, string>)[stat]
+    : (title || 'Card')
 
-  // For GitHub README: wrap image in markdown link so click works despite CSP
   const md = linkUrl.trim()
     ? `[![${displayTitle}](${buildParams(true)})](${linkUrl.trim()})`
     : `![${displayTitle}](${buildParams(true)})`
@@ -414,7 +369,8 @@ function GlassCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
             <p className="font-mono text-[10px] tracking-[2px] text-[#00ffc8] uppercase mb-3">
               // Live GitHub Stats
             </p>
-            <TextField label="GitHub Username (optional)" value={username} onChange={setUsername} />
+            <TextField label="GitHub Username (optional — leave blank for a fully custom card)"
+              value={username} onChange={setUsername} placeholder="e.g. octocat" />
             {username.trim() && (
               <SelectField label="Stat to display" value={stat} onChange={setStat}
                 options={['repos', 'stars', 'followers', 'forks']} />
@@ -426,28 +382,49 @@ function GlassCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
             )}
           </div>
 
-          {/* ── Manual / override fields ──────────────────────────────────── */}
+          {/* ── Manual / override fields — all genuinely optional ─────────── */}
           <div className="grid grid-cols-3 gap-3 mb-5">
             <div className="col-span-2">
               <TextField
-                label={username.trim() ? 'Title override' : 'Title'}
-                value={title} onChange={setTitle}
-              />
+                label={username.trim() ? 'Title override (optional)' : 'Title (optional)'}
+                value={title} onChange={setTitle} placeholder="e.g. Repositories" />
             </div>
             <div>
               <FieldLabel>Icon</FieldLabel>
               <input className="metal-input text-center" value={icon}
-                onChange={e => setIcon(e.target.value)} />
+                onChange={e => setIcon(e.target.value)} placeholder="◈" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-5">
-            <TextField label={username.trim() ? 'Value override' : 'Value'} value={value} onChange={setValue} />
-            <TextField label={username.trim() ? 'Subtitle override' : 'Subtitle'} value={subtitle} onChange={setSub} />
+            <TextField label={username.trim() ? 'Value override (optional)' : 'Value (optional)'} value={value} onChange={setValue} placeholder="e.g. 42" />
+            <TextField label={username.trim() ? 'Subtitle override (optional)' : 'Subtitle (optional)'} value={subtitle} onChange={setSub} placeholder="e.g. Public repos" />
           </div>
 
           {/* ── Appearance ────────────────────────────────────────────────── */}
-          <SelectField label="Glass Theme" value={glassTheme} onChange={setGlassTheme}
-            options={['dark', 'light', 'aurora', 'sunset', 'ocean', 'midnight', 'neon', 'rose', 'forest', 'gold', 'ice', 'void']} />
+          <div className="grid grid-cols-2 gap-4 mb-5">
+            <SelectField label="Glass Theme" value={glassTheme} onChange={setGlassTheme}
+              options={['dark', 'light', 'aurora', 'sunset', 'ocean', 'midnight', 'neon', 'rose', 'forest', 'gold', 'ice', 'void', 'crimson', 'emerald', 'sapphire', 'graphite']} />
+            <SelectField label="Style" value={style} onChange={setStyle}
+              options={['card', 'pill', 'panel', 'chip', 'ribbon', 'badge']} />
+          </div>
+          <SelectField label="Border" value={border} onChange={setBorder}
+            options={['edge', 'glow', 'minimal', 'ridge', 'double', 'none']} />
+
+          <div className="mb-5 mt-5">
+            <FieldLabel>Typography</FieldLabel>
+            <div className="grid grid-cols-2 gap-4 mb-3">
+              <SelectField label="Font" value={fontFamily} onChange={setFontFamily}
+                options={['sans', 'serif', 'mono', 'display', 'rounded']} />
+              <div>
+                <label className="block font-mono text-[11px] text-[#7880a0] mb-1.5">Text Color</label>
+                <input type="color" value={textColor || '#ffffff'} onChange={e => setTextColor(e.target.value)}
+                  className="w-full h-9 rounded-md border border-white/10 bg-transparent cursor-pointer" />
+              </div>
+            </div>
+            <RangeField label="Font Scale" id="gc-fs" min={60} max={180}
+              value={Math.round(fontScale * 100)} onChange={v => setFontScale(v / 100)} unit="%" />
+          </div>
+
           <div className="mb-5">
             <FieldLabel>Metal Accent</FieldLabel>
             <MetalPicker value={metal} onChange={setMetal} compact />
@@ -490,7 +467,11 @@ function GlassCardBuilder({ onAdd }: { onAdd: (c: string) => void }) {
             )}
           </div>
 
-          <AddButton onClick={() => onAdd(md)} />
+          <div className="flex gap-3">
+            <AddButton onClick={() => onAdd(md)} />
+            <AddToCompositeButton type="card-glass" label={displayTitle}
+              url={buildParams(true)} width={width} height={height} />
+          </div>
         </>}
         preview={<>
           <PreviewBox minHeight={height + 40}>
@@ -553,11 +534,15 @@ function TextAnimBuilder({ onAdd }: { onAdd: (c: string) => void }) {
           {colors && <AngleField value={angle} onChange={setAngle} />}
           <RangeField label="Font Size" id="tfs" min={14} max={80} value={size} onChange={setSize} />
           <RangeField label="Width" id="tw" min={200} max={1000} value={width} onChange={setWidth} />
-          <AddButton onClick={() => onAdd(md)} />
+          <div className="flex gap-3">
+            <AddButton onClick={() => onAdd(md)} />
+            <AddToCompositeButton type="text-anim" label={`Text FX — ${text}`}
+              url={buildParams(true)} width={width} height={size * 2} />
+          </div>
         </>}
         preview={<>
-          <PreviewBox minHeight={100}>
-            <img src={buildParams()} alt="Text animation preview" className="max-w-full" />
+          <PreviewBox minHeight={size * 2 + 40}>
+            <img src={buildParams()} alt="Text animation preview" />
           </PreviewBox>
           <CodeBlock code={md} />
         </>}
@@ -618,12 +603,16 @@ function ProgressBuilder({ onAdd }: { onAdd: (c: string) => void }) {
           <SelectField label="Style" value={style} onChange={setStyle}
             options={['metallic', 'glow-fill', 'segmented', 'glass', 'circuit', 'neo']} />
           <RangeField label="Width" id="pw" min={200} max={800} value={width} onChange={setWidth} />
-          <div className="flex gap-3 mt-4">
+          <div className="flex gap-3 mt-4 flex-wrap">
             <button className="btn-chrome px-4 py-2 rounded text-sm cursor-pointer"
               onClick={() => onAdd(`![Skill Tree](${skillTreeUrl(true)})`)}>
               ⚡ Add Full Skill Tree
             </button>
             <AddButton onClick={() => onAdd(md)} />
+            <AddToCompositeButton type="progress-bar" label={`Progress — ${label}`}
+              url={buildParams(true)} width={width} height={40} />
+            <AddToCompositeButton type="skill-tree" label="Skill Tree"
+              url={skillTreeUrl(true)} width={420} height={280} />
           </div>
         </>}
         preview={<>
@@ -684,11 +673,15 @@ function TerminalBuilder({ onAdd }: { onAdd: (c: string) => void }) {
           </div>
           <GradientInput value={colors} onChange={setColors} />
           <RangeField label="Width" id="termw" min={250} max={800} value={width} onChange={setWidth} />
-          <AddButton onClick={() => onAdd(md)} />
+          <div className="flex gap-3">
+            <AddButton onClick={() => onAdd(md)} />
+            <AddToCompositeButton type="terminal" label={`Terminal — ${termTitle}`}
+              url={buildParams(true)} width={width} height={220} />
+          </div>
         </>}
         preview={<>
-          <PreviewBox>
-            <img src={buildParams()} alt="Terminal preview" className="max-w-full" />
+          <PreviewBox minHeight={260}>
+            <img src={buildParams()} alt="Terminal preview" />
           </PreviewBox>
           <CodeBlock code={md} />
         </>}
@@ -747,7 +740,11 @@ function LogoBuilder({ onAdd }: { onAdd: (c: string) => void }) {
               className="accent-[#4a9eff] w-4 h-4" />
             <span className="font-mono text-[12px] text-[#7880a0]">Enable glow</span>
           </label>
-          <AddButton onClick={() => onAdd(md)} />
+          <div className="flex gap-3">
+            <AddButton onClick={() => onAdd(md)} />
+            <AddToCompositeButton type="logo-container" label={`Logo — ${text}`}
+              url={buildParams(true)} width={size} height={size} />
+          </div>
         </>}
         preview={<>
           <PreviewBox minHeight={size + 40}>
@@ -838,11 +835,15 @@ function FrameBuilder({ onAdd }: { onAdd: (c: string) => void }) {
               <RangeField label="Width" id="fw" min={100} max={600} value={width} onChange={setWidth} />
               <RangeField label="Height" id="fh2" min={80} max={500} value={height} onChange={setHeight} />
             </div>
-            <AddButton onClick={() => onAdd(md)} />
+            <div className="flex gap-3">
+              <AddButton onClick={() => onAdd(md)} />
+              <AddToCompositeButton type={frameType === 'image' ? 'image-container' : 'gif-container'}
+                label={caption || 'Frame'} url={frameUrl(true)} width={width} height={height} />
+            </div>
           </>}
           preview={<>
             <PreviewBox minHeight={height + 40}>
-              <div className="relative inline-block">
+              <div className="relative" style={{ width, height }}>
                 <img src={frameUrl()} alt="frame" className="block" />
                 {src && (
                   <img src={src} alt="preview" className="absolute"
@@ -856,7 +857,7 @@ function FrameBuilder({ onAdd }: { onAdd: (c: string) => void }) {
             </PreviewBox>
             {frameType === 'gif' && (
               <div className="font-mono text-[11px] text-[#f0c030] p-3 mt-2 leading-[1.8]
-                bg-[rgba(240,190,50,0.06)] border border-[rgba(240,190,50,0.2)] rounded-md">
+                    bg-[rgba(240,190,50,0.06)] border border-[rgba(240,190,50,0.2)] rounded-md">
                 <span className="font-bold">⚠ GIF README output:</span>
                 <span className="text-[#7880a0]"> Uses a plain <code>&lt;img&gt;</code> tag so the GIF animates correctly.</span>
               </div>
@@ -910,11 +911,15 @@ function SocialBuilder({ onAdd }: { onAdd: (c: string) => void }) {
           <SelectField label="Style" value={style} onChange={setStyle}
             options={['pills', 'icons', 'minimal']} />
           <RangeField label="Width" id="slw" min={200} max={1000} value={width} onChange={setWidth} />
-          <AddButton onClick={() => onAdd(md)} />
+          <div className="flex gap-3">
+            <AddButton onClick={() => onAdd(md)} />
+            <AddToCompositeButton type="social-links" label="Social Links"
+              url={buildParams(true)} width={width} height={60} />
+          </div>
         </>}
         preview={<>
-          <PreviewBox minHeight={80}>
-            <img src={buildParams()} alt="Social links" className="max-w-full" />
+          <PreviewBox minHeight={100}>
+            <img src={buildParams()} alt="Social links preview" />
           </PreviewBox>
           <CodeBlock code={md} />
         </>}
@@ -987,11 +992,15 @@ function TableBuilder({ onAdd }: { onAdd: (c: string) => void }) {
           <GradientInput value={colors} onChange={setColors} />
           {colors && <AngleField value={angle} onChange={setAngle} />}
           <RangeField label="Width" id="tbw" min={300} max={900} value={width} onChange={setWidth} />
-          <AddButton onClick={() => onAdd(md)} />
+          <div className="flex gap-3">
+            <AddButton onClick={() => onAdd(md)} />
+            <AddToCompositeButton type="table" label={title || `${type} table`}
+              url={buildParams(true)} width={width} height={200} />
+          </div>
         </>}
         preview={<>
-          <PreviewBox>
-            <img src={buildParams()} alt="Table preview" className="max-w-full" />
+          <PreviewBox minHeight={240}>
+            <img src={buildParams()} alt="Table preview" />
           </PreviewBox>
           <CodeBlock code={md} />
         </>}
@@ -1037,114 +1046,126 @@ export default function Home() {
   const removeFromReadme = useCallback((index: number) => setAssembled(prev => prev.filter((_, i) => i !== index)), [])
 
   return (
-    <div className="min-h-screen grid-bg">
-      <Navbar />
+    <CompositeCartProvider>
+      <div className="min-h-screen grid-bg">
+        <Navbar />
 
-      {/* HERO */}
-      <section className="relative py-16 px-6 text-center overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px]
-          bg-[radial-gradient(ellipse,rgba(74,158,255,0.09)_0%,transparent_70%)] pointer-events-none"/>
+        {/* HERO */}
+        <section className="relative py-20 px-6 overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px]
+          bg-[radial-gradient(ellipse,rgba(74,158,255,0.07)_0%,transparent_70%)] pointer-events-none"/>
 
-        <a href="https://www.natrajx.in/" target="_blank" rel="noopener"
-          title="Natraj-X — AI & IT Engineering Agency"
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-5
-            border border-[rgba(240,190,50,0.3)] bg-[rgba(240,190,50,0.06)]
-            font-mono text-[11px] tracking-[1.5px] uppercase text-[#f0c030]
-            hover:bg-[rgba(240,190,50,0.12)] transition-all duration-200 cursor-pointer">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#f0c030] shadow-[0_0_6px_#f0c030]" />
-          A free tool by Natraj-X AI Engineering
-          <svg width="9" height="9" viewBox="0 0 12 12" fill="none">
-            <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-        </a>
+          <div className="relative max-w-[880px] mx-auto text-center">
+            <a href="https://www.natrajx.in/" target="_blank" rel="noopener"
+              title="Natraj-X — AI & IT Engineering Agency"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-9
+              border border-[rgba(240,190,50,0.3)] bg-[rgba(240,190,50,0.06)]
+              font-mono text-[11px] tracking-[1.5px] uppercase text-[#f0c030]
+              hover:bg-[rgba(240,190,50,0.12)] transition-all duration-200 cursor-pointer">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#f0c030] shadow-[0_0_6px_#f0c030]" />
+              A free tool by Natraj-X AI Engineering
+              <svg width="9" height="9" viewBox="0 0 12 12" fill="none">
+                <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+            </a>
 
-        <p className="font-mono text-[11px] tracking-[3px] text-[#4a9eff] mb-3 opacity-75">
-          // readmeforge v1.0 — 44 METALS · 16 COMPONENT TYPES · EDGE RUNTIME
-        </p>
-        <h1 className="font-orbitron text-[clamp(24px,5vw,64px)] font-black tracking-[4px] leading-tight mb-4"
-          style={{
-            background: 'linear-gradient(135deg,#e8e8e8 0%,#a0a8c0 35%,#ffffff 55%,#8090b0 100%)',
-            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-          }}>
-          README FORGE
-        </h1>
-        <p className="text-[16px] text-[#7880a0] max-w-[760px] mx-auto mb-2 leading-relaxed">
-          Free GitHub README generator — metallic SVG banners, badges, stat cards,
-          buttons, terminals, skill bars &amp; more. No code needed.
-        </p>
-        <p className="text-[13px] text-[#56607a] max-w-[600px] mx-auto mb-8 leading-relaxed">
-          Headers · Footers · Metallic Cards · Neumorphic · Glassmorphic · Text FX ·
-          Progress Bars · Terminals · Logo Containers · Image Frames · Buttons · Badges · Dividers · Tables
-        </p>
-        <div className="flex gap-3 justify-center flex-wrap">
-          <button onClick={() => setTab('showcase')} className="btn-chrome px-6 py-2.5 rounded-md text-sm cursor-pointer">✦ Full Showcase</button>
-          <button onClick={() => setTab('header')} className="btn-gold px-6 py-2.5 rounded-md text-sm cursor-pointer">⊞ Build Profile</button>
-        </div>
-        <div className="flex gap-6 justify-center mt-10 flex-wrap">
-          {[
-            ['44', 'Metal Finishes'],
-            ['17', 'Component Types'],
-            ['28', 'Design Styles'],
-            ['20+', 'Text Effects'],
-          ].map(([n, l]) => (
-            <div key={l} className="text-center">
-              <div className="font-orbitron text-2xl font-black"
-                style={{ background: 'var(--gold)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                {n}
-              </div>
-              <div className="font-mono text-[10px] text-[#7880a0] tracking-widest mt-1">{l}</div>
+            {/* Forged nameplate — the signature element */}
+            <div className="relative inline-block mx-auto px-12 py-9 mb-9"
+              style={{
+                background: 'linear-gradient(155deg, rgba(150,160,185,0.07) 0%, rgba(16,18,28,0.5) 65%)',
+                border: '1px solid rgba(120,140,200,0.16)',
+              }}>
+              {[
+                ['top-2.5', 'left-2.5'], ['top-2.5', 'right-2.5'],
+                ['bottom-2.5', 'left-2.5'], ['bottom-2.5', 'right-2.5'],
+              ].map(([v, h]) => (
+                <span key={v + h}
+                  className={`absolute ${v} ${h} w-[5px] h-[5px] rounded-full
+                  bg-[rgba(170,180,205,0.4)] shadow-[inset_0_1px_1px_rgba(0,0,0,0.5)]`} />
+              ))}
+              <h1 className="font-orbitron text-[clamp(28px,6vw,58px)] font-black tracking-[6px] leading-none"
+                style={{
+                  background: 'linear-gradient(135deg,#e8e8e8 0%,#a0a8c0 35%,#ffffff 55%,#8090b0 100%)',
+                  WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+                }}>
+                README FORGE
+              </h1>
+              <p className="font-mono text-[10px] tracking-[4px] uppercase text-[#5a6080] mt-3">
+                SVG Profile Components — Rendered On Request
+              </p>
             </div>
-          ))}
-        </div>
-      </section>
 
-      <div id="api" className="absolute" style={{ marginTop: '-80px', pointerEvents: 'none' }} />
+            <p className="text-[16px] text-[#7880a0] max-w-[620px] mx-auto mb-8 leading-relaxed">
+              Build metallic SVG banners, badges, stat cards, buttons, terminals and more
+              for your GitHub README. Set the options, preview it live, copy the markdown.
+            </p>
 
-      <main id="docs" className="max-w-[1320px] mx-auto px-6 pb-24">
-        {/* TAB BAR */}
-        <div id="showcase" className="flex border-b border-[rgba(120,140,200,0.15)] mb-10 overflow-x-auto pb-0 hide-scrollbar">
-          {TABS.map(t => (
-            <button key={t.id} onClick={() => setTab(t.id)}
-              className={`px-4 py-3 font-rajdhani font-semibold text-[12px] tracking-[1.2px] uppercase
+            <div className="flex gap-3 justify-center flex-wrap mb-10">
+              <button onClick={() => setTab('showcase')} className="btn-chrome px-6 py-2.5 rounded-md text-sm cursor-pointer">✦ Full Showcase</button>
+              <button onClick={() => setTab('header')} className="btn-gold px-6 py-2.5 rounded-md text-sm cursor-pointer">⊞ Build Profile</button>
+            </div>
+
+            <div className="flex items-center justify-center gap-x-6 gap-y-2 flex-wrap
+              font-mono text-[10px] tracking-[1.5px] uppercase text-[#5a6080]">
+              <span>Output <span className="text-[#7880a0]">SVG + Markdown</span></span>
+              <span className="text-[rgba(120,140,200,0.25)]">/</span>
+              <span>Runtime <span className="text-[#7880a0]">Edge</span></span>
+              <span className="text-[rgba(120,140,200,0.25)]">/</span>
+              <span>Cost <span className="text-[#7880a0]">Free, no sign-up</span></span>
+            </div>
+          </div>
+        </section>
+
+        <div id="api" className="absolute" style={{ marginTop: '-80px', pointerEvents: 'none' }} />
+
+        <main id="docs" className="max-w-[1320px] mx-auto px-6 pb-24">
+          {/* TAB BAR */}
+          <div id="showcase" className="flex border-b border-[rgba(120,140,200,0.15)] mb-10 overflow-x-auto pb-0 hide-scrollbar">
+            {TABS.map(t => (
+              <button key={t.id} onClick={() => setTab(t.id)}
+                className={`px-4 py-3 font-rajdhani font-semibold text-[12px] tracking-[1.2px] uppercase
                 border-b-2 -mb-px whitespace-nowrap transition-all duration-200 cursor-pointer flex-shrink-0
                 ${tab === t.id
-                  ? 'text-[#4a9eff] border-[#4a9eff]'
-                  : 'text-[#7880a0] border-transparent hover:text-[#e0e4f0]'}`}>
-              {t.icon} {t.label}
-            </button>
-          ))}
-        </div>
+                    ? 'text-[#4a9eff] border-[#4a9eff]'
+                    : 'text-[#7880a0] border-transparent hover:text-[#e0e4f0]'}`}>
+                {t.icon} {t.label}
+                {t.id === 'composite' && <CompositeCartBadge />}
+              </button>
+            ))}
+          </div>
 
-        {tab === 'banner' && <BannerBuilder onAdd={addToReadme} />}
-        {tab === 'header' && <HeaderBuilder onAdd={addToReadme} />}
-        {tab === 'footer' && <FooterBuilderUI onAdd={addToReadme} />}
-        {tab === 'card' && <CardBuilder onAdd={addToReadme} />}
-        {tab === 'neo' && <NeoCardBuilder onAdd={addToReadme} />}
-        {tab === 'glass' && <GlassCardBuilder onAdd={addToReadme} />}
-        {tab === 'brutal' && <NeoBrutalCardBuilder onAdd={addToReadme} />}
-        {tab === 'clay' && <ClayCardBuilder onAdd={addToReadme} />}
-        {tab === 'glow' && <GlowCardBuilder onAdd={addToReadme} />}
-        {tab === 'skeuo' && <SkeuoCardBuilder onAdd={addToReadme} />}
-        {tab === 'button' && <ButtonBuilder onAdd={addToReadme} />}
-        {tab === 'badge' && <BadgeBuilder onAdd={addToReadme} />}
-        {tab === 'text' && <TextAnimBuilder onAdd={addToReadme} />}
-        {tab === 'progress' && <ProgressBuilder onAdd={addToReadme} />}
-        {tab === 'terminal' && <TerminalBuilder onAdd={addToReadme} />}
-        {tab === 'logo' && <LogoBuilder onAdd={addToReadme} />}
-        {tab === 'image' && <FrameBuilder onAdd={addToReadme} />}
-        {tab === 'social' && <SocialBuilder onAdd={addToReadme} />}
-        {tab === 'divider' && <DividerBuilder onAdd={addToReadme} />}
-        {tab === 'table' && <TableBuilder onAdd={addToReadme} />}
-        {tab === 'showcase' && <ShowcaseGrid onAdd={addToReadme} />}
+          {tab === 'banner' && <BannerBuilder onAdd={addToReadme} />}
+          {tab === 'header' && <HeaderBuilder onAdd={addToReadme} />}
+          {tab === 'footer' && <FooterBuilderUI onAdd={addToReadme} />}
+          {tab === 'card' && <CardBuilder onAdd={addToReadme} />}
+          {tab === 'neo' && <NeoCardBuilder onAdd={addToReadme} />}
+          {tab === 'glass' && <GlassCardBuilder onAdd={addToReadme} />}
+          {tab === 'brutal' && <NeoBrutalCardBuilder onAdd={addToReadme} />}
+          {tab === 'clay' && <ClayCardBuilder onAdd={addToReadme} />}
+          {tab === 'glow' && <GlowCardBuilder onAdd={addToReadme} />}
+          {tab === 'skeuo' && <SkeuoCardBuilder onAdd={addToReadme} />}
+          {tab === 'button' && <ButtonBuilder onAdd={addToReadme} />}
+          {tab === 'badge' && <BadgeBuilder onAdd={addToReadme} />}
+          {tab === 'text' && <TextAnimBuilder onAdd={addToReadme} />}
+          {tab === 'progress' && <ProgressBuilder onAdd={addToReadme} />}
+          {tab === 'terminal' && <TerminalBuilder onAdd={addToReadme} />}
+          {tab === 'logo' && <LogoBuilder onAdd={addToReadme} />}
+          {tab === 'image' && <FrameBuilder onAdd={addToReadme} />}
+          {tab === 'social' && <SocialBuilder onAdd={addToReadme} />}
+          {tab === 'divider' && <DividerBuilder onAdd={addToReadme} />}
+          {tab === 'table' && <TableBuilder onAdd={addToReadme} />}
+          {tab === 'composite' && <CompositeBuilder onAdd={addToReadme} />}
+          {tab === 'showcase' && <ShowcaseGrid onAdd={addToReadme} />}
 
-        <ReadmeAssembler
-          items={assembled}
-          onClear={() => setAssembled([])}
-          onRemove={removeFromReadme}
-        />
-      </main>
+          <ReadmeAssembler
+            items={assembled}
+            onClear={() => setAssembled([])}
+            onRemove={removeFromReadme}
+          />
+        </main>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </CompositeCartProvider>
   )
 }

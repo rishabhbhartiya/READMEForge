@@ -6,6 +6,7 @@ import {
   CodeBlock, PreviewBox, BuilderGrid, SectionHeader, RangeField,
   SelectField, TextField, AddButton,
 } from '../ui'
+import { AddToCompositeButton } from '../CompositeWidgets'
 
 // ─── Option Lists ─────────────────────────────────────────────────────────────
 
@@ -218,6 +219,8 @@ export default function BannerBuilder({ onAdd }: { onAdd: (code: string) => void
 
           <div className="flex gap-3 mt-2">
             <AddButton onClick={() => onAdd(markdown)} />
+            <AddToCompositeButton type="banner" label={text || 'Banner'}
+              url={`${BASE_URL}/api/banner?${buildParams()}`} width={width} height={height} />
           </div>
         </>}
 

@@ -6,6 +6,7 @@ import {
     CodeBlock, PreviewBox, BuilderGrid, SectionHeader, RangeField,
     SelectField, TextField, AddButton,
 } from '../ui'
+import { AddToCompositeButton } from '../CompositeWidgets'
 
 const BASE_URL = 'https://readmeforge.natrajx.in'
 const STAT_OPTIONS = ['repos', 'stars', 'followers', 'forks']
@@ -155,7 +156,11 @@ export function NeoBrutalCardBuilder({ onAdd }: { onAdd: (code: string) => void 
 
                     <TextField label="Link URL (optional)" value={linkUrl} onChange={setLinkUrl} placeholder="https://github.com/you" />
 
-                    <AddButton onClick={() => onAdd(markdown)} />
+                    <div className="flex gap-3">
+                        <AddButton onClick={() => onAdd(markdown)} />
+                        <AddToCompositeButton type="card-neobrutalism" label={title || 'Neo-brutal card'}
+                            url={buildParams(true)} width={width} height={height} />
+                    </div>
                 </>}
                 preview={<>
                     <PreviewBox>
@@ -259,7 +264,11 @@ export function ClayCardBuilder({ onAdd }: { onAdd: (code: string) => void }) {
 
                     <TextField label="Link URL (optional)" value={linkUrl} onChange={setLinkUrl} placeholder="https://github.com/you" />
 
-                    <AddButton onClick={() => onAdd(markdown)} />
+                    <div className="flex gap-3">
+                        <AddButton onClick={() => onAdd(markdown)} />
+                        <AddToCompositeButton type="card-clay" label={title || 'Clay card'}
+                            url={buildParams(true)} width={width} height={height} />
+                    </div>
                 </>}
                 preview={<>
                     <PreviewBox>
@@ -373,7 +382,11 @@ export function GlowCardBuilder({ onAdd }: { onAdd: (code: string) => void }) {
 
                     <TextField label="Link URL (optional)" value={linkUrl} onChange={setLinkUrl} placeholder="https://github.com/you" />
 
-                    <AddButton onClick={() => onAdd(markdown)} />
+                    <div className="flex gap-3">
+                        <AddButton onClick={() => onAdd(markdown)} />
+                        <AddToCompositeButton type="card-glow" label={title || 'Glow card'}
+                            url={buildParams(true)} width={width} height={height} />
+                    </div>
                 </>}
                 preview={<>
                     <PreviewBox>
@@ -483,7 +496,11 @@ export function SkeuoCardBuilder({ onAdd }: { onAdd: (code: string) => void }) {
 
                     <TextField label="Link URL (optional)" value={linkUrl} onChange={setLinkUrl} placeholder="https://github.com/you" />
 
-                    <AddButton onClick={() => onAdd(markdown)} />
+                    <div className="flex gap-3">
+                        <AddButton onClick={() => onAdd(markdown)} />
+                        <AddToCompositeButton type="card-skeuo" label={title || 'Skeuomorphic card'}
+                            url={buildParams(true)} width={width} height={height} />
+                    </div>
                 </>}
                 preview={<>
                     <PreviewBox>
